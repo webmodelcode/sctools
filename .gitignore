@@ -37,3 +37,10 @@ keys.json
 
 # typescript
 .tsbuildinfo
+
+*storybook.log
+
+# Ignore generated docs
+docs/api/*
+!docs/api/.gitkeep
+storybook-static/*
