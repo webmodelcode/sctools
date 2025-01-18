@@ -6,7 +6,7 @@ function IndexPopup() {
   const [data, setData] = useState("")
 
   return (
-    <div className="sct-flex sct-flex-col sct-p-16 sct-bg-red-400">
+    <div className="sct-flex sct-flex-col sct-p-8 sct-bg-red-400 sct-w-60">
       <h1>
         Welcome to your <a href="https://www.plasmo.com">Plasmo</a> Extension!
       </h1>
