@@ -1,19 +1,9 @@
-import { useState } from "react"
-
 import "./styles/global.css"
 
-function IndexPopup() {
-  const [data, setData] = useState("")
+import { Popup } from "~components/Popup/Popup"
 
-  return (
-    <div className="sct-flex sct-flex-col sct-p-8 sct-bg-red-400 sct-w-60">
-      <h1>
-        Welcome to your <a href="https://www.plasmo.com">Plasmo</a> Extension!
-      </h1>
-      <input onChange={(e) => setData(e.target.value)} value={data} />
-      <footer>Crafted by @PlasmoHQ</footer>
-    </div>
-  )
+function IndexPopup() {
+  return <Popup />
 }
 
 export default IndexPopup

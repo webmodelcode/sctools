@@ -11,7 +11,7 @@ export default defineConfig({
     alias: {
       // Maintain same aliases as Plasmo for consistency
       "~": resolve(__dirname, "src"),
-      "@": resolve(__dirname, "src")
+      "@": resolve(__dirname, ".")
     }
   }
 })
