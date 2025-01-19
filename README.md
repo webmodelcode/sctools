@@ -33,7 +33,7 @@ Brief description of what the extension does.
   - _Why?_: Built on Tailwind, customizable, modern design
 - **Vitest**: Testing Framework
   - _Why?_: Fast, good React support, Jest-compatible API
-- **TypeDoc + Storybook**: Documentation
+- **TypeDoc**: Documentation
   - _Why?_: Complete coverage (API + visual components)
 
 ## Testing Setup
@@ -92,7 +92,6 @@ describe('Popup Component', () => {
 ```
 docs/
 ├── api/              # TypeDoc generated API documentation
-├── components/       # Storybook component documentation
 ├── guides/          # Development and usage guides
 │   ├── getting-started/
 │   ├── architecture/
@@ -122,33 +121,6 @@ interface SettingsPanelProps {
   onSettingsChange: (settings: Settings) => void
 }
 ````
-
-### Storybook Example
-
-```typescript
-// src/components/SettingsPanel/SettingsPanel.stories.tsx
-import type { Meta, StoryObj } from "@storybook/react"
-
-const meta: Meta<typeof SettingsPanel> = {
-  title: "Extension/SettingsPanel",
-  component: SettingsPanel,
-  parameters: {
-    layout: "centered"
-  }
-}
-
-export default meta
-type Story = StoryObj<typeof SettingsPanel>
-
-export const Default: Story = {
-  args: {
-    initialSettings: {
-      theme: "light",
-      notifications: true
-    }
-  }
-}
-```
 
 ## Pending Topics
 
