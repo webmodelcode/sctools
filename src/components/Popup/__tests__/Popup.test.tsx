@@ -13,26 +13,36 @@ describe("Popup Component", () => {
     } as any
   })
 
-  it("should render title correctly", () => {
+  it("should render all elements correctly", () => {
     render(<Popup />)
     expect(screen.getByText("ScTools")).toBeInTheDocument()
+    expect(screen.getByText("Enable Extension")).toBeInTheDocument()
+    expect(screen.getByText("Buy me a coffee ☕")).toBeInTheDocument()
+    expect(screen.getByRole("switch")).toBeInTheDocument()
+  })
+
+  it("switch starts deactivated and changes state when clicked", () => {
+    render(<Popup />)
+    const switchElement = screen.getByRole("switch")
+
+    expect(switchElement).not.toBeChecked()
+
+    fireEvent.click(switchElement)
+    setTimeout(() => {
+      expect(switchElement).toBeChecked()
+    }, 200)
+
+    fireEvent.click(switchElement)
+    expect(switchElement).not.toBeChecked()
   })
 
   it("should handle donation button click", () => {
     render(<Popup />)
-    const donationButton = screen.getByText(/buy me a coffee/i)
+    const donationButton = screen.getByText("Buy me a coffee ☕")
     fireEvent.click(donationButton)
 
     expect(chrome.tabs.create).toHaveBeenCalledWith({
       url: "https://buymeacoffee.com/juanleon"
     })
-  })
-
-  it("should toggle extension state", () => {
-    render(<Popup />)
-    const toggle = screen.getByRole("switch")
-    fireEvent.click(toggle)
-
-    expect(toggle).toBeChecked()
   })
 })
