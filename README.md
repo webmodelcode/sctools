@@ -1,159 +1,50 @@
-# Extension Name
+# React + TypeScript + Vite
 
-## Overview
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Brief description of what the extension does.
+Currently, two official plugins are available:
 
-## Quick Links
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-- [Getting Started](guides/getting-started/installation.md)
-- [Architecture](guides/architecture/overview.md)
-- [API Documentation](api/README.md)
-- [Component Library](components/README.md)
+## Expanding the ESLint configuration
 
-## Documentation Structure
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- `/api`: Technical API documentation
-- `/components`: UI component documentation
-- `/guides`: Development and usage guides
+- Configure the top-level `parserOptions` property like this:
 
-# Chrome Extension Project Overview
-
-## Selected Stack
-
-- **React**: UI Framework
-  - _Why?_: Component-based, rich ecosystem, strong TypeScript support
-- **TypeScript**: Base Language
-  - _Why?_: Type safety, better DX, enhanced maintainability
-- **Plasmo**: Extension Framework
-  - _Why?_: Specialized for browser extensions, modern features, good DX
-- **Tailwind CSS**: Styling Solution
-  - _Why?_: Utility-first, zero runtime, perfect for extensions
-- **shadcn/ui**: UI Component Library
-  - _Why?_: Built on Tailwind, customizable, modern design
-- **Vitest**: Testing Framework
-  - _Why?_: Fast, good React support, Jest-compatible API
-- **TypeDoc**: Documentation
-  - _Why?_: Complete coverage (API + visual components)
-
-## Testing Setup
-
-### Basic Test Configuration
-
-```typescript
-// vitest.config.ts
-import { resolve } from "path"
-import react from "@vitejs/plugin-react"
-import { defineConfig } from "vitest/config"
-
-export default defineConfig({
-  plugins: [react()],
-  test: {
-    environment: "jsdom",
-    globals: true,
-    setupFiles: "./src/test/setup.ts",
-    alias: {
-      "~": resolve(__dirname, "src"),
-      "@": resolve(__dirname, "src")
-    }
-  }
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
 })
 ```
 
-### Component Test Example
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-```typescript
-// src/components/Popup/__tests__/Popup.test.tsx
-import { render, screen } from '@testing-library/react'
-import { describe, it, expect, beforeEach } from 'vitest'
-import { Storage } from '@plasmohq/storage'
-import Popup from '../Popup'
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
 
-describe('Popup Component', () => {
-  beforeEach(() => {
-    // Clear all mocks before each test
-    vi.clearAllMocks()
-  })
-
-  it('should handle storage operations', async () => {
-    const storage = new Storage()
-    render(<Popup />)
-
-    expect(storage.get).toHaveBeenCalled()
-    await screen.findByText('test-value')
-  })
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
 })
 ```
-
-## Documentation Structure
-
-### Project Structure
-
-```
-docs/
-├── api/              # TypeDoc generated API documentation
-├── guides/          # Development and usage guides
-│   ├── getting-started/
-│   ├── architecture/
-│   └── contributing/
-└── README.md        # Main documentation entry point
-```
-
-### Component Documentation Example
-
-````typescript
-/**
- * Displays user settings with real-time updates
- * @component
- *
- * @example
- * ```tsx
- * <SettingsPanel
- *   initialSettings={defaultSettings}
- *   onSettingsChange={handleChange}
- * />
- * ```
- */
-interface SettingsPanelProps {
-  /** Initial settings configuration */
-  initialSettings: Settings
-  /** Callback for settings changes */
-  onSettingsChange: (settings: Settings) => void
-}
-````
-
-## Pending Topics
-
-1. Update System Implementation (outside Chrome Web Store)
-   - Auto-update mechanism
-   - Version control
-   - User notifications
-2. CI/CD Pipeline Setup
-
-   - Build process
-   - Testing automation
-   - Documentation generation
-
-3. State Management Decision
-
-   - Global state solution
-   - Storage strategy
-
-4. Security Considerations
-   - Data encryption
-   - Safe storage practices
-   - Code signing
-
-## Next Steps
-
-1. Implement base project structure
-2. Set up development environment
-3. Configure testing and documentation tools
-4. Create initial component library
-5. Implement core extension features
-
-## Additional Resources
-
-- [Plasmo Documentation](https://docs.plasmo.com/)
-- [shadcn/ui Components](https://ui.shadcn.com/)
-- [Chrome Extension Developer Guide](https://developer.chrome.com/docs/extensions/mv3/)
