@@ -4,7 +4,7 @@ import "./index.css";
 import { ContentMenu } from "./components";
 
 const root = document.createElement("div");
-root.id = "crx-root";
+root.id = "sct-root";
 document.body.appendChild(root);
 
 createRoot(root).render(
