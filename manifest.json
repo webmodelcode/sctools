@@ -3,5 +3,11 @@
   "name": "sctools",
   "version": "0.0.1",
   "action": { "default_popup": "index.html" },
-  "permissions": ["tabs", "activeTab", "storage", "scripting"]
+  "permissions": ["tabs", "activeTab", "storage", "scripting"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content.tsx"]
+    }
+  ]
 }
