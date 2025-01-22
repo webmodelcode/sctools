@@ -1,14 +1,24 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
 import { ContentMenu } from "./components";
+
+import indexcss from "./index_content.css?inline";
 
 const root = document.createElement("div");
 root.id = "sct-root";
 document.body.appendChild(root);
+const host = document.querySelector("#sct-root");
+const shadow = host!.attachShadow({ mode: "open" });
+const style = document.createElement("style");
+const body = indexcss;
+console.log(indexcss);
+style.textContent = body;
+shadow.appendChild(style);
 
-createRoot(root).render(
+createRoot(shadow).render(
   <StrictMode>
-    <ContentMenu />
+    <div id="sct-shadow-dom">
+      <ContentMenu />
+    </div>
   </StrictMode>
 );
