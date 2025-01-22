@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { scAdapter } from "../sc.adapter";
-import { render } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
 
 const elmClassName = "class-test";
 const elmId = "id-test";
@@ -75,12 +75,15 @@ describe("sc.adapter by Id", () => {
 describe("sc.adapter SCElements are ready", () => {
   it("should return true whel all SCElements are ready", async () => {
     const elm = document.createElement("div");
-    scAdapter.getScElementByClassName = vi.fn().mockResolvedValue(elm);
-    scAdapter.getScElementById = vi.fn().mockResolvedValue(elm);
+    scAdapter.getScElementByClassName = vi.fn(() => elm);
+    scAdapter.getScElementById = vi.fn(() => elm);
 
-    const broadcastContainer = scAdapter.getScElementByClassName("asasa");
-    console.log(broadcastContainer);
+    act(() => {
+      const broadcastContainer = scAdapter.getScElementByClassName("asasa");
 
-    expect(scAdapter.isScElementsReady()).toBeTruthy();
+      console.log(broadcastContainer);
+
+      expect(scAdapter.isScElementsReady()).toBeTruthy();
+    });
   });
 });
