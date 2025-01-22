@@ -4,6 +4,7 @@ import { Switch } from "@/components/ui/switch";
 import { useLocalStorage } from "@/hooks";
 import { Hammer } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import { GLOBAL_STINGS } from "@/config";
 
 const EXT_ISACTIVE_LOCAL_STORAGE_KEY = "sctIsActive";
 
@@ -40,7 +41,10 @@ export const Popup = () => {
 
   // Handle donation click
   const handleDonationClick = () => {
-    chrome.tabs.create({ url: "https://buymeacoffee.com/juanleon" });
+    if (!chrome.tabs) {
+      window.open(GLOBAL_STINGS.DONATION_URL, "_blank", "noopener");
+    }
+    chrome.tabs.create({ url: GLOBAL_STINGS.DONATION_URL });
   };
 
   return (
