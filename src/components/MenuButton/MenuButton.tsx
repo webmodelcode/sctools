@@ -12,6 +12,7 @@ interface Props {
   ButtonIcon: ReactElement;
   title: string;
   onClick: () => void;
+  isToggle?: boolean;
 }
 
 const variants = {
@@ -21,7 +22,7 @@ const variants = {
 
 export const MenuButton = (props: Props) => {
   const [isActive, setIsActive] = useState(false);
-  const { ButtonIcon, title, onClick } = props;
+  const { ButtonIcon, title, onClick, isToggle = true } = props;
   return (
     <div>
       <TooltipProvider>
@@ -35,8 +36,12 @@ export const MenuButton = (props: Props) => {
               )}
               variant={isActive ? "outline" : "ghost"}
               onClick={() => {
-                setIsActive(!isActive);
                 onClick();
+                if (!isToggle) {
+                  setIsActive(false);
+                  return;
+                }
+                setIsActive(!isActive);
               }}
             >
               {ButtonIcon}

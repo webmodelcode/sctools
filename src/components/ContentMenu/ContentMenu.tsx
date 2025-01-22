@@ -23,6 +23,7 @@ export const ContentMenu = () => {
               }}
             />
             <MenuButton
+              isToggle={false}
               ButtonIcon={<HandCoins />}
               title="Support The Project"
               onClick={() => {
