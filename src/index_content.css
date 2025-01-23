@@ -101,17 +101,10 @@
   background-color: #22c55e;
 }
 
-.sct-status-text.offline {
-  color: #ff0000;
-}
-
-.sct-status-text.live {
-  color: #22c55e;
-}
-
 .sct-status-text {
   margin-left: 0.5rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #747474;
+  color: #fff;
+  text-transform: uppercase;
 }
