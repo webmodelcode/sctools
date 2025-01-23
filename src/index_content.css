@@ -66,3 +66,52 @@
     @apply sct-bg-background sct-text-foreground;
   }
 }
+
+.sct-status-indicator {
+  display: flex;
+  align-items: center;
+  padding: 0.1rem 0.75rem;
+}
+
+.sct-indicator-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #747474;
+  border-radius: 50%;
+  position: relative;
+}
+
+.sct-indicator-dot::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #747474;
+  border-radius: 50%;
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.sct-indicator-dot.offline,
+.sct-indicator-dot.offline::after {
+  background-color: #ff0000;
+}
+
+.sct-indicator-dot.live,
+.sct-indicator-dot.live::after {
+  background-color: #22c55e;
+}
+
+.sct-status-text.offline {
+  color: #ff0000;
+}
+
+.sct-status-text.live {
+  color: #22c55e;
+}
+
+.sct-status-text {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #747474;
+}
