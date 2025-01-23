@@ -11,7 +11,6 @@ const host = document.querySelector("#sct-root");
 const shadow = host!.attachShadow({ mode: "open" });
 const style = document.createElement("style");
 const body = indexcss;
-console.log(indexcss);
 style.textContent = body;
 shadow.appendChild(style);
 
