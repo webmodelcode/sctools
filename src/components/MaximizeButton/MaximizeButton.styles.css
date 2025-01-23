@@ -1,0 +1,11 @@
+.sct-flex-reverse {
+  flex-direction: column-reverse !important;
+}
+
+.sct-dnone {
+  display: none !important;
+}
+
+.sct-h-70 {
+  height: 70vh !important;
+}
