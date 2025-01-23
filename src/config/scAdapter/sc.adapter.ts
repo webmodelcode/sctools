@@ -21,11 +21,21 @@ const isScElementsReady = () => {
   const scClassElements = SC_STRINGS.SC_CLASSES;
   const scIdElements = SC_STRINGS.SC_IDS;
 
-  return (
-    scClassElements.every(
-      (elmClass) => getScElementByClassName(elmClass) !== null
-    ) && scIdElements.every((elmId) => getScElementById(elmId) !== null)
-  );
+  const classElementsValidation = scClassElements.every((elmClass) => {
+    if (!getScElementByClassName(elmClass)) {
+      return false;
+    }
+    return true;
+  });
+
+  const idElementsValidation = scIdElements.every((elmId) => {
+    if (!getScElementById(elmId)) {
+      return false;
+    }
+    return true;
+  });
+
+  return classElementsValidation && idElementsValidation;
 };
 
 export const scAdapter = {

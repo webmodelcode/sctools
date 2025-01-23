@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { scAdapter } from "../sc.adapter";
-import { act, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
+import { SC_STRINGS } from "../sc.strings";
 
 const elmClassName = "class-test";
 const elmId = "id-test";
@@ -15,6 +16,7 @@ const MockScErrorWeb = () => {
 
 describe("sc.adapter by Classes", () => {
   beforeEach(() => {
+    document.body.innerHTML = "";
     vi.resetAllMocks();
   });
 
@@ -44,6 +46,7 @@ describe("sc.adapter by Classes", () => {
 
 describe("sc.adapter by Id", () => {
   beforeEach(() => {
+    document.body.innerHTML = "";
     vi.resetAllMocks();
   });
 
@@ -73,17 +76,79 @@ describe("sc.adapter by Id", () => {
 });
 
 describe("sc.adapter SCElements are ready", () => {
+  vi.mock("./sc.strings", () => ({
+    SC_STRINGS: {
+      SC_CLASSES: ["class1", "class2"],
+      SC_IDS: ["id1", "id2"],
+    },
+  }));
+  beforeEach(() => {
+    document.body.innerHTML = "";
+    vi.resetAllMocks();
+  });
   it("should return true whel all SCElements are ready", async () => {
-    const elm = document.createElement("div");
-    scAdapter.getScElementByClassName = vi.fn(() => elm);
-    scAdapter.getScElementById = vi.fn(() => elm);
-
-    act(() => {
-      const broadcastContainer = scAdapter.getScElementByClassName("asasa");
-
-      console.log(broadcastContainer);
-
-      expect(scAdapter.isScElementsReady()).toBeTruthy();
+    SC_STRINGS.SC_CLASSES.forEach((className) => {
+      const element = document.createElement("div");
+      element.className = className;
+      document.body.appendChild(element);
     });
+
+    SC_STRINGS.SC_IDS.forEach((id) => {
+      const element = document.createElement("div");
+      element.id = id;
+      document.body.appendChild(element);
+    });
+
+    expect(scAdapter.isScElementsReady()).toBe(true);
+  });
+
+  it("should return false when some class elements are missing", () => {
+    // only add id elements
+    SC_STRINGS.SC_IDS.forEach((id) => {
+      const element = document.createElement("div");
+      element.id = id;
+      document.body.appendChild(element);
+    });
+
+    expect(scAdapter.isScElementsReady()).toBe(false);
+  });
+
+  it("should return false when some id elements are missing", () => {
+    // only add classes elements
+    SC_STRINGS.SC_CLASSES.forEach((className) => {
+      const element = document.createElement("div");
+      element.className = className;
+      document.body.appendChild(element);
+    });
+
+    expect(scAdapter.isScElementsReady()).toBe(false);
+  });
+
+  it("should return false when no elements exist", () => {
+    expect(scAdapter.isScElementsReady()).toBe(false);
+  });
+
+  it("should handle errors when checking elements", () => {
+    // Simulate an error when searching for items
+    const consoleSpy = vi.spyOn(console, "warn");
+    const mockDocument = {
+      getElementsByClassName: () => {
+        throw new Error("Test error");
+      },
+      getElementById: () => {
+        throw new Error("Test error");
+      },
+    };
+
+    // Temporarily replace document with our mock
+    const originalDocument = global.document;
+    global.document = mockDocument as unknown as Document;
+
+    expect(scAdapter.isScElementsReady()).toBe(false);
+    expect(consoleSpy).toHaveBeenCalled();
+
+    // Reset Original document
+    global.document = originalDocument;
+    consoleSpy.mockRestore();
   });
 });
