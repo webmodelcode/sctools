@@ -20,6 +20,7 @@ const enableMaximized = ({
   scMemberList,
 }: ToggleFocusChatParams) => {
   scBroadcastContainer?.classList.add("sct-flex-reverse");
+  scBroadcastContainer?.classList.add("sct-h-70");
   scBroadCastWrapper?.classList.add("sct-dnone");
   scBroadcastSwitch?.classList.add("sct-dnone");
   scMemberList?.classList.add("sct-h-70");
@@ -32,6 +33,7 @@ const disableMaximized = ({
   scMemberList,
 }: ToggleFocusChatParams) => {
   scBroadcastContainer?.classList.remove("sct-flex-reverse");
+  scBroadcastContainer?.classList.remove("sct-h-70");
   scBroadCastWrapper?.classList.remove("sct-dnone");
   scBroadcastSwitch?.classList.remove("sct-dnone");
   scMemberList?.classList.remove("sct-h-70");

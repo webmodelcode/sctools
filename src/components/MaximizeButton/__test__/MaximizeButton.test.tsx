@@ -97,6 +97,9 @@ describe("MaximizeButton.tsx", () => {
       mockElements.scBroadcastContainer.classList.contains("sct-flex-reverse")
     ).toBe(true);
     expect(
+      mockElements.scBroadcastContainer.classList.contains("sct-h-70")
+    ).toBe(true);
+    expect(
       mockElements.scBroadCastWrapper.classList.contains("sct-dnone")
     ).toBe(true);
     expect(mockElements.scBroadcastSwitch.classList.contains("sct-dnone")).toBe(
@@ -122,6 +125,9 @@ describe("MaximizeButton.tsx", () => {
       mockElements.scBroadcastContainer.classList.contains("sct-flex-reverse")
     ).toBe(true);
     expect(
+      mockElements.scBroadcastContainer.classList.contains("sct-h-70")
+    ).toBe(true);
+    expect(
       mockElements.scBroadCastWrapper.classList.contains("sct-dnone")
     ).toBe(true);
     expect(mockElements.scBroadcastSwitch.classList.contains("sct-dnone")).toBe(
@@ -134,6 +140,9 @@ describe("MaximizeButton.tsx", () => {
     });
     expect(
       mockElements.scBroadcastContainer.classList.contains("sct-flex-reverse")
+    ).toBe(false);
+    expect(
+      mockElements.scBroadcastContainer.classList.contains("sct-h-70")
     ).toBe(false);
     expect(
       mockElements.scBroadCastWrapper.classList.contains("sct-dnone")
