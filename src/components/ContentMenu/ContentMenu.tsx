@@ -4,8 +4,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { MenuButton } from "..";
-import { Maximize2, HandCoins } from "lucide-react";
+import { MaximizeButton, MenuButton } from "..";
+import { HandCoins } from "lucide-react";
 import { GLOBAL_STINGS } from "@/config";
 
 export const ContentMenu = () => {
@@ -15,13 +15,7 @@ export const ContentMenu = () => {
         <AccordionItem value="item-1">
           <AccordionTrigger className="sct-justify-around sct-py-1 [&>svg]:sct-text-red" />
           <AccordionContent className="sct-text-sm sct-text-gray-500">
-            <MenuButton
-              ButtonIcon={<Maximize2 />}
-              title="Maximize"
-              onClick={() => {
-                console.log("Maximizado");
-              }}
-            />
+            <MaximizeButton />
             <MenuButton
               isToggle={false}
               ButtonIcon={<HandCoins />}

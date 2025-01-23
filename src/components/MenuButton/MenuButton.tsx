@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 interface Props {
   ButtonIcon: ReactElement;
   title: string;
-  onClick: () => void;
+  onClick: () => boolean;
   isToggle?: boolean;
 }
 
@@ -36,8 +36,8 @@ export const MenuButton = (props: Props) => {
               )}
               variant={isActive ? "outline" : "ghost"}
               onClick={() => {
-                onClick();
-                if (!isToggle) {
+                const isOk = onClick();
+                if (!isOk || !isToggle) {
                   setIsActive(false);
                   return;
                 }
