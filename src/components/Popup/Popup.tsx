@@ -6,7 +6,8 @@ import { Hammer } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { GLOBAL_STINGS } from "@/config";
 
-const EXT_ISACTIVE_LOCAL_STORAGE_KEY = "sctIsActive";
+const EXT_ISACTIVE_LOCAL_STORAGE_KEY =
+  GLOBAL_STINGS.EXT_ISACTIVE_LOCAL_STORAGE_KEY;
 
 /**
  * Main popup component for the extension
