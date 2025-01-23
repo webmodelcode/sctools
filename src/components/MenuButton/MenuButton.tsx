@@ -47,7 +47,16 @@ export const MenuButton = (props: Props) => {
               {ButtonIcon}
             </Button>
           </TooltipTrigger>
-          <TooltipContent className="sct-z-[10000]">
+          <TooltipContent
+            style={{
+              zIndex: "10000",
+              background: "#000",
+              color: "#fff",
+              padding: "4px",
+              fontSize: "0.8rem",
+            }}
+            className="sct-z-[10000]"
+          >
             <p>{title}</p>
           </TooltipContent>
         </Tooltip>
