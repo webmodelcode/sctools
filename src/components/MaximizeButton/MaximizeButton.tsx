@@ -1,8 +1,9 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Maximize2 } from "lucide-react";
 import { MenuButton } from "../";
 import { scAdapter, GLOBAL_STINGS } from "@/config/";
 import { SC_STRINGS } from "@/config/scAdapter/sc.strings";
+import { useMutationObserver } from "@/hooks/";
 
 import "./MaximizeButton.styles.css";
 
@@ -41,8 +42,27 @@ const disableMaximized = ({
 
 export const MaximizeButton = () => {
   const [isMaximized, setIsMaximized] = useState(false);
+  const scErrorNode = useRef(
+    scAdapter.getScElementByClassName(SC_STRINGS.ERROR_CONTAINER.CLASS)
+  );
+  const errorMutationCallback: MutationCallback = useCallback((mutations) => {
+    mutations.forEach((mutation) => {
+      console.log(mutation);
+      if (mutation.type === "childList") {
+        mutation.addedNodes.forEach((node) => {
+          const isError = scAdapter.isScErrorNode(node);
+          if (isError) location.reload();
+        });
+      }
+    });
+  }, []);
+  useMutationObserver({
+    ref: scErrorNode,
+    callback: errorMutationCallback,
+  });
   const onClick = useCallback(() => {
     const { getScElementByClassName, getScElementById } = scAdapter;
+
     if (!scAdapter.isScElementsReady()) {
       window.alert(GLOBAL_STINGS.SC_ELEMENTS_NO_READY);
       return false;
@@ -56,8 +76,6 @@ export const MaximizeButton = () => {
     );
     const scBroadcastSwitch = getScElementById(SC_STRINGS.BROADCAST_SWITCH.ID);
     const scMemberList = getScElementByClassName(SC_STRINGS.MEMBER_LIST.CLASS);
-
-    //TODO: Implement Error Observer
 
     if (!isMaximized) {
       enableMaximized({

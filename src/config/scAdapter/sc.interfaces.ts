@@ -13,6 +13,7 @@ export interface ScStrings {
   SC_IDS: ScIds[];
   ERROR_CONTAINER: {
     CLASS: ScClasses;
+    FIND_BY: string;
   };
   BROADCAST_CONTAINER: {
     CLASS: ScClasses;

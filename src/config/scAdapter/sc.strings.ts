@@ -16,6 +16,7 @@ export const SC_STRINGS: ScStrings = {
   },
   ERROR_CONTAINER: {
     CLASS: "main-layout-main-content",
+    FIND_BY: "loadableerrorboundary",
   },
   BROADCAST_WRAPPER: {
     CLASS:

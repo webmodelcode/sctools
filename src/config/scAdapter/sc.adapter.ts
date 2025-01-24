@@ -38,8 +38,20 @@ const isScElementsReady = () => {
   return classElementsValidation && idElementsValidation;
 };
 
+const isScErrorNode = (node: Node) => {
+  try {
+    return (node as HTMLElement).innerHTML
+      .toLocaleLowerCase()
+      .includes("loadableerrorboundary");
+  } catch (error) {
+    console.warn(error);
+    return false;
+  }
+};
+
 export const scAdapter = {
   getScElementByClassName,
   getScElementById,
   isScElementsReady,
+  isScErrorNode,
 };
