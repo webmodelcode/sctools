@@ -8,6 +8,7 @@ interface QuickMessageProps {
 
 export const QuickMessage = ({ label, text }: QuickMessageProps) => {
   const onClick = useCallback(() => {
+    // is necesary to use document.execCommand to insert text into the active element becouse stripchat webpage have a implementation for prevent another text insertion method
     document.execCommand("insertText", false, text);
   }, [text]);
 
