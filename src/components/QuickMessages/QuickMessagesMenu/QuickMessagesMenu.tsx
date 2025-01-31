@@ -7,31 +7,23 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { QuickMessage } from "../QuickMessage/QuickMessage";
+import { QuickMessageOptions } from "../QuickMessageOptions/QuickMessageOptions";
 import { isEditableElement } from "@/config";
+import { getQuickMessages } from "@/services";
+import type { QuickMessageType } from "@/services";
 
-import { MessageSquarePlus } from "lucide-react";
+import { MessageSquarePlus, BotMessageSquare } from "lucide-react";
 
-const quickMessagesArray: { label: string; text: string }[] = [
-  {
-    label: "hello",
-    text: "hello world.",
-  },
-  {
-    label: "bye",
-    text: "goodbye world.",
-  },
-  {
-    label: "info",
-    text: "information about the world.",
-  },
-  {
-    label: "warning",
-    text: "warning about the world.",
-  },
+const quickMessageOptions: ("add" | "update" | "delete")[] = [
+  "add",
+  "update",
+  "delete",
 ];
 
 export const QuickMessagesMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [needUpdateMessages, setNeedUpdateMessages] = useState(false);
+  const [quickMessages, setQuickMessages] = useState<QuickMessageType[]>([]);
   const [currentElementPosition, setCurrentElementPosition] = useState<{
     x: number;
     y: number;
@@ -39,12 +31,22 @@ export const QuickMessagesMenu = () => {
   }>({ x: 0, y: 0, elmHeight: 0 });
 
   useEffect(() => {
-    const eventhandle = () => {
+    const loadMessages = async () => {
+      const messages = await getQuickMessages();
+      setQuickMessages(messages);
+    };
+    loadMessages();
+  }, [needUpdateMessages]);
+
+  useEffect(() => {
+    const eventhandle = (e: Event) => {
+      console.log(e.type);
       const currentElement: Element = document.activeElement ?? document.body;
       if (!isEditableElement(currentElement)) {
         setIsOpen(false);
         return;
       }
+      if (isOpen) return;
       const currentPosition = currentElement.getBoundingClientRect();
       setCurrentElementPosition({
         x: currentPosition.left,
@@ -56,9 +58,9 @@ export const QuickMessagesMenu = () => {
       });
       setIsOpen(true);
     };
-    document.addEventListener("selectionchange", eventhandle);
+    document.addEventListener("selectionchange", eventhandle, true);
     return () => {
-      document.removeEventListener("selectionchange", eventhandle);
+      document.removeEventListener("selectionchange", eventhandle, true);
     };
   }, [isOpen]);
 
@@ -84,14 +86,34 @@ export const QuickMessagesMenu = () => {
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger>
+                <BotMessageSquare />
+              </NavigationMenuTrigger>
+              <NavigationMenuContent className="sct-flex sct-flex-row">
+                {quickMessages.length <= 0 ? (
+                  <span className="sct-p-2 sct-w-80">
+                    No quick messages found. Add a new one.
+                  </span>
+                ) : (
+                  quickMessages.map((qm) => (
+                    <QuickMessage
+                      label={qm.label}
+                      text={qm.text}
+                      key={`${qm.label}${qm.text}`}
+                    />
+                  ))
+                )}
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>
                 <MessageSquarePlus />
               </NavigationMenuTrigger>
               <NavigationMenuContent className="sct-flex sct-flex-row">
-                {quickMessagesArray.map((qm) => (
-                  <QuickMessage
-                    label={qm.label}
-                    text={qm.text}
-                    key={`${qm.label}${qm.text}`}
+                {quickMessageOptions.map((opt) => (
+                  <QuickMessageOptions
+                    label={opt}
+                    key={opt}
+                    setNeedUpdateMessages={setNeedUpdateMessages}
                   />
                 ))}
               </NavigationMenuContent>
