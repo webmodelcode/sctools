@@ -3,20 +3,40 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-
+import { QuickMessage } from "../QuickMessage/QuickMessage";
 import { isEditableElement } from "@/config";
-import { cn } from "@/lib/utils";
+
+import { MessageSquarePlus } from "lucide-react";
+
+const quickMessagesArray: { label: string; text: string }[] = [
+  {
+    label: "hello",
+    text: "hello world.",
+  },
+  {
+    label: "bye",
+    text: "goodbye world.",
+  },
+  {
+    label: "info",
+    text: "information about the world.",
+  },
+  {
+    label: "warning",
+    text: "warning about the world.",
+  },
+];
 
 export const QuickMessagesMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentElementPosition, setCurrentElementPosition] = useState<{
     x: number;
     y: number;
-  }>({ x: 0, y: 0 });
+    elmHeight: number;
+  }>({ x: 0, y: 0, elmHeight: 0 });
 
   useEffect(() => {
     const eventhandle = () => {
@@ -29,6 +49,10 @@ export const QuickMessagesMenu = () => {
       setCurrentElementPosition({
         x: currentPosition.left,
         y: currentPosition.top,
+        elmHeight:
+          currentElement instanceof HTMLElement
+            ? currentElement.offsetHeight
+            : 0,
       });
       setIsOpen(true);
     };
@@ -39,10 +63,7 @@ export const QuickMessagesMenu = () => {
   }, [isOpen]);
 
   const getYPosition = useMemo(() => {
-    const value =
-      currentElementPosition.y - 160 >= 0
-        ? currentElementPosition.y - 50
-        : currentElementPosition.y + 50;
+    const value = currentElementPosition.y + currentElementPosition.elmHeight;
     return `${value}px`;
   }, [currentElementPosition]);
 
@@ -55,12 +76,24 @@ export const QuickMessagesMenu = () => {
         }}
         className={"sct-fixed"}
       >
-        <NavigationMenu role="QuickMessagesMenu">
+        <NavigationMenu
+          role="QuickMessagesMenu"
+          orientation="horizontal"
+          className="sct-m-1"
+        >
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <NavigationMenuLink>Link</NavigationMenuLink>
+              <NavigationMenuTrigger>
+                <MessageSquarePlus />
+              </NavigationMenuTrigger>
+              <NavigationMenuContent className="sct-flex sct-flex-row">
+                {quickMessagesArray.map((qm) => (
+                  <QuickMessage
+                    label={qm.label}
+                    text={qm.text}
+                    key={`${qm.label}${qm.text}`}
+                  />
+                ))}
               </NavigationMenuContent>
             </NavigationMenuItem>
           </NavigationMenuList>
