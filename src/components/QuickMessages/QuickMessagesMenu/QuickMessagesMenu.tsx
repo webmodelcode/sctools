@@ -34,6 +34,7 @@ export const QuickMessagesMenu = () => {
     const loadMessages = async () => {
       const messages = await getQuickMessages();
       setQuickMessages(messages);
+      setNeedUpdateMessages(false);
     };
     loadMessages();
   }, [needUpdateMessages]);

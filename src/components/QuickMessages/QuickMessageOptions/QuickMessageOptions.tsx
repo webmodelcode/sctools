@@ -19,6 +19,7 @@ import {
   clearQuickMessages,
 } from "@/services";
 import type { QuickMessageType } from "@/services";
+import { QuickMessage } from "../QuickMessage/QuickMessage";
 
 interface QuickMessageOptionsProps {
   label: "add" | "update" | "delete";
@@ -33,14 +34,47 @@ export const QuickMessageOptions = ({
   const titleRef = useRef<HTMLInputElement>(null);
   const messageRef = useRef<HTMLInputElement>(null);
   const onClick = useCallback(() => {
-    const handleAddMessage = async () => {
+    const getNewMessage = (): QuickMessageType | undefined => {
       const label = titleRef.current?.value ?? "";
       const text = messageRef.current?.value ?? "";
       if (!label || !text) {
         return;
       }
       const quickMessage: QuickMessageType = { label, text };
+
+      return quickMessage;
+    };
+
+    const existQuickMessage = async (label: string): Promise<number> => {
+      const quickmessages = await getQuickMessages();
+      const indexOfLabel: number = quickmessages.findIndex(
+        (qm) => qm.label === label
+      );
+      return indexOfLabel;
+    };
+
+    const handleAddMessage = async () => {
+      const quickMessage = getNewMessage();
+      if (!quickMessage) return;
+      const exist = (await existQuickMessage(quickMessage.label)) >= 0;
+      if (exist) return;
       await addQuickMessage(quickMessage);
+      setNeedUpdateMessages(true);
+    };
+
+    const handleUpdateMessage = async () => {
+      const quickMessage = getNewMessage();
+      if (!quickMessage) return;
+      const indexToUpdate = await existQuickMessage(quickMessage.label);
+      await updateQuickMessage(indexToUpdate, quickMessage);
+      setNeedUpdateMessages(true);
+    };
+
+    const handleDeleteMessage = async () => {
+      const label = titleRef.current?.value ?? "";
+      if (!label) return;
+      const indexToDelete = await existQuickMessage(label);
+      await deleteQuickMessage(indexToDelete);
       setNeedUpdateMessages(true);
     };
 
@@ -50,10 +84,10 @@ export const QuickMessageOptions = ({
         break;
 
       case "update":
-        console.log("update quick message");
+        handleUpdateMessage();
         break;
       case "delete":
-        console.log("delete quick message");
+        handleDeleteMessage();
         break;
       default:
         console.error("Invalid label for QuickMessageOptions");
@@ -61,7 +95,7 @@ export const QuickMessageOptions = ({
     }
 
     setIsOpen(false);
-  }, [label]);
+  }, [label, setNeedUpdateMessages]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -93,18 +127,20 @@ export const QuickMessageOptions = ({
               ref={titleRef}
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="message" className="text-right">
-              Message
-            </Label>
-            <Input
-              id="message"
-              placeholder="Write your quick message here"
-              className="col-span-3"
-              autoComplete="off"
-              ref={messageRef}
-            />
-          </div>
+          {label !== "delete" && (
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="message" className="text-right">
+                Message
+              </Label>
+              <Input
+                id="message"
+                placeholder="Write your quick message here"
+                className="col-span-3"
+                autoComplete="off"
+                ref={messageRef}
+              />
+            </div>
+          )}
         </div>
         <DialogFooter>
           <Button onClick={onClick}>Save changes</Button>
