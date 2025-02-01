@@ -7,7 +7,7 @@ import { QuickMessagesMenu } from "./components/QuickMessages/QuickMessagesMenu/
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Popup />
-    <QuickMessagesMenu />
+    {/* <QuickMessagesMenu /> */}
     <input type="text" />
   </StrictMode>
 );

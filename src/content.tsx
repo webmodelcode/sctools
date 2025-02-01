@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { ContentMenu } from "./components";
+import { ContentMenu, QuickMessagesMenu } from "./components";
 
 import indexcss from "./index_content.css?inline";
 
@@ -18,6 +18,7 @@ createRoot(shadow).render(
   <StrictMode>
     <div id="sct-shadow-dom">
       <ContentMenu />
+      <QuickMessagesMenu />
     </div>
   </StrictMode>
 );

@@ -9,7 +9,7 @@
   "permissions": ["tabs", "activeTab", "storage", "scripting"],
   "content_scripts": [
     {
-      "matches": ["https://es.stripchat.com/*"],
+      "matches": ["<all_urls>"],
       "js": ["src/content.tsx"]
     }
   ]

@@ -7,18 +7,12 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { QuickMessage } from "../QuickMessage/QuickMessage";
-import { QuickMessageOptions } from "../QuickMessageOptions/QuickMessageOptions";
+
 import { isEditableElement } from "@/config";
 import { getQuickMessages } from "@/services";
 import type { QuickMessageType } from "@/services";
 
-import { MessageSquarePlus, BotMessageSquare } from "lucide-react";
-
-const quickMessageOptions: ("add" | "update" | "delete")[] = [
-  "add",
-  "update",
-  "delete",
-];
+import { BotMessageSquare } from "lucide-react";
 
 export const QuickMessagesMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,10 +34,13 @@ export const QuickMessagesMenu = () => {
   }, [needUpdateMessages]);
 
   useEffect(() => {
-    const eventhandle = (e: Event) => {
-      console.log(e.type);
+    const eventhandle = (e: FocusEvent) => {
       const currentElement: Element = document.activeElement ?? document.body;
       if (!isEditableElement(currentElement)) {
+        const target = e.target as HTMLElement;
+        const targetClassList = target?.classList.toString();
+        if (targetClassList?.includes("sct-") || target?.id.includes("sct-"))
+          return;
         setIsOpen(false);
         return;
       }
@@ -59,9 +56,9 @@ export const QuickMessagesMenu = () => {
       });
       setIsOpen(true);
     };
-    document.addEventListener("selectionchange", eventhandle, true);
+    document.addEventListener("focus", eventhandle, true);
     return () => {
-      document.removeEventListener("selectionchange", eventhandle, true);
+      document.removeEventListener("focus", eventhandle, true);
     };
   }, [isOpen]);
 
@@ -77,7 +74,7 @@ export const QuickMessagesMenu = () => {
           top: getYPosition,
           left: `${currentElementPosition.x}px`,
         }}
-        className={"sct-fixed"}
+        className={"sct-fixed sct-z-40 sct-text-foreground"}
       >
         <NavigationMenu
           role="QuickMessagesMenu"
@@ -92,7 +89,8 @@ export const QuickMessagesMenu = () => {
               <NavigationMenuContent className="sct-flex sct-flex-row">
                 {quickMessages.length <= 0 ? (
                   <span className="sct-p-2 sct-w-80">
-                    No quick messages found. Add a new one.
+                    No quick messages found. Add a new one in the extension
+                    Popup.
                   </span>
                 ) : (
                   quickMessages.map((qm) => (
@@ -103,20 +101,6 @@ export const QuickMessagesMenu = () => {
                     />
                   ))
                 )}
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>
-                <MessageSquarePlus />
-              </NavigationMenuTrigger>
-              <NavigationMenuContent className="sct-flex sct-flex-row">
-                {quickMessageOptions.map((opt) => (
-                  <QuickMessageOptions
-                    label={opt}
-                    key={opt}
-                    setNeedUpdateMessages={setNeedUpdateMessages}
-                  />
-                ))}
               </NavigationMenuContent>
             </NavigationMenuItem>
           </NavigationMenuList>

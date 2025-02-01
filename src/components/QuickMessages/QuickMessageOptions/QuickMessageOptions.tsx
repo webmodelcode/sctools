@@ -16,19 +16,24 @@ import {
   addQuickMessage,
   updateQuickMessage,
   deleteQuickMessage,
-  clearQuickMessages,
 } from "@/services";
 import type { QuickMessageType } from "@/services";
-import { QuickMessage } from "../QuickMessage/QuickMessage";
 
 interface QuickMessageOptionsProps {
   label: "add" | "update" | "delete";
-  setNeedUpdateMessages: (value: boolean) => void;
+  setNeedUpdateMessages?: (value: boolean) => void;
 }
 
 export const QuickMessageOptions = ({
   label,
-  setNeedUpdateMessages,
+  setNeedUpdateMessages = (value: boolean) => {
+    if (!value) return;
+    if (!chrome.tabs) {
+      location.reload();
+      return;
+    }
+    chrome.tabs.reload();
+  },
 }: QuickMessageOptionsProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const titleRef = useRef<HTMLInputElement>(null);
@@ -100,11 +105,11 @@ export const QuickMessageOptions = ({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="sct-px-2 sct-m-1 sct-capitalize">
+        <Button variant="outline" className="sct-px-2 sct-m-1 sct-capitalize">
           {label}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="!sct-max-w-[325px]">
         <DialogHeader>
           <DialogTitle className="sct-capitalize">
             {label} Quick Message
@@ -114,28 +119,28 @@ export const QuickMessageOptions = ({
             here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="title" className="text-right">
+        <div className="sct-grid sct-gap-4 py-4">
+          <div className="sct-grid sct-grid-cols-4 sct-items-center sct-gap-4">
+            <Label htmlFor="title" className="sct-text-right">
               Tittle
             </Label>
             <Input
               id="title"
               placeholder="Quick Message Title"
-              className="col-span-3"
+              className="sct-col-span-3"
               autoComplete="off"
               ref={titleRef}
             />
           </div>
           {label !== "delete" && (
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="message" className="text-right">
+            <div className="sct-grid sct-grid-cols-4 sct-items-center sct-gap-4">
+              <Label htmlFor="message" className="sct-text-right">
                 Message
               </Label>
               <Input
                 id="message"
                 placeholder="Write your quick message here"
-                className="col-span-3"
+                className="sct-col-span-3"
                 autoComplete="off"
                 ref={messageRef}
               />
