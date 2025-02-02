@@ -8,13 +8,16 @@ import {
 } from "@/components/ui/navigation-menu";
 import { QuickMessage } from "../QuickMessage/QuickMessage";
 
-import { isEditableElement } from "@/config";
+import { GLOBAL_STINGS, isEditableElement } from "@/config";
 import { getQuickMessages } from "@/services";
 import type { QuickMessageType } from "@/services";
 
 import { BotMessageSquare } from "lucide-react";
+import { useLocalStorage } from "@/hooks";
 
 export const QuickMessagesMenu = () => {
+  const { getItem } = useLocalStorage();
+  const [extIsActive, setExtIsActive] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [needUpdateMessages, setNeedUpdateMessages] = useState(false);
   const [quickMessages, setQuickMessages] = useState<QuickMessageType[]>([]);
@@ -25,13 +28,19 @@ export const QuickMessagesMenu = () => {
   }>({ x: 0, y: 0, elmHeight: 0 });
 
   useEffect(() => {
+    const checkExtIsActive = async () => {
+      setExtIsActive(
+        (await getItem(GLOBAL_STINGS.EXT_ISACTIVE_LOCAL_STORAGE_KEY)) === "true"
+      );
+    };
     const loadMessages = async () => {
       const messages = await getQuickMessages();
       setQuickMessages(messages);
       setNeedUpdateMessages(false);
     };
     loadMessages();
-  }, [needUpdateMessages]);
+    checkExtIsActive();
+  }, [needUpdateMessages, getItem]);
 
   useEffect(() => {
     const eventhandle = (e: Event) => {
@@ -67,8 +76,10 @@ export const QuickMessagesMenu = () => {
     return `${value}px`;
   }, [currentElementPosition]);
 
+  const canShowComponent = isOpen && extIsActive;
+
   return (
-    isOpen && (
+    canShowComponent && (
       <div
         style={{
           top: getYPosition,
