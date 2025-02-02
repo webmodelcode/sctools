@@ -34,12 +34,12 @@ export const QuickMessagesMenu = () => {
   }, [needUpdateMessages]);
 
   useEffect(() => {
-    const eventhandle = (e: FocusEvent) => {
+    const eventhandle = (e: Event) => {
       const currentElement: Element = document.activeElement ?? document.body;
       if (!isEditableElement(currentElement)) {
         const target = e.target as HTMLElement;
-        const targetClassList = target?.classList.toString();
-        if (targetClassList?.includes("sct-") || target?.id.includes("sct-"))
+        const targetClassList = target?.classList?.toString();
+        if (targetClassList?.includes("sct-") || target?.id?.includes("sct-"))
           return;
         setIsOpen(false);
         return;
@@ -56,9 +56,9 @@ export const QuickMessagesMenu = () => {
       });
       setIsOpen(true);
     };
-    document.addEventListener("focus", eventhandle, true);
+    document.addEventListener("selectionchange", eventhandle, true);
     return () => {
-      document.removeEventListener("focus", eventhandle, true);
+      document.removeEventListener("selectionchange", eventhandle, true);
     };
   }, [isOpen]);
 
