@@ -45,13 +45,19 @@ export const Popup = () => {
     localStorage.setItem(EXT_ISACTIVE_LOCAL_STORAGE_KEY, checked.toString());
     setIsExtEnabled(checked);
 
-    console.log("Extension toggled:", checked);
+    if (!chrome.tabs) {
+      location.reload();
+      return;
+    }
+
+    chrome.tabs.reload();
   };
 
   // Handle donation click
   const handleDonationClick = () => {
     if (!chrome.tabs) {
       window.open(GLOBAL_STINGS.DONATION_URL, "_blank", "noopener");
+      return;
     }
     chrome.tabs.create({ url: GLOBAL_STINGS.DONATION_URL });
   };
