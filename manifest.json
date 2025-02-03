@@ -9,7 +9,11 @@
   "permissions": ["tabs", "activeTab", "storage", "scripting"],
   "content_scripts": [
     {
-      "matches": ["https://es.stripchat.com/*"],
+      "matches": [
+        "https://es.stripchat.com/*",
+        "https://chaturbate.com/*",
+        "https://*/streamatemodels.com/*"
+      ],
       "js": ["src/content.tsx"]
     }
   ]
