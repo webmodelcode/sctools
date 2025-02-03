@@ -73,7 +73,7 @@ export const QuickMessagesMenu = () => {
 
   const getYPosition = useMemo(() => {
     const value =
-      currentElementPosition.y - currentElementPosition.elmHeight * 2;
+      currentElementPosition.y - currentElementPosition.elmHeight * 3;
     return `${value}px`;
   }, [currentElementPosition]);
 
