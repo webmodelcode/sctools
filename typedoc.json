@@ -1,7 +1,17 @@
 {
-  "entryPoints": ["./src/main.tsx", "./src/content.tsx"],
+  "entryPoints": [
+    "./src/main.tsx",
+    "./src/content.tsx",
+    "./src/**/*.tsx",
+    "./src/**/*.ts"
+  ],
+  "exclude": ["**/*.test.tsx", "./src/components/ui/**"],
   "out": "docs",
   "name": "ScTools Chrome Extension",
   "includeVersion": true,
-  "readme": "README.md"
+  "readme": "README.md",
+  "categorizeByGroup": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeExternals": true
 }

@@ -1,0 +1,11 @@
+- @module src
+- @description The `src` directory contains the core source code for the ScTools Chrome extension.
+- It includes reusable React components, configuration files, custom hooks, utility functions,
+- and services for managing quick messages and other functionalities.
+-
+- Key Features:
+- - **Content Script**: Injects functionality into StripChat pages.
+- - **Popup Script**: Manages the extension's popup interface.
+- - **Components**: Reusable UI elements built with ShadCn and TailwindCSS.
+- - **Services**: Handles storage and retrieval of quick messages.
+- - **Hooks**: Provides custom React hooks for state management and DOM observation.

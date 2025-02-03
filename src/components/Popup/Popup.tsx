@@ -18,7 +18,9 @@ const quickMessageOptions: ("add" | "update" | "delete")[] = [
 ];
 
 /**
- * Main popup component for the extension
+ * Main popup component for the extension.
+ * This component provides the user interface for enabling/disabling the extension
+ * and managing quick messages.
  */
 export const Popup = () => {
   const localStorage = useLocalStorage();
@@ -39,9 +41,11 @@ export const Popup = () => {
     initExtensionState();
   }, [initExtensionState]);
 
-  // Handle extension toggle
+  /**
+   * Handles the toggle of the extension.
+   * @param {boolean} checked - Whether the extension is enabled or disabled.
+   */
   const handleToggleExtension = async (checked: boolean) => {
-    // Here we'll add the logic to enable/disable the extension
     localStorage.setItem(EXT_ISACTIVE_LOCAL_STORAGE_KEY, checked.toString());
     setIsExtEnabled(checked);
 
@@ -53,7 +57,9 @@ export const Popup = () => {
     chrome.tabs.reload();
   };
 
-  // Handle donation click
+  /**
+   * Handles the donation button click.
+   */
   const handleDonationClick = () => {
     if (!chrome.tabs) {
       window.open(GLOBAL_STINGS.DONATION_URL, "_blank", "noopener");
