@@ -31,7 +31,7 @@ SCTools is a Chrome extension designed to enhance the user experience on StripCh
 - **Testing Library**: For unit testing.
 - **ESLint**: Linting.
 - **TypeScript ESLint**: Linting.
-- **Doctype**: Dev Documentation.
+- **Typedoc**: Dev Documentation.
 - **Chrome Extension API**: For interacting with the browser and storage.
 
 ---
