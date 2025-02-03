@@ -9,18 +9,32 @@ describe("QuickMessage.tsx", () => {
   });
 
   it("should render component", () => {
-    render(<QuickMessage label="label" text="text" />);
-    const div = screen.getByText("label");
+    render(<QuickMessage label="add" text="text" />);
+    const div = screen.getByText("add");
     expect(div).toBeInTheDocument();
   });
 
-  it("should insert text", () => {
+  it("should insert all labels", async () => {
     document.execCommand = vi.fn();
 
-    render(<QuickMessage label="label" text="text" />);
-    const input = screen.getByText("label");
-    fireEvent.click(input);
+    const labels = ["add", "delete", "update"];
 
+    render(
+      labels.map((label) => (
+        <QuickMessage key={label} label={label} text="text" />
+      ))
+    );
+    const addLabel = await screen.findByText("add");
+    const deleteLabel = await screen.findByText("delete");
+    const updateLabel = await screen.findByText("update");
+
+    fireEvent.click(addLabel);
     expect(document.execCommand).toBeCalledWith("insertText", false, "text");
+    fireEvent.click(deleteLabel);
+    expect(document.execCommand).toBeCalledWith("insertText", false, "text");
+    fireEvent.click(updateLabel);
+    expect(document.execCommand).toBeCalledWith("insertText", false, "text");
+
+    expect(document.execCommand).toBeCalledTimes(labels.length);
   });
 });

@@ -9,6 +9,7 @@ describe("Popup Component", () => {
     global.chrome = {
       tabs: {
         create: vi.fn(),
+        reload: vi.fn(),
       },
     } as unknown as typeof chrome;
   });
