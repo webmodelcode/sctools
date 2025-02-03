@@ -5,3 +5,4 @@ export { MaximizeButton } from "./MaximizeButton/MaximizeButton";
 export { StatusIndicator } from "./StatusIndicator/StatusIndicator";
 export { QuickMessagesMenu } from "./QuickMessages/QuickMessagesMenu/QuickMessagesMenu";
 export { QuickMessageOptions } from "./QuickMessages/QuickMessageOptions/QuickMessageOptions";
+export { FloatAlert } from "./FloatAlert/FloatAlert";
