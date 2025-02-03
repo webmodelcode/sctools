@@ -31,7 +31,7 @@ export const ContentMenu = () => {
               <StatusIndicator />
             </AccordionTrigger>
             <AccordionContent className="sct-text-sm sct-text-gray-500">
-              <MaximizeButton />
+              {location.hostname.includes("stripchat") && <MaximizeButton />}
               <MenuButton
                 isToggle={false}
                 ButtonIcon={<HandCoins />}
