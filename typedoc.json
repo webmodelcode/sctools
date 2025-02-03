@@ -1,0 +1,7 @@
+{
+  "entryPoints": ["./src/main.tsx", "./src/content.tsx"],
+  "out": "docs",
+  "name": "ScTools Chrome Extension",
+  "includeVersion": true,
+  "readme": "README.md"
+}
