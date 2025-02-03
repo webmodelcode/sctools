@@ -1,4 +1,4 @@
-import { Terminal } from "lucide-react";
+import { Terminal, AlertCircle } from "lucide-react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
@@ -15,7 +15,11 @@ export const FloatAlert = ({
 }: FloatAlertProps) => {
   return (
     <Alert variant={destructive ? "destructive" : "default"}>
-      <Terminal className="h-4 w-4" />
+      {destructive ? (
+        <AlertCircle className="sct-h-4 sct-w-4 !sct-text-destructive" />
+      ) : (
+        <Terminal className="sct-h-4 sct-w-4" />
+      )}
       <AlertTitle>{title}</AlertTitle>
       <AlertDescription>{message}</AlertDescription>
     </Alert>
