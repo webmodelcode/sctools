@@ -5,7 +5,13 @@
     "./src/**/*.tsx",
     "./src/**/*.ts"
   ],
-  "exclude": ["**/*.test.tsx", "./src/components/ui/**"],
+  "exclude": [
+    "**/*.test.tsx",
+    "./src/components/ui/**",
+    "./src/vite-env.d.ts",
+    "./src/test/*",
+    "./src/lib/*"
+  ],
   "out": "docs",
   "name": "ScTools Chrome Extension",
   "includeVersion": true,

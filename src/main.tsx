@@ -1,16 +1,10 @@
 /**
+ * Entry point for the popup script of the Chrome extension.
+ * This script renders the `Popup` component into the root element of the popup HTML.
+ * It is responsible for initializing the React application for the popup UI.
+ *
+ * @module PopupScript
  * @file main.tsx
- * @description Entry point for the popup script. This script renders the `Popup` component,
- * which provides the user interface for managing quick messages and other extension settings.
- *
- * @exports
- * - Renders the `Popup` component into the `#root` element of the popup HTML.
- *
- * @example
- * The popup script initializes the React app:
- * ```tsx
- * createRoot(document.getElementById("root")!).render(<Popup />);
- * ```
  */
 
 import { StrictMode } from "react";

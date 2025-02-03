@@ -1,14 +1,10 @@
 /**
- * @file index.css
- * @description Global styles for the ScTools Chrome extension. This file integrates TailwindCSS
- * and defines custom CSS variables for theming and styling consistency.
- * 
- * @details
- * - Includes TailwindCSS base, components, and utilities.
- * - Defines CSS variables for colors, borders, and spacing.
- * - Applies global styles to the `body` and other elements.
+ * Global Tailwind CSS styles for the application.
+ * This file defines the base styles, components, and utilities for the project.
+ * It also includes custom color variables and animations for light and dark themes.
+ *
+ * @module GlobalStyles
  */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

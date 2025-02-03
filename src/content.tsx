@@ -1,31 +1,28 @@
 /**
- * @file content.tsx
- * @description Entry point for the content script. This script is injected into compatibles pages
- * and initializes the Shadow DOM to ensure styles and components don't interfere with the host website.
+ * Entry point for the content script of the Chrome extension.
+ * This script injects a React application into the shadow DOM of the current webpage.
+ * It is responsible for rendering the `ContentMenu` component and applying the necessary styles.
  *
- * @exports
- * - Attaches a Shadow DOM to the document body.
- * - Renders the `ContentMenu` and `QuickMessagesMenu` components within the Shadow DOM.
- *
- * @example
- * The Shadow DOM ensures encapsulation:
- * ```tsx
- * const shadow = host!.attachShadow({ mode: "open" });
- * createRoot(shadow).render(<App />);
- * ```
+ * @module ContentScript
  */
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { ContentMenu, QuickMessagesMenu } from "./components";
 
+// this kind of import is neccessary for use with shadow dom
 import indexcss from "./index_content.css?inline";
 
+// Create a root container for the React application
 const root = document.createElement("div");
 root.id = "sct-root";
 document.body.appendChild(root);
+
+// Attach a shadow DOM to the root container
 const host = document.querySelector("#sct-root");
 const shadow = host!.attachShadow({ mode: "open" });
+
+// Inject the styles into the shadow DOM
 const style = document.createElement("style");
 const body = indexcss;
 style.textContent = body;
