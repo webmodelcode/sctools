@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,6 +17,7 @@ import {
   updateQuickMessage,
   deleteQuickMessage,
 } from "@/services";
+import { FloatAlert } from "@/components";
 import type { QuickMessageType } from "@/services";
 
 interface QuickMessageOptionsProps {
@@ -36,8 +37,23 @@ export const QuickMessageOptions = ({
   },
 }: QuickMessageOptionsProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [onErrorMsg, setOnErrorMsg] = useState<{
+    message: string;
+    title: string;
+  }>({
+    message: "",
+    title: "",
+  });
   const titleRef = useRef<HTMLInputElement>(null);
   const messageRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setOnErrorMsg({
+      message: "",
+      title: "",
+    });
+  }, [isOpen]);
+
   const onClick = useCallback(() => {
     const getNewMessage = (): QuickMessageType | undefined => {
       const label = titleRef.current?.value ?? "";
@@ -62,32 +78,48 @@ export const QuickMessageOptions = ({
       const quickMessage = getNewMessage();
       if (!quickMessage) return;
       const exist = (await existQuickMessage(quickMessage.label)) >= 0;
-      if (exist) return;
+      const msg = {
+        title: `${quickMessage.label} Already exist`,
+        message: "Set a new or use Update option",
+      };
+      if (exist) return setOnErrorMsg(msg);
       await addQuickMessage(quickMessage);
       setNeedUpdateMessages(true);
+      setIsOpen(false);
     };
 
     const handleUpdateMessage = async () => {
       const quickMessage = getNewMessage();
       if (!quickMessage) return;
+      const msg = {
+        title: `${quickMessage?.label} not exist`,
+        message: "Set a new in the correct option",
+      };
+      const exist = (await existQuickMessage(quickMessage.label)) >= 0;
+      if (!exist) return setOnErrorMsg(msg);
       const indexToUpdate = await existQuickMessage(quickMessage.label);
       await updateQuickMessage(indexToUpdate, quickMessage);
       setNeedUpdateMessages(true);
+      setIsOpen(false);
     };
 
     const handleDeleteMessage = async () => {
       const label = titleRef.current?.value ?? "";
-      if (!label) return;
+      const msg = {
+        title: `${label} not exist`,
+        message: "Check and try again",
+      };
+      if (!label) return setOnErrorMsg(msg);
       const indexToDelete = await existQuickMessage(label);
       await deleteQuickMessage(indexToDelete);
       setNeedUpdateMessages(true);
+      setIsOpen(false);
     };
 
     switch (label) {
       case "add":
         handleAddMessage();
         break;
-
       case "update":
         handleUpdateMessage();
         break;
@@ -98,8 +130,6 @@ export const QuickMessageOptions = ({
         console.error("Invalid label for QuickMessageOptions");
         break;
     }
-
-    setIsOpen(false);
   }, [label, setNeedUpdateMessages]);
 
   return (
@@ -148,6 +178,13 @@ export const QuickMessageOptions = ({
           )}
         </div>
         <DialogFooter>
+          {onErrorMsg.message && (
+            <FloatAlert
+              title={onErrorMsg.title}
+              message={onErrorMsg.message}
+              destructive
+            />
+          )}
           <Button onClick={onClick}>Save changes</Button>
         </DialogFooter>
       </DialogContent>
