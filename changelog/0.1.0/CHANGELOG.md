@@ -45,6 +45,7 @@
 
 2. **Content Script**:
 
+   - Now we allow new pages `Chaturbate.com`, `Streamatemodels.com`
    - The content script now renders the `QuickMessagesMenu` component alongside the `ContentMenu`.
 
 3. **Dependencies**:
@@ -59,7 +60,11 @@
    - Updated the README to include information about the new quick messages feature, project structure, and usage instructions.
 
 5. **Manifest Version**:
+
    - Updated the extension version from `0.0.1` to `0.1.0`.
+
+6. **Maximize Button**
+   - This feature is only enabled in `Stripchat`
 
 #### Bug Fixes:
 
