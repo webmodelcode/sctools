@@ -15,7 +15,7 @@ import { useLocalStorage } from "@/hooks";
 import { Hammer } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { GLOBAL_STINGS } from "@/config";
-import { QuickMessageOptions } from "..";
+import { QuickMessageOptions, QuickMessagesOptionsArea } from "..";
 import { Label } from "../ui/label";
 
 const EXT_ISACTIVE_LOCAL_STORAGE_KEY =
@@ -89,12 +89,7 @@ export const Popup = () => {
             />
           </div>
 
-          <Label className="sct-text-xl"> Quick Message Operations </Label>
-          <div className="sct-flex sct-flex-row">
-            {quickMessageOptions.map((opt) => (
-              <QuickMessageOptions label={opt} key={opt} />
-            ))}
-          </div>
+          <QuickMessagesOptionsArea />
 
           {/* Donation Button */}
           <Button
