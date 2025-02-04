@@ -1,3 +1,11 @@
+/**
+ *
+ * Create the menu for add, update or delete quickmessages
+ * @param {QuickMessageOptionsProps}
+ * @return {JSX.Element}
+ * @module components/QuickMessage/QuickMessageOptions
+ */
+
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +28,7 @@ import {
 import { FloatAlert } from "@/components";
 import type { QuickMessageType } from "@/services";
 
-interface QuickMessageOptionsProps {
+export interface QuickMessageOptionsProps {
   label: "add" | "update" | "delete";
   setNeedUpdateMessages?: (value: boolean) => void;
 }

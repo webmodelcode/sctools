@@ -1,3 +1,9 @@
+/** 
+* Styles for apply in Stripchat WebPage for Maximize chat window
+*
+* @module components/MaximizeButton
+*/
+
 .sct-flex-reverse {
   flex-direction: column-reverse !important;
 }
