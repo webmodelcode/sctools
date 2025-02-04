@@ -1,3 +1,13 @@
+/**
+ * Popup Component
+ *
+ * The `Popup` component is the main interface for the extension's popup.
+ * It provides a switch to enable/disable the extension and a button to support the project via donations.
+ *
+ * @module components/Popup
+ * @returns {JSX.Element} - Returns the JSX element representing the popup.
+ */
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
@@ -17,11 +27,6 @@ const quickMessageOptions: ("add" | "update" | "delete")[] = [
   "delete",
 ];
 
-/**
- * Main popup component for the extension.
- * This component provides the user interface for enabling/disabling the extension
- * and managing quick messages.
- */
 export const Popup = () => {
   const localStorage = useLocalStorage();
   const [isExtEnabled, setIsExtEnabled] = useState(false);
@@ -41,10 +46,6 @@ export const Popup = () => {
     initExtensionState();
   }, [initExtensionState]);
 
-  /**
-   * Handles the toggle of the extension.
-   * @param {boolean} checked - Whether the extension is enabled or disabled.
-   */
   const handleToggleExtension = async (checked: boolean) => {
     localStorage.setItem(EXT_ISACTIVE_LOCAL_STORAGE_KEY, checked.toString());
     setIsExtEnabled(checked);
@@ -57,9 +58,6 @@ export const Popup = () => {
     chrome.tabs.reload();
   };
 
-  /**
-   * Handles the donation button click.
-   */
   const handleDonationClick = () => {
     if (!chrome.tabs) {
       window.open(GLOBAL_STINGS.DONATION_URL, "_blank", "noopener");
