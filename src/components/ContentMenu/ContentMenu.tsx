@@ -1,3 +1,13 @@
+/**
+ * ContentMenu Component
+ *
+ * The `ContentMenu` component renders a menu with options like maximize, status indicator, and donation support.
+ * It uses local storage to determine if the extension is active and conditionally renders its content.
+ *
+ * @module components/ContentMenu
+ * @returns {JSX.Element} - Returns the JSX element representing the content menu.
+ */
+
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "@/hooks";
 import { MaximizeButton, MenuButton, StatusIndicator } from "..";
