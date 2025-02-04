@@ -12,7 +12,7 @@
       "matches": [
         "https://es.stripchat.com/*",
         "https://chaturbate.com/*",
-        "https://*/streamatemodels.com/*"
+        "https://performerclient.streamatemodels.com/client/*"
       ],
       "js": ["src/content.tsx"]
     }
