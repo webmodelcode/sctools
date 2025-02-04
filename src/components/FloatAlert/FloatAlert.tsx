@@ -2,6 +2,8 @@
  * React Component for show a alert in screen
  * @param  {FloatAlertProps} props
  * @returns {JSX.Element}
+ *
+ * @module components/FloatAlert
  */
 
 import { Terminal, AlertCircle } from "lucide-react";
