@@ -64,7 +64,11 @@
    - Updated the extension version from `0.0.1` to `0.1.0`.
 
 6. **Maximize Button**
+
    - This feature is only enabled in `Stripchat`
+
+7. **Documentation**
+   - Add Documentation for all the ./src directory
 
 #### Bug Fixes:
 
