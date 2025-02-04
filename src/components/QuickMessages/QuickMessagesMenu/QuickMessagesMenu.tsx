@@ -1,3 +1,10 @@
+/**
+ *
+ * Create the menu for use the QuickMessages Feature
+ * @return {JSX.Element}
+ * @module components/QuickMessage/QuickMessagesMenu
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import {
   NavigationMenu,
