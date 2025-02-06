@@ -1,6 +1,15 @@
+/**
+ * Custom hook for observing DOM mutations using the `MutationObserver` API.
+ * This hook allows you to observe changes to a DOM element and execute a callback
+ * when mutations occur.
+ *
+ * @param {MutationObserverProps} props see the interface for more.
+ * @module hooks/useMutationObserver
+ */
+
 import { useEffect, type MutableRefObject } from "react";
 
-interface MutationObserverProps {
+export interface MutationObserverProps {
   ref: MutableRefObject<Element | null>;
   callback: MutationCallback;
   options?: MutationObserverInit;

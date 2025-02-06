@@ -1,3 +1,14 @@
+/**
+ * MaximizeButton Component
+ *
+ * The `MaximizeButton` component allows users to toggle between a maximized and normal view of the streaming interface.
+ * It interacts with specific DOM elements to apply CSS classes that modify the layout.
+ * @param {ToggleFocusChatParams} props - The properties passed to the component see the interface.
+ *
+ * @module components/MaximizeButton
+ * @returns {JSX.Element} - Returns the JSX element representing the maximize button.
+ */
+
 import { useCallback, useRef, useState } from "react";
 import { Maximize2 } from "lucide-react";
 import { MenuButton } from "../";
@@ -7,10 +18,15 @@ import { useMutationObserver } from "@/hooks/";
 
 import "./MaximizeButton.styles.css";
 
-interface ToggleFocusChatParams {
+/** Interface for Params of MaximizeButton Component */
+export interface ToggleFocusChatParams {
+  /** Striptchat Broadcast container element */
   scBroadcastContainer: Element | null;
+  /** Striptchat Wrapper container element */
   scBroadCastWrapper: Element | null;
+  /** Striptchat Wrapper switch button element */
   scBroadcastSwitch: Element | null;
+  /** Striptchat Member list container element */
   scMemberList: Element | null;
 }
 

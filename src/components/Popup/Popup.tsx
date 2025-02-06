@@ -1,3 +1,13 @@
+/**
+ * Popup Component
+ *
+ * The `Popup` component is the main interface for the extension's popup.
+ * It provides a switch to enable/disable the extension and a button to support the project via donations.
+ *
+ * @module components/Popup
+ * @returns {JSX.Element} - Returns the JSX element representing the popup.
+ */
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
@@ -5,13 +15,18 @@ import { useLocalStorage } from "@/hooks";
 import { Hammer } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { GLOBAL_STINGS } from "@/config";
+import { QuickMessageOptions } from "..";
+import { Label } from "../ui/label";
 
 const EXT_ISACTIVE_LOCAL_STORAGE_KEY =
   GLOBAL_STINGS.EXT_ISACTIVE_LOCAL_STORAGE_KEY;
 
-/**
- * Main popup component for the extension
- */
+const quickMessageOptions: ("add" | "update" | "delete")[] = [
+  "add",
+  "update",
+  "delete",
+];
+
 export const Popup = () => {
   const localStorage = useLocalStorage();
   const [isExtEnabled, setIsExtEnabled] = useState(false);
@@ -31,25 +46,28 @@ export const Popup = () => {
     initExtensionState();
   }, [initExtensionState]);
 
-  // Handle extension toggle
   const handleToggleExtension = async (checked: boolean) => {
-    // Here we'll add the logic to enable/disable the extension
     localStorage.setItem(EXT_ISACTIVE_LOCAL_STORAGE_KEY, checked.toString());
     setIsExtEnabled(checked);
 
-    console.log("Extension toggled:", checked);
+    if (!chrome.tabs) {
+      location.reload();
+      return;
+    }
+
+    chrome.tabs.reload();
   };
 
-  // Handle donation click
   const handleDonationClick = () => {
     if (!chrome.tabs) {
       window.open(GLOBAL_STINGS.DONATION_URL, "_blank", "noopener");
+      return;
     }
     chrome.tabs.create({ url: GLOBAL_STINGS.DONATION_URL });
   };
 
   return (
-    <Card className="sct-w-[300px] sct-min-h-[200px] sct-bg-gray-50 sct-rounded-none">
+    <Card className="sct-w-[450px] sct-min-h-[200px] sct-bg-gray-50 sct-rounded-none">
       <CardHeader className="sct-flex sct-flex-row sct-items-center sct-justify-around sct-space-y-0 sct-p-3">
         <CardTitle className="sct-text-2xl sct-font-bold">
           <Hammer className="sct-inline-block sct-h-6 sct-w-6 sct-text-gray-500 sct-cursor-pointer hover:sct-text-gray-700 sct-mr-2" />
@@ -69,6 +87,13 @@ export const Popup = () => {
               checked={isExtEnabled}
               onCheckedChange={handleToggleExtension}
             />
+          </div>
+
+          <Label className="sct-text-xl"> Quick Message Operations </Label>
+          <div className="sct-flex sct-flex-row">
+            {quickMessageOptions.map((opt) => (
+              <QuickMessageOptions label={opt} key={opt} />
+            ))}
           </div>
 
           {/* Donation Button */}

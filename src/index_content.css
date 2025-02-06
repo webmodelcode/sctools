@@ -1,3 +1,11 @@
+/**
+ * Tailwind CSS styles specific to the content script.
+ * This file defines styles for the shadow DOM elements injected by the content script.
+ * It mirrors the global styles but is scoped to the shadow DOM.
+ *
+ * @module ContentScriptStyles
+ */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

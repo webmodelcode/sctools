@@ -1,3 +1,12 @@
+/**
+ * StatusIndicator Component
+ *
+ * The `StatusIndicator` component monitors and displays the current status of the streaming service. Only Stripchat is compatible.
+ * It periodically checks the DOM for updates and reflects the status in the UI.
+ *
+ * @module components/Statusindicator
+ * @returns {JSX.Element} - Returns the JSX element representing the status indicator.
+ */
 import { useEffect, useState } from "react";
 import { scAdapter, SC_STRINGS } from "@/config";
 

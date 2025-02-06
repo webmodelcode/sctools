@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "sctools",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "action": {
     "default_popup": "index.html",
     "default_icon": "sctools-icon.png"
@@ -9,7 +9,11 @@
   "permissions": ["tabs", "activeTab", "storage", "scripting"],
   "content_scripts": [
     {
-      "matches": ["https://es.stripchat.com/*"],
+      "matches": [
+        "https://es.stripchat.com/*",
+        "https://chaturbate.com/*",
+        "https://performerclient.streamatemodels.com/client/*"
+      ],
       "js": ["src/content.tsx"]
     }
   ]

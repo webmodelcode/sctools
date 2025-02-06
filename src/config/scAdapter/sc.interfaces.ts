@@ -1,3 +1,13 @@
+/**
+ * Type definitions for StripChat DOM elements and configuration.
+ * This module defines the interfaces and types used by the StripChat adapter.
+ *
+ * @module Config/ScInterfaces
+ */
+
+/**
+ * Type representing StripChat DOM class names.
+ */
 export type ScClasses =
   | "main-layout-main-content"
   | "BroadcastContainer__main#ka"
@@ -6,8 +16,14 @@ export type ScClasses =
   | "player-panel-status-connection"
   | "BroadcastContainer__aside#AX";
 
+/**
+ * Type representing StripChat DOM element IDs.
+ */
 export type ScIds = "external-switcher";
 
+/**
+ * Interface representing the configuration for StripChat DOM elements.
+ */
 export interface ScStrings {
   SC_CLASSES: ScClasses[];
   SC_IDS: ScIds[];

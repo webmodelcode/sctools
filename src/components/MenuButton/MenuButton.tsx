@@ -1,3 +1,15 @@
+/**
+ * MenuButton Component
+ *
+ * The `MenuButton` component is a reusable button designed for use in menus.
+ * It supports an optional toggle state and displays a tooltip on hover.
+ *
+ * @param {Props} props - The properties passed to the component see the interface.
+ *
+ * @module components/MenuButton
+ * @returns {JSX.Element} - Returns the JSX element representing the menu button.
+ */
+
 import { ReactElement, useState } from "react";
 import { Button } from "../ui/button";
 import {
@@ -8,10 +20,15 @@ import {
 } from "../ui/tooltip";
 import { cn } from "@/lib/utils";
 
-interface Props {
+/** Props interface for MenuButton */
+export interface Props {
+  /** The icon to be displayed inside the */
   ButtonIcon: ReactElement;
+  /** The text to be displayed in the tooltip. */
   title: string;
+  /** The callback function to be executed when the */
   onClick: () => boolean;
+  /** Whether the button should act as a toggle. */
   isToggle?: boolean;
 }
 

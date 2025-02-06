@@ -1,5 +1,15 @@
+/**
+ * Configuration for StripChat DOM elements.
+ * This module defines the class names and IDs used to interact with the StripChat website.
+ *
+ * @module Config/ScStrings
+ */
+
 import { ScStrings } from "./sc.interfaces.ts";
 
+/**
+ * Constants for StripChat DOM elements.
+ */
 export const SC_STRINGS: ScStrings = {
   SC_CLASSES: [
     "BroadcastContainer__aside#AX",

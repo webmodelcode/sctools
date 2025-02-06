@@ -1,3 +1,10 @@
+/**
+ * Global Tailwind CSS styles for the application.
+ * This file defines the base styles, components, and utilities for the project.
+ * It also includes custom color variables and animations for light and dark themes.
+ *
+ * @module GlobalStyles
+ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
