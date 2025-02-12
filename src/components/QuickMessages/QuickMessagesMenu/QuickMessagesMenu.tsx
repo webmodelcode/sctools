@@ -70,14 +70,13 @@ export const QuickMessagesMenu = () => {
     canShowComponent && (
       <div
         className={
-          "sct-fixed sct-z-40 sct-text-foreground sct-bottom-0 sct-right-0 sct-bg-background/70 sct-min-w-8"
+          "sct-fixed sct-z-40 sct-text-foreground sct-bottom-0 sct-right-0 sct-bg-background/70 sct-min-w-12"
         }
       >
         <Accordion
           type="single"
           role="QuickMessagesMenu"
           className="sct-m-1"
-          dir="rtl"
           value={value}
           onMouseEnter={() => {
             setValue("item-1");
@@ -87,8 +86,11 @@ export const QuickMessagesMenu = () => {
           }}
         >
           <AccordionItem value="item-1">
-            <AccordionTrigger className="sct-justify-around sct-flex-col-reverse sct-py-[0.25rem] [&>svg]:sct-text-red">
-              <BotMessageSquare size={10} />
+            <AccordionTrigger
+              showArrowIcon={false}
+              className="sct-justify-around sct-flex-col-reverse sct-py-[0.25rem] [&>svg]:sct-text-red"
+            >
+              <BotMessageSquare size={15} />
             </AccordionTrigger>
             <AccordionContent className="sct-flex sct-flex-col">
               {quickMessages.length <= 0 ? (

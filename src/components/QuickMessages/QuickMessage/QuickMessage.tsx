@@ -21,7 +21,7 @@ export const QuickMessage = ({ label, text }: QuickMessageProps) => {
   }, [text]);
 
   return (
-    <Button onClick={onClick} variant="ghost" className="sct-px-2 sct-m-1 ">
+    <Button onClick={onClick} variant="ghost" className="!sct-px-2">
       {label}
     </Button>
   );
