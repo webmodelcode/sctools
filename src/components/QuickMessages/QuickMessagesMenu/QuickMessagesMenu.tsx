@@ -5,14 +5,13 @@
  * @module components/QuickMessage/QuickMessagesMenu
  */
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { QuickMessage } from "../QuickMessage/QuickMessage";
 
 import { GLOBAL_STINGS, isEditableElement } from "@/config";
@@ -25,14 +24,10 @@ import { useLocalStorage } from "@/hooks";
 export const QuickMessagesMenu = () => {
   const { getItem } = useLocalStorage();
   const [extIsActive, setExtIsActive] = useState(false);
+  const [value, setValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [needUpdateMessages, setNeedUpdateMessages] = useState(false);
   const [quickMessages, setQuickMessages] = useState<QuickMessageType[]>([]);
-  const [currentElementPosition, setCurrentElementPosition] = useState<{
-    x: number;
-    y: number;
-    elmHeight: number;
-  }>({ x: 0, y: 0, elmHeight: 0 });
 
   useEffect(() => {
     const checkExtIsActive = async () => {
@@ -58,18 +53,9 @@ export const QuickMessagesMenu = () => {
         if (targetClassList?.includes("sct-") || target?.id?.includes("sct-"))
           return;
         setIsOpen(false);
+        setValue("");
         return;
       }
-      if (isOpen) return;
-      const currentPosition = currentElement.getBoundingClientRect();
-      setCurrentElementPosition({
-        x: currentPosition.left,
-        y: currentPosition.top,
-        elmHeight:
-          currentElement instanceof HTMLElement
-            ? currentElement.offsetHeight
-            : 0,
-      });
       setIsOpen(true);
     };
     document.addEventListener("selectionchange", eventhandle, true);
@@ -78,52 +64,51 @@ export const QuickMessagesMenu = () => {
     };
   }, [isOpen]);
 
-  const getYPosition = useMemo(() => {
-    const value =
-      currentElementPosition.y - currentElementPosition.elmHeight * 3;
-    return `${value}px`;
-  }, [currentElementPosition]);
-
   const canShowComponent = isOpen && extIsActive;
 
   return (
     canShowComponent && (
       <div
-        style={{
-          top: getYPosition,
-          left: `${currentElementPosition.x}px`,
-        }}
-        className={"sct-fixed sct-z-40 sct-text-foreground"}
+        className={
+          "sct-fixed sct-z-40 sct-text-foreground sct-bottom-0 sct-right-0 sct-bg-background/70 sct-min-w-12"
+        }
       >
-        <NavigationMenu
+        <Accordion
+          type="single"
           role="QuickMessagesMenu"
-          orientation="horizontal"
           className="sct-m-1"
+          value={value}
+          onMouseEnter={() => {
+            setValue("item-1");
+          }}
+          onMouseLeave={() => {
+            setValue("");
+          }}
         >
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>
-                <BotMessageSquare />
-              </NavigationMenuTrigger>
-              <NavigationMenuContent className="sct-flex sct-flex-row">
-                {quickMessages.length <= 0 ? (
-                  <span className="sct-p-2 sct-w-80">
-                    No quick messages found. Add a new one in the extension
-                    Popup.
-                  </span>
-                ) : (
-                  quickMessages.map((qm) => (
-                    <QuickMessage
-                      label={qm.label}
-                      text={qm.text}
-                      key={`${qm.label}${qm.text}`}
-                    />
-                  ))
-                )}
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+          <AccordionItem value="item-1">
+            <AccordionTrigger
+              showArrowIcon={false}
+              className="sct-justify-around sct-flex-col-reverse sct-py-[0.25rem] [&>svg]:sct-text-red"
+            >
+              <BotMessageSquare size={15} />
+            </AccordionTrigger>
+            <AccordionContent className="sct-flex sct-flex-col">
+              {quickMessages.length <= 0 ? (
+                <span className="sct-p-2 sct-w-80">
+                  No quick messages found. Add a new one in the extension Popup.
+                </span>
+              ) : (
+                quickMessages.map((qm) => (
+                  <QuickMessage
+                    label={qm.label}
+                    text={qm.text}
+                    key={`${qm.label}${qm.text}`}
+                  />
+                ))
+              )}
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     )
   );
