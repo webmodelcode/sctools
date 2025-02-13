@@ -1,20 +1,33 @@
 import { useCallback } from "react";
 import { SquareCheckBig } from "lucide-react";
 import { MenuButton } from "../MenuButton/MenuButton";
+import { smAdapter } from "@/config";
 
 export const SmChreckTerms = () => {
-  const onclick = useCallback((): boolean => {
-    const consentModal = document.querySelector(
-      'div[data-ta-locator="ModelConsentModal__Modal"]'
+  const alertMessage = () =>
+    window.alert(
+      "This button is only to accept the consent when starting stream "
     );
-    if (!consentModal) return false;
-    const checkboxes = consentModal.querySelectorAll("input[type=checkbox]");
-    if (!checkboxes.length) return false;
+  const onclick = useCallback((): boolean => {
+    const consentModal = smAdapter.getConsentModal();
+    if (!consentModal) {
+      alertMessage();
+      return false;
+    }
+    const checkboxes = smAdapter.getConsentCheckbox();
+    if (!checkboxes?.length) {
+      alertMessage();
+      return false;
+    }
 
     checkboxes.forEach((c) => {
       const elm = c as HTMLInputElement;
       elm.click();
     });
+
+    const button = smAdapter.getConsentButton();
+    if (!button) return false;
+    button.click();
 
     return true;
   }, []);
