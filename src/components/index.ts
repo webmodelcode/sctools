@@ -13,3 +13,4 @@ export { StatusIndicator } from "./StatusIndicator/StatusIndicator";
 export { QuickMessagesMenu } from "./QuickMessages/QuickMessagesMenu/QuickMessagesMenu";
 export { QuickMessageOptions } from "./QuickMessages/QuickMessageOptions/QuickMessageOptions";
 export { FloatAlert } from "./FloatAlert/FloatAlert";
+export { SmChreckTerms } from "./SmChreckTerms/SmChreckTerms";
