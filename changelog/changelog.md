@@ -5,6 +5,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.2.0] - 2025-02-13
+
+### Added
+
+- **Streamate Checker Button**: Add button for check all the checkbox in terms for start stream in streamate
+- **New structure for changelog**: update the `changelog` structure
+
+### Changed
+
+- **Update version**: update version of extension in `package.json` and `manifest.json`
+- **ContentMenu default value**: Add default value to `ContentMenu` component for open default state
+- **Update Test**: Update Test for new changes
+
+### Removed
+
+- **Old changeLog structure**: remove old changelog structure.
+
+---
+
 ## [0.1.1] - 2025-02-09
 
 ### Added
