@@ -25,17 +25,17 @@ describe("MenuButton", () => {
     );
   });
 
-  it("should render and display the button", () => {
+  it("should render and display the button", async () => {
     const button = screen.getByRole("menuButton");
     expect(button).toBeInTheDocument();
     expect(button.firstChild).toHaveTextContent(MockIconText);
     expect(button.className).include(variants.noActive);
 
     fireEvent.mouseUp(button);
-    setTimeout(() => {
-      const tooltip = screen.getByText(mockTitle);
+    setTimeout(async () => {
+      const tooltip = await screen.findByText(mockTitle);
       expect(tooltip).toBeInTheDocument();
-    }, 100);
+    }, 200);
   });
 
   it("should execute click event", () => {

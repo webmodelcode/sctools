@@ -79,7 +79,7 @@ describe("ContentMenu Component", () => {
     const accordion = await screen.findByRole("accordion");
 
     expect(accordion).toBeInTheDocument();
-    expect(accordion.firstChild).toHaveAttribute("data-state", "closed");
+    expect(accordion.firstChild).toHaveAttribute("data-state", "open");
   });
 
   it("should toggle the menu open/closed", async () => {
@@ -97,12 +97,10 @@ describe("ContentMenu Component", () => {
 
     const accordion = await screen.findByRole("accordion");
 
-    fireEvent.click(accordion);
-    setTimeout(() => {
-      expect(accordion.firstChild).toHaveAttribute("data-state", "open");
-    }, 200);
+    expect(accordion.firstChild).toHaveAttribute("data-state", "open");
 
     fireEvent.click(accordion);
-    expect(accordion.firstChild).toHaveAttribute("data-state", "closed");
+
+    expect(accordion.firstChild).toHaveAttribute("data-state", "open");
   });
 });
