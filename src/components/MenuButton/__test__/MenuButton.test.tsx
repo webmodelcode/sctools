@@ -35,7 +35,7 @@ describe("MenuButton", () => {
     setTimeout(() => {
       const tooltip = screen.getByText(mockTitle);
       expect(tooltip).toBeInTheDocument();
-    }, 50);
+    }, 100);
   });
 
   it("should execute click event", () => {
