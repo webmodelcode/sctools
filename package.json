@@ -2,7 +2,7 @@
   "name": "sctools",
   "displayName": "Sctools",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A extension for chrome to add utilities functions to stripchat model view",
   "author": "Juan Pablo Leon Maya co.coffeecode@gmail.com",
   "type": "module",
