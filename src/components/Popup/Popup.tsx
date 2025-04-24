@@ -8,7 +8,6 @@
  * @returns {JSX.Element} - Returns the JSX element representing the popup.
  */
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { useLocalStorage } from "@/hooks";
@@ -58,20 +57,13 @@ export const Popup = () => {
     chrome.tabs.reload();
   };
 
-  const handleDonationClick = () => {
-    if (!chrome.tabs) {
-      window.open(GLOBAL_STINGS.DONATION_URL, "_blank", "noopener");
-      return;
-    }
-    chrome.tabs.create({ url: GLOBAL_STINGS.DONATION_URL });
-  };
-
   return (
     <Card className="sct-w-[450px] sct-min-h-[200px] sct-bg-gray-50 sct-rounded-none">
       <CardHeader className="sct-flex sct-flex-row sct-items-center sct-justify-around sct-space-y-0 sct-p-3">
         <CardTitle className="sct-text-2xl sct-font-bold">
           <Hammer className="sct-inline-block sct-h-6 sct-w-6 sct-text-gray-500 sct-cursor-pointer hover:sct-text-gray-700 sct-mr-2" />
           <span>ScTools</span>
+          <span>by Estrellas Webcam</span>
         </CardTitle>
       </CardHeader>
 
@@ -95,15 +87,6 @@ export const Popup = () => {
               <QuickMessageOptions label={opt} key={opt} />
             ))}
           </div>
-
-          {/* Donation Button */}
-          <Button
-            variant="outline"
-            onClick={handleDonationClick}
-            className="sct-w-full"
-          >
-            Buy me a coffee ☕
-          </Button>
         </div>
       </CardContent>
     </Card>

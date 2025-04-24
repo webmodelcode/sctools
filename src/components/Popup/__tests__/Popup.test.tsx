@@ -21,7 +21,6 @@ describe("Popup Component", () => {
 
     expect(scToolsText).toBeInTheDocument();
     expect(screen.getByText("Enable Extension")).toBeInTheDocument();
-    expect(screen.getByText("Buy me a coffee ☕")).toBeInTheDocument();
     expect(screen.getByRole("switch")).toBeInTheDocument();
   });
 
@@ -38,15 +37,5 @@ describe("Popup Component", () => {
 
     fireEvent.click(switchElement);
     expect(switchElement).not.toBeChecked();
-  });
-
-  it("should handle donation button click", () => {
-    render(<Popup />);
-    const donationButton = screen.getByText("Buy me a coffee ☕");
-    fireEvent.click(donationButton);
-
-    expect(chrome.tabs.create).toHaveBeenCalledWith({
-      url: "https://buymeacoffee.com/juanleon",
-    });
   });
 });

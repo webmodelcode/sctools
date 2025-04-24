@@ -10,7 +10,7 @@
 
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "@/hooks";
-import { MaximizeButton, MenuButton, SmChreckTerms, StatusIndicator } from "..";
+import { MaximizeButton, SmChreckTerms, StatusIndicator } from "..";
 import { GLOBAL_STINGS } from "@/config";
 import {
   Accordion,
@@ -18,7 +18,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { HandCoins } from "lucide-react";
 
 export const ContentMenu = () => {
   const [isExtActive, setIsExtActive] = useState(false);
@@ -50,15 +49,6 @@ export const ContentMenu = () => {
               {location.hostname.includes("streamatemodels") && (
                 <SmChreckTerms />
               )}
-              <MenuButton
-                isToggle={false}
-                ButtonIcon={<HandCoins />}
-                title="Support The Project"
-                onClick={() => {
-                  window.open(GLOBAL_STINGS.DONATION_URL, "_blank", "noopener");
-                  return true;
-                }}
-              />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
