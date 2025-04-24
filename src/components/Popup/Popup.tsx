@@ -63,17 +63,15 @@ export const Popup = () => {
         <CardTitle className="sct-text-2xl sct-font-bold">
           <Hammer className="sct-inline-block sct-h-6 sct-w-6 sct-text-gray-500 sct-cursor-pointer hover:sct-text-gray-700 sct-mr-2" />
           <span>ScTools</span>
-          <span>by Estrellas Webcam</span>
+          <span className="sct-pl-2 sct-text-sm">by Estrellas Webcam</span>
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="sct-p-4  ">
-        <div className="sct-flex sct-flex-col sct-items-center sct-justify-between sct-bg-white sct-rounded-lg sct-p-3 sct-shadow-sm sct-gap-4">
+      <CardContent className="sct-p-4">
+        <div className="sct-flex sct-items-start sct-justify-between sct-bg-white sct-rounded-lg sct-p-3 sct-shadow-sm sct-gap-4">
           {/* Extension Toggle */}
-          <div className="sct-flex sct-items-center sct-justify-between">
-            <span className="sct-font-medium sct-text-sm  sct-text-gray-700 sct-p-2">
-              Enable Extension
-            </span>
+          <div className="sct-flex sct-flex-col sct-items-center sct-justify-start">
+            <Label className="sct-text-sm sct-pb-4">Enable Extension</Label>
             <Switch
               className="sct-data-[state=checked]:sct-bg-blue-600"
               checked={isExtEnabled}
@@ -81,11 +79,13 @@ export const Popup = () => {
             />
           </div>
 
-          <Label className="sct-text-xl"> Quick Message Operations </Label>
-          <div className="sct-flex sct-flex-row">
-            {quickMessageOptions.map((opt) => (
-              <QuickMessageOptions label={opt} key={opt} />
-            ))}
+          <div>
+            <Label className="sct-text-sm"> Quick Message Operations </Label>
+            <div className="sct-flex sct-flex-row">
+              {quickMessageOptions.map((opt) => (
+                <QuickMessageOptions label={opt} key={opt} />
+              ))}
+            </div>
           </div>
         </div>
       </CardContent>

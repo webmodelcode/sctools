@@ -27,9 +27,12 @@ import {
 } from "@/services";
 import { FloatAlert } from "@/components";
 import type { QuickMessageType } from "@/services";
+import { Delete, NotebookPen, Plus } from "lucide-react";
+
+type LabelOptions = "add" | "update" | "delete";
 
 export interface QuickMessageOptionsProps {
-  label: "add" | "update" | "delete";
+  label: LabelOptions;
   setNeedUpdateMessages?: (value: boolean) => void;
 }
 
@@ -144,7 +147,7 @@ export const QuickMessageOptions = ({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className="sct-px-2 sct-m-1 sct-capitalize">
-          {label}
+          {returnActionIcon(label)}
         </Button>
       </DialogTrigger>
       <DialogContent className="!sct-max-w-[325px]">
@@ -198,4 +201,10 @@ export const QuickMessageOptions = ({
       </DialogContent>
     </Dialog>
   );
+};
+
+const returnActionIcon = (label: LabelOptions) => {
+  if (label === "add") return <Plus />;
+  if (label === "delete") return <Delete />;
+  if (label === "update") return <NotebookPen />;
 };
