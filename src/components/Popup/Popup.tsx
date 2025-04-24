@@ -16,6 +16,7 @@ import { useCallback, useEffect, useState } from "react";
 import { GLOBAL_STINGS } from "@/config";
 import { QuickMessageOptions } from "..";
 import { Label } from "../ui/label";
+import { EwLogo } from "../EwLogo/EwLogo";
 
 const EXT_ISACTIVE_LOCAL_STORAGE_KEY =
   GLOBAL_STINGS.EXT_ISACTIVE_LOCAL_STORAGE_KEY;
@@ -58,17 +59,17 @@ export const Popup = () => {
   };
 
   return (
-    <Card className="sct-w-[450px] sct-min-h-[200px] sct-bg-gray-50 sct-rounded-none">
+    <Card className="sct-min-w-[350px]  sct-min-h-[200px] sct-text-white !sct-rounded-none !sct-bg-[#F9AE28]">
       <CardHeader className="sct-flex sct-flex-row sct-items-center sct-justify-around sct-space-y-0 sct-p-3">
         <CardTitle className="sct-text-2xl sct-font-bold">
-          <Hammer className="sct-inline-block sct-h-6 sct-w-6 sct-text-gray-500 sct-cursor-pointer hover:sct-text-gray-700 sct-mr-2" />
+          <EwLogo className="sct-h-32 sct-mx-auto" />
           <span>ScTools</span>
           <span className="sct-pl-2 sct-text-sm">by Estrellas Webcam</span>
         </CardTitle>
       </CardHeader>
 
       <CardContent className="sct-p-4">
-        <div className="sct-flex sct-items-start sct-justify-between sct-bg-white sct-rounded-lg sct-p-3 sct-shadow-sm sct-gap-4">
+        <div className="sct-flex sct-items-start sct-justify-between  sct-rounded-lg sct-p-3 sct-shadow-sm sct-gap-4 sct-border">
           {/* Extension Toggle */}
           <div className="sct-flex sct-flex-col sct-items-center sct-justify-start">
             <Label className="sct-text-sm sct-pb-4">Enable Extension</Label>

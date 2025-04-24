@@ -146,7 +146,10 @@ export const QuickMessageOptions = ({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="sct-px-2 sct-m-1 sct-capitalize">
+        <Button
+          variant="outline"
+          className="sct-px-2 sct-m-1 sct-capitalize sct-text-[#F9AE28]"
+        >
           {returnActionIcon(label)}
         </Button>
       </DialogTrigger>

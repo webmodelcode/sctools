@@ -70,6 +70,6 @@
     @apply sct-border-border;
   }
   body {
-    @apply sct-bg-background sct-text-foreground;
+    @apply sct-bg-[#F9AE28] sct-text-foreground;
   }
 }
