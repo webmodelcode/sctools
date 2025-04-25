@@ -11,7 +11,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { useLocalStorage } from "@/hooks";
-import { Hammer } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { GLOBAL_STINGS } from "@/config";
 import { QuickMessageOptions } from "..";
