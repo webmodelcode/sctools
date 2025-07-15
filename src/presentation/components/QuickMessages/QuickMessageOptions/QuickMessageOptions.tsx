@@ -7,6 +7,14 @@
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  getQuickMessages,
+  addQuickMessage,
+  updateQuickMessage,
+  deleteQuickMessage,
+  IQuickMessage,
+} from "~@/infrastructure/datasource/quickMessages.local.datasource";
+
 import { Button } from "~@/presentation/components/ui/button";
 import {
   Dialog,
@@ -19,15 +27,9 @@ import {
 } from "~@/presentation/components/ui/dialog";
 import { Input } from "~@/presentation/components/ui/input";
 import { Label } from "~@/presentation/components/ui/label";
-import {
-  getQuickMessages,
-  addQuickMessage,
-  updateQuickMessage,
-  deleteQuickMessage,
-} from "@/services";
-import { FloatAlert } from "@/components";
-import type { QuickMessageType } from "@/services";
+
 import { Delete, NotebookPen, Plus } from "lucide-react";
+import { FloatAlert } from "../../FloatAlert/FloatAlert";
 
 type LabelOptions = "add" | "update" | "delete";
 
@@ -66,13 +68,13 @@ export const QuickMessageOptions = ({
   }, [isOpen]);
 
   const onClick = useCallback(() => {
-    const getNewMessage = (): QuickMessageType | undefined => {
+    const getNewMessage = (): IQuickMessage | undefined => {
       const label = titleRef.current?.value ?? "";
       const text = messageRef.current?.value ?? "";
       if (!label || !text) {
         return;
       }
-      const quickMessage: QuickMessageType = { label, text };
+      const quickMessage: IQuickMessage = { label, text };
 
       return quickMessage;
     };
@@ -148,43 +150,43 @@ export const QuickMessageOptions = ({
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="sct-px-2 sct-m-1 sct-capitalize sct-text-[#F9AE28]"
+          className="px-2 m-1 capitalize text-[#F9AE28]"
         >
           {returnActionIcon(label)}
         </Button>
       </DialogTrigger>
-      <DialogContent className="!sct-max-w-[325px]">
+      <DialogContent className="!max-w-[325px]">
         <DialogHeader>
-          <DialogTitle className="sct-capitalize">
+          <DialogTitle className="capitalize">
             {label} Quick Message
           </DialogTitle>
           <DialogDescription>
-            <span className="sct-capitalize">{label}</span> a quick message
-            here. Click save when you're done.
+            <span className="capitalize">{label}</span> a quick message here.
+            Click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        <div className="sct-grid sct-gap-4 py-4">
-          <div className="sct-grid sct-grid-cols-4 sct-items-center sct-gap-4">
-            <Label htmlFor="title" className="sct-text-right">
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="title" className="text-right">
               Tittle
             </Label>
             <Input
               id="title"
               placeholder="Quick Message Title"
-              className="sct-col-span-3"
+              className="col-span-3"
               autoComplete="off"
               ref={titleRef}
             />
           </div>
           {label !== "delete" && (
-            <div className="sct-grid sct-grid-cols-4 sct-items-center sct-gap-4">
-              <Label htmlFor="message" className="sct-text-right">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="message" className="text-right">
                 Message
               </Label>
               <Input
                 id="message"
                 placeholder="Write your quick message here"
-                className="sct-col-span-3"
+                className="col-span-3"
                 autoComplete="off"
                 ref={messageRef}
               />

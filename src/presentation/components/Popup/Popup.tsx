@@ -9,13 +9,16 @@
  */
 
 import { useCallback, useEffect, useState } from "react";
+import { QuickMessageOptions } from "../QuickMessages/QuickMessageOptions/QuickMessageOptions";
+import { useQuickMenuIsActive } from "~@/presentation/hooks/useLocalStorage/useQuickMenuIsActive";
+
 import { GLOBAL_STINGS } from "~@/config/utils/globalStrings";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Switch } from "../ui/switch";
 import { EwLogo } from "../EwLogo/EwLogo";
 import { Label } from "../ui/label";
-import { QuickMessageOptions } from "../QuickMessages/QuickMessageOptions/QuickMessageOptions";
-import { useQuickMenuIsActive } from "~@/presentation/hooks/useLocalStorage/useQuickMenuIsActive";
+
+import "~@/presentation/assets/globals.css";
 
 const EXT_ISACTIVE_LOCAL_STORAGE_KEY =
   GLOBAL_STINGS.EXT_ISACTIVE_LOCAL_STORAGE_KEY;
@@ -56,30 +59,30 @@ export const Popup = () => {
   };
 
   return (
-    <Card className="sct-min-w-[350px]  sct-min-h-[200px] sct-text-white !sct-rounded-none !sct-bg-[#F9AE28]">
-      <CardHeader className="sct-flex sct-flex-row sct-items-center sct-justify-around sct-space-y-0 sct-p-3">
-        <CardTitle className="sct-text-2xl sct-font-bold">
-          <EwLogo className="sct-h-32 sct-mx-auto" />
+    <Card className="min-h-[200px] min-w-[350px] !rounded-none !bg-[#F9AE28] text-white">
+      <CardHeader className="flex flex-row items-center justify-around space-y-0 p-3">
+        <CardTitle className="text-2xl font-bold">
+          <EwLogo className="mx-auto h-32" />
           <span>ScTools</span>
-          <span className="sct-pl-2 sct-text-sm">by Estrellas Webcam</span>
+          <span className="pl-2 text-sm">by Estrellas Webcam</span>
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="sct-p-4">
-        <div className="sct-flex sct-items-start sct-justify-between  sct-rounded-lg sct-p-3 sct-shadow-sm sct-gap-4 sct-border">
+      <CardContent className="p-4">
+        <div className="flex items-start justify-between gap-4 rounded-lg border p-3 shadow-sm">
           {/* Extension Toggle */}
-          <div className="sct-flex sct-flex-col sct-items-center sct-justify-start">
-            <Label className="sct-text-sm sct-pb-4">Enable Extension</Label>
+          <div className="flex flex-col items-center justify-start">
+            <Label className="pb-4 text-sm">Enable Extension</Label>
             <Switch
-              className="sct-data-[state=checked]:sct-bg-blue-600"
+              className="data-[state=checked]:bg-blue-600"
               checked={isExtEnabled}
               onCheckedChange={handleToggleExtension}
             />
           </div>
 
           <div>
-            <Label className="sct-text-sm"> Quick Message Operations </Label>
-            <div className="sct-flex sct-flex-row">
+            <Label className="text-sm"> Quick Message Operations </Label>
+            <div className="flex flex-row">
               {quickMessageOptions.map((opt) => (
                 <QuickMessageOptions label={opt} key={opt} />
               ))}
