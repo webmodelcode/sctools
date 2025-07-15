@@ -74,7 +74,6 @@ export const Popup = () => {
           <div className="flex flex-col items-center justify-start">
             <Label className="pb-4 text-sm">Enable Extension</Label>
             <Switch
-              className="data-[state=checked]:bg-blue-600"
               checked={isExtEnabled}
               onCheckedChange={handleToggleExtension}
             />
