@@ -5,9 +5,9 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   manifest: {
     permissions: ["activeTab", "tabs", "storage", "scripting"],
-    name: "EW Monitor Tools",
+    name: "EW Model Tools",
     description:
-      "Extension para facilitar el trabajo de monitores en su día a día",
+      "Incorporamos herramientas para mejorar la experiencia de trabajo de los modelos de EW.",
   },
   alias: {
     "~@": "src",
