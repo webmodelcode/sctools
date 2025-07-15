@@ -9,7 +9,7 @@
  */
 
 import { useCallback, useEffect, useState } from "react";
-import { GLOBAL_STINGS } from "~@/presentation/config";
+import { GLOBAL_STINGS } from "~@/config";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Switch } from "../ui/switch";
 import { EwLogo } from "../EwLogo/EwLogo";
