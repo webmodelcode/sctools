@@ -2,13 +2,13 @@
  * Popup Component
  *
  * The `Popup` component is the main interface for the extension's popup.
- * It provides a switch to enable/disable the extension and a button to support the project via donations.
+ * It provides a switch to enable/disable the extension and quick message operations.
  *
  * @module components/Popup
  * @returns {JSX.Element} - Returns the JSX element representing the popup.
  */
 
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { QuickMessageOptions } from "../QuickMessages/QuickMessageOptions/QuickMessageOptions";
 import { useQuickMenuIsActive } from "~@/presentation/hooks/useLocalStorage/useQuickMenuIsActive";
 
@@ -19,13 +19,13 @@ import { Label } from "../ui/label";
 
 import "~@/presentation/assets/globals.css";
 
-const quickMessageOptions: ("add" | "update" | "delete")[] = [
+const quickMessageOptions: readonly ("add" | "update" | "delete")[] = [
   "add",
   "update",
   "delete",
-];
+] as const;
 
-export const Popup = () => {
+export const Popup = memo(() => {
   const quickMenuIsActive = useQuickMenuIsActive();
   const [isQuickMenuEnabled, setIsQuickMenuEnabled] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -36,17 +36,19 @@ export const Popup = () => {
     const storedState = await quickMenuIsActive.getItem();
     setIsQuickMenuEnabled(storedState);
     setIsInitialized(true);
-  }, [localStorage, isInitialized]);
+  }, [isInitialized]);
 
   useEffect(() => {
     initExtensionState();
-  }, [initExtensionState, isQuickMenuEnabled]);
+  }, [initExtensionState]);
 
   const handleToggleExtension = async (checked: boolean) => {
     quickMenuIsActive.setItem(checked);
     setIsQuickMenuEnabled(checked);
 
-    browser.tabs.reload();
+    if (typeof browser !== "undefined" && browser.tabs) {
+      browser.tabs.reload();
+    }
   };
 
   return (
@@ -82,4 +84,4 @@ export const Popup = () => {
       </CardContent>
     </Card>
   );
-};
+});
