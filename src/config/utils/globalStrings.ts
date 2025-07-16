@@ -13,8 +13,9 @@ interface GlobalStrings {
  * Global configuration constants.
  */
 export const GLOBAL_STINGS: GlobalStrings = {
-  SC_ELEMENTS_NO_READY: "Some elements are not available yet.",
+  EXT_QUICKMENU_ISACTIVE_LOCAL_STORAGE_KEY: "quickMenuIsActive",
   EXT_ISACTIVE_LOCAL_STORAGE_KEY: "sctIsActive",
+  SC_ELEMENTS_NO_READY: "Some elements are not available yet.",
   QUICK_MESSAGES_KEY: "quickMessages",
 };
 

@@ -12,16 +12,12 @@ import { useCallback, useEffect, useState } from "react";
 import { QuickMessageOptions } from "../QuickMessages/QuickMessageOptions/QuickMessageOptions";
 import { useQuickMenuIsActive } from "~@/presentation/hooks/useLocalStorage/useQuickMenuIsActive";
 
-import { GLOBAL_STINGS } from "~@/config/utils/globalStrings";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Switch } from "../ui/switch";
 import { EwLogo } from "../EwLogo/EwLogo";
 import { Label } from "../ui/label";
 
 import "~@/presentation/assets/globals.css";
-
-const EXT_ISACTIVE_LOCAL_STORAGE_KEY =
-  GLOBAL_STINGS.EXT_ISACTIVE_LOCAL_STORAGE_KEY;
 
 const quickMessageOptions: ("add" | "update" | "delete")[] = [
   "add",
@@ -31,29 +27,24 @@ const quickMessageOptions: ("add" | "update" | "delete")[] = [
 
 export const Popup = () => {
   const quickMenuIsActive = useQuickMenuIsActive();
-  const [isExtEnabled, setIsExtEnabled] = useState(false);
+  const [isQuickMenuEnabled, setIsQuickMenuEnabled] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
   const initExtensionState = useCallback(async () => {
     if (isInitialized) return;
 
     const storedState = await quickMenuIsActive.getItem();
-    setIsExtEnabled(storedState);
+    setIsQuickMenuEnabled(storedState);
     setIsInitialized(true);
   }, [localStorage, isInitialized]);
 
   useEffect(() => {
     initExtensionState();
-  }, [initExtensionState]);
+  }, [initExtensionState, isQuickMenuEnabled]);
 
   const handleToggleExtension = async (checked: boolean) => {
-    localStorage.setItem(EXT_ISACTIVE_LOCAL_STORAGE_KEY, checked.toString());
-    setIsExtEnabled(checked);
-
-    if (!browser.tabs) {
-      location.reload();
-      return;
-    }
+    quickMenuIsActive.setItem(checked);
+    setIsQuickMenuEnabled(checked);
 
     browser.tabs.reload();
   };
@@ -74,7 +65,7 @@ export const Popup = () => {
           <div className="flex flex-col items-center justify-start">
             <Label className="pb-4 text-sm">Enable Extension</Label>
             <Switch
-              checked={isExtEnabled}
+              checked={isQuickMenuEnabled}
               onCheckedChange={handleToggleExtension}
             />
           </div>
