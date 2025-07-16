@@ -13,7 +13,7 @@ import { GLOBAL_STINGS } from "~@/config/utils/globalStrings";
 type SetValue = (value: boolean) => Promise<void>;
 type GetValue = () => Promise<boolean>;
 
-interface UseQuickMenuIsActive {
+interface IUseQuickMenuIsActive {
   setItem: SetValue;
   getItem: GetValue;
 }
@@ -25,33 +25,27 @@ const quickMenuIsActive = storage.defineItem<boolean>(
   },
 );
 
-const setQuickMenuIsActive: SetValue = async (
-  value: boolean,
-): Promise<void> => {
-  await quickMenuIsActive.setValue(value);
-};
-
-const getQuickMenuIsActive: GetValue = async (): Promise<boolean> => {
-  return await quickMenuIsActive.getValue();
-};
-
 /**
- * Custom hook for interacting with local storage.
+ * Custom hook for interacting with local storage for quick menu state.
  *
- * @returns {UseQuickMenuIsActive} - An object containing storage methods for quick menu activate state.
+ * @returns {IUseQuickMenuIsActive} - An object containing storage methods for quick menu activate state.
  */
-export const useQuickMenuIsActive = (): UseQuickMenuIsActive => {
+export const useQuickMenuIsActive = (): IUseQuickMenuIsActive => {
   return {
     /**
-     * @param {string} key - The key under which to store the value.
-     * @param {string} value - The value to store.
+     * Sets the active state of the quick menu.
+     * @param {boolean} value - The state to set (true for active, false for inactive).
      * @returns {Promise<void>}
      */
-    setItem: setQuickMenuIsActive,
+    setItem: async (value: boolean): Promise<void> => {
+      await quickMenuIsActive.setValue(value);
+    },
     /**
-     * @param {string} key - The key of the value to retrieve.
-     * @returns {Promise<string | { [key: string]: unknown } | null>} - The stored value or null if not found.
+     * Gets the current active state of the quick menu.
+     * @returns {Promise<boolean>} - The stored state (true for active, false for inactive).
      */
-    getItem: getQuickMenuIsActive,
+    getItem: async (): Promise<boolean> => {
+      return await quickMenuIsActive.getValue();
+    },
   };
 };
