@@ -10,7 +10,7 @@
 
 import { memo, useCallback, useEffect, useState } from "react";
 import { QuickMessageOptions } from "../QuickMessages/QuickMessageOptions/QuickMessageOptions";
-import { useQuickMenuIsActive } from "~@/presentation/hooks/useLocalStorage/useQuickMenuIsActive";
+import { useQuickMenuIsActive } from "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Switch } from "../ui/switch";
