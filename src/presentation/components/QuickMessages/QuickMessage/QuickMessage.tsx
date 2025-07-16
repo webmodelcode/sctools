@@ -7,7 +7,7 @@
  */
 
 import { useCallback } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "~@/presentation/components/ui/button";
 
 export interface QuickMessageProps {
   label: string;
@@ -17,7 +17,7 @@ export interface QuickMessageProps {
 export const QuickMessage = ({ label, text }: QuickMessageProps) => {
   const onClick = useCallback(() => {
     const smInput: HTMLInputElement | null = document.getElementById(
-      "message_text_input"
+      "message_text_input",
     ) as HTMLInputElement;
     if (smInput) smInput.focus();
 

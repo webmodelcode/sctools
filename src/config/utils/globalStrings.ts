@@ -7,6 +7,7 @@
 
 interface IStorageKeys {
   QUICK_MENU_IS_ACTIVE: string;
+  QUICK_MESSAGES_IS_ACTIVE: string;
   QUICK_MESSAGES: string;
 }
 
@@ -26,6 +27,8 @@ export const GLOBAL_STRINGS: IGlobalStrings = {
   STORAGE_KEYS: {
     /** Key for storing quick menu active state in local storage */
     QUICK_MENU_IS_ACTIVE: "quickMenuIsActive",
+    /** Key for storing quick messages active state in local storage */
+    QUICK_MESSAGES_IS_ACTIVE: "quickMenuIsActive",
     /** Key for storing quick messages in local storage */
     QUICK_MESSAGES: "quickMessages",
   },

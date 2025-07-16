@@ -6,20 +6,20 @@
  */
 
 import { useEffect, useState } from "react";
+
+import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
+import { isEditableElement } from "~@/config/utils/isTextElement";
+import { getQuickMessages } from "~@/infrastructure/datasource/quickMessages.local.datasource";
+import type { IQuickMessage } from "~@/infrastructure/datasource/quickMessages.local.datasource";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "~@/presentation/components/ui/accordion";
 import { QuickMessage } from "../QuickMessage/QuickMessage";
-
-import { GLOBAL_STINGS, isEditableElement } from "@/config";
-import { getQuickMessages } from "@/services";
-import type { QuickMessageType } from "@/services";
-
 import { BotMessageSquare } from "lucide-react";
-import { useLocalStorage } from "@/hooks";
 
 export const QuickMessagesMenu = () => {
   const { getItem } = useLocalStorage();
@@ -27,12 +27,12 @@ export const QuickMessagesMenu = () => {
   const [value, setValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [needUpdateMessages, setNeedUpdateMessages] = useState(false);
-  const [quickMessages, setQuickMessages] = useState<QuickMessageType[]>([]);
+  const [quickMessages, setQuickMessages] = useState<IQuickMessage[]>([]);
 
   useEffect(() => {
     const checkExtIsActive = async () => {
       setExtIsActive(
-        (await getItem(GLOBAL_STINGS.EXT_ISACTIVE_LOCAL_STORAGE_KEY)) === "true"
+        await getItem(GLOBAL_STRINGS.STORAGE_KEYS.QUICK_MESSAGES_IS_ACTIVE),
       );
     };
     const loadMessages = async () => {
