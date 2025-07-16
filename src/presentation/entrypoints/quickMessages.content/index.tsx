@@ -4,7 +4,11 @@ import "~@/presentation/assets/globals.css";
 import ReactDOM from "react-dom/client";
 
 export default defineContentScript({
-  matches: ["<all_urls>"],
+  matches: [
+    "https://*.stripchat.com/*",
+    "https://*.chaturbate.com/*",
+    "https://performerclient.streamatemodels.com/*",
+  ],
   // 2. Set cssInjectionMode
   cssInjectionMode: "ui",
 

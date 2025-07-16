@@ -7,7 +7,6 @@
 
 import { useEffect, useState } from "react";
 
-import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 import { isEditableElement } from "~@/config/utils/isTextElement";
 import { getQuickMessages } from "~@/infrastructure/datasource/quickMessages.local.datasource";
 import type { IQuickMessage } from "~@/infrastructure/datasource/quickMessages.local.datasource";
@@ -20,9 +19,10 @@ import {
 } from "~@/presentation/components/ui/accordion";
 import { QuickMessage } from "../QuickMessage/QuickMessage";
 import { BotMessageSquare } from "lucide-react";
+import { useQuickMenuIsActive } from "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive";
 
 export const QuickMessagesMenu = () => {
-  const { getItem } = useLocalStorage();
+  const { getItem } = useQuickMenuIsActive();
   const [extIsActive, setExtIsActive] = useState(false);
   const [value, setValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -31,9 +31,7 @@ export const QuickMessagesMenu = () => {
 
   useEffect(() => {
     const checkExtIsActive = async () => {
-      setExtIsActive(
-        await getItem(GLOBAL_STRINGS.STORAGE_KEYS.QUICK_MESSAGES_IS_ACTIVE),
-      );
+      setExtIsActive(await getItem());
     };
     const loadMessages = async () => {
       const messages = await getQuickMessages();
@@ -70,13 +68,13 @@ export const QuickMessagesMenu = () => {
     canShowComponent && (
       <div
         className={
-          "sct-fixed sct-z-40 sct-text-foreground sct-bottom-0 sct-right-0 sct-bg-background/70 sct-min-w-12"
+          "sct-component fixed right-0 bottom-0 z-40 min-w-12 bg-background/70 text-foreground"
         }
       >
         <Accordion
           type="single"
           role="QuickMessagesMenu"
-          className="sct-m-1"
+          className="m-1"
           value={value}
           onMouseEnter={() => {
             setValue("item-1");
@@ -88,13 +86,13 @@ export const QuickMessagesMenu = () => {
           <AccordionItem value="item-1">
             <AccordionTrigger
               showArrowIcon={false}
-              className="sct-justify-around sct-flex-col-reverse sct-py-[0.25rem] [&>svg]:sct-text-red"
+              className="[&>svg]:text-red flex-col-reverse items-center justify-around py-[0.25rem]"
             >
               <BotMessageSquare size={15} />
             </AccordionTrigger>
-            <AccordionContent className="sct-flex sct-flex-col">
+            <AccordionContent className="flex flex-col">
               {quickMessages.length <= 0 ? (
-                <span className="sct-p-2 sct-w-80">
+                <span className="w-80 p-2">
                   No quick messages found. Add a new one in the extension Popup.
                 </span>
               ) : (
