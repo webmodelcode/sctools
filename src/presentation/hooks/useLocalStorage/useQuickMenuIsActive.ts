@@ -8,7 +8,7 @@
 
 import { storage } from "#imports";
 
-import { GLOBAL_STINGS } from "~@/config/utils/globalStrings";
+import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 
 type SetValue = (value: boolean) => Promise<void>;
 type GetValue = () => Promise<boolean>;
@@ -19,7 +19,7 @@ interface IUseQuickMenuIsActive {
 }
 
 const quickMenuIsActive = storage.defineItem<boolean>(
-  `local:${GLOBAL_STINGS.EXT_QUICKMENU_ISACTIVE_LOCAL_STORAGE_KEY}`,
+  `local:${GLOBAL_STRINGS.STORAGE_KEYS.QUICK_MENU_IS_ACTIVE}`,
   {
     fallback: true,
   },

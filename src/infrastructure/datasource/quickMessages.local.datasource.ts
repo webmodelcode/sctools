@@ -1,7 +1,7 @@
 import { storage } from "#imports";
-import { GLOBAL_STINGS } from "~@/config/utils/globalStrings";
+import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 
-const STORAGE_KEY = GLOBAL_STINGS.QUICK_MESSAGES_KEY;
+const STORAGE_KEY = GLOBAL_STRINGS.STORAGE_KEYS.QUICK_MESSAGES;
 
 export interface IQuickMessage {
   label: string;
@@ -12,7 +12,7 @@ const quickMessageStorage = storage.defineItem<IQuickMessage[]>(
   `local:${STORAGE_KEY}`,
   {
     fallback: [],
-  }
+  },
 );
 
 /**
@@ -20,7 +20,7 @@ const quickMessageStorage = storage.defineItem<IQuickMessage[]>(
  * @param messages Array of quick messages to save.
  */
 export const saveQuickMessages = async (
-  messages: IQuickMessage[]
+  messages: IQuickMessage[],
 ): Promise<void> => {
   try {
     await quickMessageStorage.setValue(messages);
@@ -47,7 +47,7 @@ export const getQuickMessages = async (): Promise<IQuickMessage[]> => {
  * @param message The quick message to add.
  */
 export const addQuickMessage = async (
-  message: IQuickMessage
+  message: IQuickMessage,
 ): Promise<void> => {
   const messages = await getQuickMessages();
   messages.push(message);
@@ -61,7 +61,7 @@ export const addQuickMessage = async (
  */
 export const updateQuickMessage = async (
   index: number,
-  message: IQuickMessage
+  message: IQuickMessage,
 ): Promise<void> => {
   const messages = await getQuickMessages();
   if (index >= 0 && index < messages.length) {
