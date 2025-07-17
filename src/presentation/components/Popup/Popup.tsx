@@ -52,7 +52,7 @@ export const Popup = memo(() => {
   };
 
   return (
-    <Card className="min-h-[200px] min-w-[350px] !rounded-none !bg-[#F9AE28] text-white">
+    <Card className="min-h-[200px] min-w-[350px] !rounded-none !bg-ew-star-color text-white">
       <CardHeader className="flex flex-row items-center justify-around space-y-0 p-3">
         <CardTitle className="text-2xl font-bold">
           <EwLogo className="mx-auto h-32" />

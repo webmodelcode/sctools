@@ -82,7 +82,7 @@ export const QuickMessageOptions = ({
     const existQuickMessage = async (label: string): Promise<number> => {
       const quickmessages = await getQuickMessages();
       const indexOfLabel: number = quickmessages.findIndex(
-        (qm) => qm.label === label
+        (qm) => qm.label === label,
       );
       return indexOfLabel;
     };
@@ -150,7 +150,7 @@ export const QuickMessageOptions = ({
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="px-2 m-1 capitalize text-[#F9AE28]"
+          className="m-1 px-2 text-ew-star-color capitalize"
         >
           {returnActionIcon(label)}
         </Button>
