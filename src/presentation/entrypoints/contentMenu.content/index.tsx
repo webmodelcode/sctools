@@ -1,7 +1,8 @@
 // 1. Import the style
-import { QuickMessagesMenu } from "~@/presentation/components/QuickMessages/QuickMessagesMenu/QuickMessagesMenu";
-import "~@/presentation/assets/globals.css";
 import ReactDOM from "react-dom/client";
+import { ContentMenu } from "~@/presentation/components/ContentMenu/ContentMenu";
+
+import "~@/presentation/assets/globals.css";
 
 export default defineContentScript({
   matches: [
@@ -15,7 +16,7 @@ export default defineContentScript({
   async main(ctx) {
     // 3. Define your UI
     const ui = await createShadowRootUi(ctx, {
-      name: "quick-messages-menu",
+      name: "content-menu",
       position: "inline",
       anchor: "body",
       onMount: (container) => {
@@ -25,7 +26,7 @@ export default defineContentScript({
 
         // Create a root on the UI container and render a component
         const root = ReactDOM.createRoot(app);
-        root.render(<QuickMessagesMenu />);
+        root.render(<ContentMenu />);
         return root;
       },
       onRemove: (root) => {
