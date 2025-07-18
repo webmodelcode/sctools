@@ -2,7 +2,7 @@
  * MaximizeButton Component
  *
  * The `MaximizeButton` component allows users to toggle between a maximized and normal view of the streaming interface.
- * It interacts with specific DOM elements to apply CSS classes that modify the layout.
+ * It interacts with specific DOM elements to apply inline styles that modify the layout.
  * @param {ToggleFocusChatParams} props - The properties passed to the component see the interface.
  *
  * @module components/MaximizeButton
@@ -14,8 +14,6 @@ import { Maximize2 } from "lucide-react";
 
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 import { SC_STRINGS } from "~@/config/scAdapter/sc.strings";
-
-import "./MaximizeButton.styles.css";
 import { scAdapter } from "~@/config/scAdapter/sc.adapter";
 import { useMutationObserver } from "~@/presentation/hooks/useMutationObserver/useMutationObserver";
 import { MenuButton } from "../MenuButton/MenuButton";
@@ -38,11 +36,19 @@ const enableMaximized = ({
   scBroadcastSwitch,
   scMemberList,
 }: ToggleFocusChatParams) => {
-  scBroadcastContainer?.classList.add("flex-reverse");
-  scBroadcastContainer?.classList.add("h-70");
-  scBroadCastWrapper?.classList.add("dnone");
-  scBroadcastSwitch?.classList.add("dnone");
-  scMemberList?.classList.add("h-70");
+  if (scBroadcastContainer instanceof HTMLElement) {
+    scBroadcastContainer.style.flexDirection = "column-reverse";
+    scBroadcastContainer.style.height = "70vh";
+  }
+  if (scBroadCastWrapper instanceof HTMLElement) {
+    scBroadCastWrapper.style.display = "none";
+  }
+  if (scBroadcastSwitch instanceof HTMLElement) {
+    scBroadcastSwitch.style.display = "none";
+  }
+  if (scMemberList instanceof HTMLElement) {
+    scMemberList.style.height = "70vh";
+  }
 };
 
 const disableMaximized = ({
@@ -51,11 +57,19 @@ const disableMaximized = ({
   scBroadcastSwitch,
   scMemberList,
 }: ToggleFocusChatParams) => {
-  scBroadcastContainer?.classList.remove("flex-reverse");
-  scBroadcastContainer?.classList.remove("h-70");
-  scBroadCastWrapper?.classList.remove("dnone");
-  scBroadcastSwitch?.classList.remove("dnone");
-  scMemberList?.classList.remove("h-70");
+  if (scBroadcastContainer instanceof HTMLElement) {
+    scBroadcastContainer.style.flexDirection = "";
+    scBroadcastContainer.style.height = "";
+  }
+  if (scBroadCastWrapper instanceof HTMLElement) {
+    scBroadCastWrapper.style.display = "";
+  }
+  if (scBroadcastSwitch instanceof HTMLElement) {
+    scBroadcastSwitch.style.display = "";
+  }
+  if (scMemberList instanceof HTMLElement) {
+    scMemberList.style.height = "";
+  }
 };
 
 export const MaximizeButton = () => {
