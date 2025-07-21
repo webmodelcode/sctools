@@ -14,7 +14,7 @@ const getConsentCheckbox = (): NodeListOf<Element> | undefined =>
 
 const getConsentButton = (): HTMLButtonElement | null | undefined =>
   getConsentModal()?.querySelector(
-    'button[data-icf-click="ModelConsentModal__Accept"]'
+    'button[data-icf-click="ModelConsentModal__Accept"]',
   );
 
 export const smAdapter = {
