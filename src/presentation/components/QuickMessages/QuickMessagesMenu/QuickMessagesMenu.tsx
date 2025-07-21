@@ -102,7 +102,7 @@ export const QuickMessagesMenu = () => {
         <AccordionItem value="item-1">
           <AccordionTrigger
             showArrowIcon={false}
-            className="w-20 animate-bounce flex-col-reverse items-center justify-around py-[0.25rem]"
+            className="w-12 animate-bounce flex-col-reverse items-center justify-around py-[0.25rem]"
           >
             <BotMessageSquare size={15} />
           </AccordionTrigger>
