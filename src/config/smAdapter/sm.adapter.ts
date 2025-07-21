@@ -20,17 +20,17 @@ const getConsentButton = (): HTMLButtonElement | null | undefined =>
 export const smAdapter = {
   /**
    *
-   * @returns {HTMLDivElement | null} - The DOM element for check consent o null.
+   * @returns {HTMLDivElement | null} - The DOM element for checking consent or null.
    */
   getConsentModal,
   /**
    *
-   * @returns {NodeListOf<Element> | undefined} - all the checkbox elements in the consent modal.
+   * @returns {NodeListOf<Element> | undefined} - All the checkbox elements in the consent modal.
    */
   getConsentCheckbox,
   /**
    *
-   * @returns {HTMLButtonElement | null | undefined} - button element for accepting consent.
+   * @returns {HTMLButtonElement | null | undefined} - Button element for accepting consent.
    */
   getConsentButton,
 };
