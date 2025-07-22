@@ -12,7 +12,7 @@ export type ScClasses =
   | "main-layout-main-content"
   | "BroadcastContainer__main#ka"
   | "broadcast-player-wrapper view-cam-resizer view-cam-resizer-boundary-x view-cam-resizer-broadcast"
-  | "BroadcastContainer__members#Go cam-members"
+  | "BroadcastContainer__members#Go"
   | "player-panel-status-connection"
   | "BroadcastContainer__aside#AX";
 

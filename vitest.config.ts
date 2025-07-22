@@ -1,15 +1,13 @@
-import { resolve } from "path";
-import react from "@vitejs/plugin-react";
 import { defineConfig } from "vitest/config";
+import { WxtVitest } from "wxt/testing";
 
 export default defineConfig({
-  plugins: [react()],
   test: {
-    environment: "jsdom",
+    environment: "happy-dom",
     globals: true,
     setupFiles: "./src/test/setup.ts",
-    alias: {
-      "@": resolve(__dirname, "src"),
-    },
+    mockReset: true,
+    restoreMocks: true,
   },
+  plugins: [WxtVitest()],
 });

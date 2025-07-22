@@ -76,7 +76,7 @@ describe("sc.adapter by Id", () => {
 });
 
 describe("sc.adapter SCElements are ready", () => {
-  vi.mock("./sc.strings", () => ({
+  vi.mock("../sc.strings", () => ({
     SC_STRINGS: {
       SC_CLASSES: ["class1", "class2"],
       SC_IDS: ["id1", "id2"],
@@ -86,7 +86,7 @@ describe("sc.adapter SCElements are ready", () => {
     document.body.innerHTML = "";
     vi.resetAllMocks();
   });
-  it("should return true whel all SCElements are ready", async () => {
+  it("should return true when all SCElements are ready", async () => {
     SC_STRINGS.SC_CLASSES.forEach((className) => {
       const element = document.createElement("div");
       element.className = className;
