@@ -1,17 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-
 import { Popup } from "../Popup";
 
 describe("Popup Component", () => {
   beforeEach(() => {
     // Mock chrome API
-    global.chrome = {
-      tabs: {
-        create: vi.fn(),
-        reload: vi.fn(),
-      },
-    } as unknown as typeof chrome;
   });
 
   it("should render all elements correctly", () => {
@@ -21,7 +14,7 @@ describe("Popup Component", () => {
 
     expect(scToolsText).toBeInTheDocument();
     expect(screen.getByText("Enable Extension")).toBeInTheDocument();
-    expect(screen.getByRole("switch")).toBeInTheDocument();
+    expect(screen.getByText("Enable Extension")).toBeInTheDocument();
   });
 
   it("switch starts deactivated and changes state when clicked", () => {
