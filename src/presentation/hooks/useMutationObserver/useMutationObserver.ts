@@ -7,10 +7,10 @@
  * @module hooks/useMutationObserver
  */
 
-import { useEffect, type MutableRefObject } from "react";
+import { useEffect, type RefObject } from "react";
 
 export interface MutationObserverProps {
-  ref: MutableRefObject<Element | null>;
+  ref: RefObject<Element | null>;
   callback: MutationCallback;
   options?: MutationObserverInit;
 }
