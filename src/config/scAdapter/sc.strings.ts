@@ -19,6 +19,7 @@ export const SC_STRINGS: ScStrings = {
     "broadcast-player-wrapper view-cam-resizer view-cam-resizer-boundary-x view-cam-resizer-broadcast",
     "player-panel-status-connection",
     "BroadcastContainer__aside#AX",
+    "messages",
   ],
   SC_IDS: ["external-switcher"],
   BROADCAST_CONTAINER: {

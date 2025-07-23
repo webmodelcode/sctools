@@ -6,6 +6,7 @@
  * @module Config/ScAdapter
  */
 
+import { ScClasses } from "./sc.interfaces";
 import { SC_STRINGS } from "./sc.strings";
 
 /**
@@ -15,7 +16,7 @@ import { SC_STRINGS } from "./sc.strings";
  * @returns {Element | null} - The DOM element or null if not found.
  *
  */
-const getScElementByClassName = (elmClass: string) => {
+const getScElementByClassName = (elmClass: ScClasses) => {
   try {
     return document.getElementsByClassName(elmClass).item(0) || null;
   } catch (error) {

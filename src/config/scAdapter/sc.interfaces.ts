@@ -14,7 +14,8 @@ export type ScClasses =
   | "broadcast-player-wrapper view-cam-resizer view-cam-resizer-boundary-x view-cam-resizer-broadcast"
   | "BroadcastContainer__members#Go"
   | "player-panel-status-connection"
-  | "BroadcastContainer__aside#AX";
+  | "BroadcastContainer__aside#AX"
+  | "messages";
 
 /**
  * Type representing StripChat DOM element IDs.
