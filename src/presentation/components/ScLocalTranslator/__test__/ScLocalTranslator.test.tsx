@@ -1,11 +1,14 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render } from "@testing-library/react";
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 // Mock the useMutationObserver hook
-vi.mock("~@/presentation/hooks/useMutationObserver/useMutationObserver", () => ({
-  useMutationObserver: vi.fn(),
-}));
+vi.mock(
+  "~@/presentation/hooks/useMutationObserver/useMutationObserver",
+  () => ({
+    useMutationObserver: vi.fn(),
+  }),
+);
 
 // Import the hook after mocking
 import { useMutationObserver } from "~@/presentation/hooks/useMutationObserver/useMutationObserver";
@@ -44,7 +47,7 @@ describe("ScLocalTranslator", () => {
 
   it("should setup mutation observer with correct parameters", () => {
     render(<TestScLocalTranslator />);
-    
+
     expect(vi.mocked(useMutationObserver)).toHaveBeenCalledWith({
       ref: expect.objectContaining({
         current: null,
