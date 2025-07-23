@@ -16,9 +16,12 @@ interface IErrorMessages {
   QM_NOT_MESSAGES: string;
 }
 
+type IBgMessageType = "CHAT_MESSAGE" | "INPUT_MESSAGE";
+
 interface IGlobalStrings {
   STORAGE_KEYS: IStorageKeys;
   ERROR_MESSAGES: IErrorMessages;
+  BG_MESSAGE_TYPE: { [key in IBgMessageType]: IBgMessageType };
 }
 
 /**
@@ -38,6 +41,10 @@ export const GLOBAL_STRINGS: IGlobalStrings = {
     SC_ELEMENTS_NOT_READY: "Some elements are not available yet.",
     /** Error message for when quick messages are not found */
     QM_NOT_MESSAGES: "No messages found.",
+  },
+  BG_MESSAGE_TYPE: {
+    CHAT_MESSAGE: "CHAT_MESSAGE",
+    INPUT_MESSAGE: "INPUT_MESSAGE",
   },
 };
 
