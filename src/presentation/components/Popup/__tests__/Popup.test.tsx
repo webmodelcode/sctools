@@ -5,6 +5,9 @@ import { Popup } from "../Popup";
 describe("Popup Component", () => {
   beforeEach(() => {
     // Mock chrome API
+    browser.tabs.reload = vi.fn();
+
+    vi.resetAllMocks();
   });
 
   it("should render all elements correctly", () => {
