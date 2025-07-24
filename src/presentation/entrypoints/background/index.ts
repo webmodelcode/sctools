@@ -1,25 +1,17 @@
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
+import { localTranslator } from "~@/infrastructure/datasource/chromeTranslator.local.datasource";
+import { backgroundController } from "./controller";
 
 export default defineBackground(() => {
   browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch (message.type) {
       case GLOBAL_STRINGS.BG_MESSAGE_TYPE.CHAT_MESSAGE:
-        if ("Translator" in self) {
-          setTimeout(async () => {
-            const translator = await Translator.create({
-              sourceLanguage: "en",
-              targetLanguage: "es",
-              monitor(m) {
-                m.addEventListener("downloadprogress", (e) => {
-                  console.log(`Downloaded ${e.loaded * 100}%`);
-                });
-              },
-            });
-            const msg = await translator.translate(message.data);
-
-            sendResponse(msg);
-          }, 5);
-        }
+        (async () => {
+          const result = await backgroundController.handleChatMessage(
+            message.data,
+          );
+          sendResponse(result);
+        })();
       case GLOBAL_STRINGS.BG_MESSAGE_TYPE.INPUT_MESSAGE:
         break;
       default:
