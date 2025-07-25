@@ -45,10 +45,6 @@ export const Popup = memo(() => {
   const handleToggleExtension = async (checked: boolean) => {
     quickMenuIsActive.setItem(checked);
     setIsQuickMenuEnabled(checked);
-
-    if (typeof browser !== "undefined" && browser.tabs) {
-      browser.tabs.reload();
-    }
   };
 
   return (

@@ -7,15 +7,18 @@
  */
 
 import { storage } from "#imports";
+import { Unwatch } from "wxt/utils/storage";
 
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 
 type SetValue = (value: boolean) => Promise<void>;
 type GetValue = () => Promise<boolean>;
+type WatchItem = (callback: (value: boolean) => void) => void;
 
 interface IUseQuickMenuIsActive {
   setItem: SetValue;
   getItem: GetValue;
+  watchItem: WatchItem;
 }
 
 const quickMenuIsActive = storage.defineItem<boolean>(
@@ -46,6 +49,15 @@ export const useQuickMenuIsActive = (): IUseQuickMenuIsActive => {
      */
     getItem: async (): Promise<boolean> => {
       return await quickMenuIsActive.getValue();
+    },
+    /**
+     * Watches for changes to the quick menu active state.
+     * @param {function} callback - The callback function to be invoked when the state changes.
+     */
+    watchItem: async (callback: (value: boolean) => void) => {
+      await quickMenuIsActive.watch((newInstallDate, oldInstallDate) => {
+        callback(newInstallDate ?? false);
+      });
     },
   };
 };

@@ -21,8 +21,12 @@ import { SmCheckTerms } from "../SmCheckTerms/SmCheckTerms";
 import { useQuickMenuIsActive } from "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive";
 
 export const ContentMenu = () => {
-  const { getItem } = useQuickMenuIsActive();
+  const { getItem, watchItem } = useQuickMenuIsActive();
   const [isExtActive, setIsExtActive] = useState(false);
+
+  watchItem((value) => {
+    setIsExtActive(value);
+  });
 
   useEffect(() => {
     (async () => {
