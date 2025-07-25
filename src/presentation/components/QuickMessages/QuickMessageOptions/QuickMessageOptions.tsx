@@ -1,6 +1,6 @@
 /**
  *
- * Create the menu for add, update or delete quickmessages
+ * Create the menu for add, update or delete quickMessages
  * @param {QuickMessageOptionsProps}
  * @return {JSX.Element}
  * @module components/QuickMessage/QuickMessageOptions
@@ -69,8 +69,8 @@ export const QuickMessageOptions = ({ label }: QuickMessageOptionsProps) => {
     };
 
     const existQuickMessage = async (label: string): Promise<number> => {
-      const quickmessages = await getQuickMessages();
-      const indexOfLabel: number = quickmessages.findIndex(
+      const quickMessages = await getQuickMessages();
+      const indexOfLabel: number = quickMessages.findIndex(
         (qm) => qm.label === label,
       );
       return indexOfLabel;
