@@ -26,7 +26,7 @@ import { BotMessageSquare } from "lucide-react";
 import { useQuickMenuIsActive } from "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive";
 
 export const QuickMessagesMenu = () => {
-  const { getItem } = useQuickMenuIsActive();
+  const { getItem, watchItem } = useQuickMenuIsActive();
   const [extIsActive, setExtIsActive] = useState(false);
   const [value, setValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -60,6 +60,10 @@ export const QuickMessagesMenu = () => {
     }
     setIsOpen(true);
   }, []);
+
+  watchItem((value) => {
+    setExtIsActive(value);
+  });
 
   useEffect(() => {
     const checkExtIsActive = async () => {

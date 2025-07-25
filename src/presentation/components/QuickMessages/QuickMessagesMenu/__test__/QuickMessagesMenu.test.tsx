@@ -32,18 +32,19 @@ describe("QuickMessagesMenu.tsx", () => {
   beforeEach(() => {
     // Reset all mocks before each test
     vi.clearAllMocks();
+
+    // Mock the useQuickMenuIsActive hook
+    vi.mocked(useQuickMenuIsActive).mockReturnValue({
+      getItem: vi.fn().mockResolvedValue(true),
+      setItem: vi.fn(),
+      watchItem: vi.fn().mockResolvedValue(true),
+    });
+
+    // Mock the isEditableElement function
+    vi.mocked(isEditableElement).mockReturnValue(true);
   });
 
   it("should no render when isOpen is false", async () => {
-    // Create a mock implementation of getItem
-    const mockGetItem = vi.fn().mockResolvedValue("true");
-
-    // Mock the useQuickMenuIsActive hook to return the mock getItem function
-    vi.mocked(useQuickMenuIsActive).mockReturnValue({
-      getItem: mockGetItem,
-      setItem: vi.fn(),
-    });
-
     await act(async () => {
       render(<QuickMessagesMenu />);
     });
@@ -52,14 +53,6 @@ describe("QuickMessagesMenu.tsx", () => {
 
   it("should no render when ext is disabled", async () => {
     vi.mocked(isEditableElement).mockReturnValue(true);
-    // Create a mock implementation of getItem
-    const mockGetItem = vi.fn().mockResolvedValue("false");
-
-    // Mock the useQuickMenuIsActive hook to return the mock getItem function
-    vi.mocked(useQuickMenuIsActive).mockReturnValue({
-      getItem: mockGetItem,
-      setItem: vi.fn(),
-    });
 
     await act(async () => {
       render(<QuickMessagesMenu />);
@@ -68,14 +61,6 @@ describe("QuickMessagesMenu.tsx", () => {
   });
 
   it("should render component", async () => {
-    const mockGetItem = vi.fn().mockResolvedValue("true");
-
-    // Mock the useQuickMenuIsActive hook to return the mock getItem function
-    vi.mocked(useQuickMenuIsActive).mockReturnValue({
-      getItem: mockGetItem,
-      setItem: vi.fn(),
-    });
-    vi.mocked(isEditableElement).mockReturnValue(true);
     render(<QuickMessagesMenu />);
     act(() => {
       fireEvent(document, new Event("selectionchange"));
@@ -88,14 +73,6 @@ describe("QuickMessagesMenu.tsx", () => {
   });
 
   it("should close when a non-editable element is focused", async () => {
-    const mockGetItem = vi.fn().mockResolvedValue("true");
-
-    // Mock the useQuickMenuIsActive hook to return the mock getItem function
-    vi.mocked(useQuickMenuIsActive).mockReturnValue({
-      getItem: mockGetItem,
-      setItem: vi.fn(),
-    });
-    vi.mocked(isEditableElement).mockReturnValue(true);
     render(<QuickMessagesMenu />);
     act(() => {
       fireEvent(document, new Event("selectionchange"));
