@@ -42,6 +42,14 @@ export const getQuickMessages = async (): Promise<IQuickMessage[]> => {
   }
 };
 
+export const watchQuickMessages = (
+  callback: (messages: IQuickMessage[]) => void,
+) => {
+  quickMessageStorage.watch((newValue) => {
+    callback(newValue);
+  });
+};
+
 /**
  * Add a new quick message to storage.
  * @param message The quick message to add.

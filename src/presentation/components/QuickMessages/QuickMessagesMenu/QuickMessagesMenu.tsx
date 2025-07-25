@@ -12,7 +12,10 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 import { isEditableElement } from "~@/config/utils/isTextElement";
-import { getQuickMessages } from "~@/infrastructure/datasource/quickMessages.local.datasource";
+import {
+  getQuickMessages,
+  watchQuickMessages,
+} from "~@/infrastructure/datasource/quickMessages.local.datasource";
 import type { IQuickMessage } from "~@/infrastructure/datasource/quickMessages.local.datasource";
 
 import {
@@ -73,8 +76,13 @@ export const QuickMessagesMenu = () => {
   }, [getItem]);
 
   useEffect(() => {
+    watchQuickMessages(setQuickMessages);
     reloadMessages();
   }, [reloadMessages]);
+
+  useEffect(() => {
+    watchQuickMessages(setQuickMessages);
+  }, [quickMessages]);
 
   useEffect(() => {
     document.addEventListener("selectionchange", eventHandler, true);

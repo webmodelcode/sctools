@@ -35,20 +35,9 @@ type LabelOptions = "add" | "update" | "delete";
 
 export interface QuickMessageOptionsProps {
   label: LabelOptions;
-  setNeedUpdateMessages?: (value: boolean) => void;
 }
 
-export const QuickMessageOptions = ({
-  label,
-  setNeedUpdateMessages = (value: boolean) => {
-    if (!value) return;
-    if (!browser.tabs) {
-      location.reload();
-      return;
-    }
-    browser.tabs.reload();
-  },
-}: QuickMessageOptionsProps) => {
+export const QuickMessageOptions = ({ label }: QuickMessageOptionsProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [onErrorMsg, setOnErrorMsg] = useState<{
     message: string;
@@ -97,7 +86,6 @@ export const QuickMessageOptions = ({
       };
       if (exist) return setOnErrorMsg(msg);
       await addQuickMessage(quickMessage);
-      setNeedUpdateMessages(true);
       setIsOpen(false);
     };
 
@@ -112,7 +100,6 @@ export const QuickMessageOptions = ({
       if (!exist) return setOnErrorMsg(msg);
       const indexToUpdate = await existQuickMessage(quickMessage.label);
       await updateQuickMessage(indexToUpdate, quickMessage);
-      setNeedUpdateMessages(true);
       setIsOpen(false);
     };
 
@@ -125,7 +112,6 @@ export const QuickMessageOptions = ({
       if (!label) return setOnErrorMsg(msg);
       const indexToDelete = await existQuickMessage(label);
       await deleteQuickMessage(indexToDelete);
-      setNeedUpdateMessages(true);
       setIsOpen(false);
     };
 
@@ -143,7 +129,7 @@ export const QuickMessageOptions = ({
         console.error("Invalid label for QuickMessageOptions");
         break;
     }
-  }, [label, setNeedUpdateMessages]);
+  }, [label]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
