@@ -1,4 +1,7 @@
 import { forwardRef } from "react";
+import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
+import { Button } from "../ui/button";
+import { SendHorizontal } from "lucide-react";
 
 interface PopupPosition {
   top: number;
@@ -13,6 +16,18 @@ interface TranslatorPopupProps {
 
 export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
   ({ position, inputValue }, ref) => {
+    const [translatedValue, setTranslatedValue] = useState<string>("");
+
+    browser.runtime.sendMessage(
+      {
+        type: GLOBAL_STRINGS.BG_MESSAGE_TYPE.INPUT_MESSAGE,
+        data: inputValue,
+      },
+      (data: string) => {
+        setTranslatedValue(data);
+      },
+    );
+
     return (
       <div
         ref={ref}
@@ -24,11 +39,16 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
           maxWidth: "400px",
         }}
       >
-        <div className="mb-1 text-sm text-gray-600">Valor capturado:</div>
-        <div className="max-h-20 overflow-y-auto rounded border bg-gray-50 p-2 text-sm">
-          {inputValue || (
-            <span className="text-gray-400 italic">Sin contenido</span>
-          )}
+        <div className="mb-1 text-sm text-gray-600">Traducción:</div>
+        <div className="flex gap-2">
+          <div className="max-h-20 overflow-y-auto rounded border bg-gray-50 p-2 text-sm">
+            {translatedValue || (
+              <span className="text-gray-400 italic">Sin contenido</span>
+            )}
+          </div>
+          <Button variant={"outline"}>
+            <SendHorizontal />
+          </Button>
         </div>
       </div>
     );

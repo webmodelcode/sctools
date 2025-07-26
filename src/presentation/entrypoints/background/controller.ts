@@ -23,4 +23,15 @@ export const backgroundController = {
       return msg;
     }
   },
+  handleInputMessage: async (message: string) => {
+    if (localTranslator.isAvailable()) {
+      const translator = await localTranslator.create({
+        sourceLanguage: "es",
+        targetLanguage: "en",
+      });
+      const msg = await translator.translate(message);
+
+      return msg;
+    }
+  },
 };

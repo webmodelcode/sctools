@@ -12,7 +12,14 @@ export default defineBackground(() => {
           );
           sendResponse(result);
         })();
+        break;
       case GLOBAL_STRINGS.BG_MESSAGE_TYPE.INPUT_MESSAGE:
+        (async () => {
+          const result = await backgroundController.handleInputMessage(
+            message.data,
+          );
+          sendResponse(result);
+        })();
         break;
       default:
         break;
