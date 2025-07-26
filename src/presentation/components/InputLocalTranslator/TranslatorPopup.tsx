@@ -18,7 +18,7 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
   ({ position, inputValue }, ref) => {
     const [translatedValue, setTranslatedValue] = useState<string>("");
 
-    const onClick = () => {
+    const insertTranslate = () => {
       document.execCommand("insertText", false, translatedValue);
     };
 
@@ -32,10 +32,26 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
       },
     );
 
+    useEffect(() => {
+      const handleKeyPress = (event: KeyboardEvent) => {
+        if (event.ctrlKey && event.key.toLowerCase() === "q") {
+          event.preventDefault();
+          (event.target as HTMLInputElement)?.select();
+          insertTranslate();
+        }
+      };
+
+      document.addEventListener("keypress", handleKeyPress);
+
+      return () => {
+        document.removeEventListener("keypress", handleKeyPress);
+      };
+    }, [translatedValue]);
+
     return (
       <div
         ref={ref}
-        className="fixed z-50 max-w-sm rounded-lg border border-ew-star-color bg-white p-3 shadow-lg"
+        className="fixed z-50 flex max-w-sm flex-col items-start rounded-lg border border-ew-star-color bg-white px-3 py-1 shadow-lg"
         style={{
           top: `${position.top}px`,
           left: `${position.left}px`,
@@ -43,16 +59,14 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
           maxWidth: "400px",
         }}
       >
-        <div className="mb-1 text-sm text-gray-600">Traducción:</div>
-        <div className="flex gap-2">
-          <div className="max-h-20 overflow-y-auto rounded border bg-gray-50 p-2 text-sm">
-            {translatedValue || (
-              <span className="text-gray-400 italic">Sin contenido</span>
-            )}
-          </div>
-          <Button variant={"outline"} onClick={onClick}>
-            <SendHorizontal />
-          </Button>
+        <div className="mb-1 w-full text-sm text-gray-600">
+          <span className="font-bold">ctrl + q</span> para traducir
+        </div>
+
+        <div className="max-h-14 w-full overflow-y-auto rounded border bg-gray-50 px-2 text-center text-sm">
+          {translatedValue || (
+            <span className="text-gray-400 italic">Sin contenido</span>
+          )}
         </div>
       </div>
     );

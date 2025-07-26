@@ -10,28 +10,6 @@ export const InputLocalTranslator = () => {
   const position = usePopupPosition(focusedElement, isVisible);
   const inputValue = useInputValue(focusedElement);
 
-  // Handle popup blur to hide when clicking outside
-  useEffect(() => {
-    const handleDocumentClick = (event: MouseEvent) => {
-      if (
-        popupRef.current &&
-        !popupRef.current.contains(event.target as Node)
-      ) {
-        if (!focusedElement?.contains(event.target as Node)) {
-          setIsVisible(false);
-        }
-      }
-    };
-
-    if (isVisible) {
-      document.addEventListener("mousedown", handleDocumentClick);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleDocumentClick);
-    };
-  }, [isVisible, focusedElement, setIsVisible]);
-
   if (!isVisible) {
     return null;
   }
