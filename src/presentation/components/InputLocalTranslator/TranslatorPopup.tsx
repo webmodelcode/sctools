@@ -18,6 +18,10 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
   ({ position, inputValue }, ref) => {
     const [translatedValue, setTranslatedValue] = useState<string>("");
 
+    const onClick = () => {
+      document.execCommand("insertText", false, translatedValue);
+    };
+
     browser.runtime.sendMessage(
       {
         type: GLOBAL_STRINGS.BG_MESSAGE_TYPE.INPUT_MESSAGE,
@@ -31,7 +35,7 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
     return (
       <div
         ref={ref}
-        className="fixed z-50 max-w-sm rounded-lg border border-gray-300 bg-white p-3 shadow-lg"
+        className="fixed z-50 max-w-sm rounded-lg border border-ew-star-color bg-white p-3 shadow-lg"
         style={{
           top: `${position.top}px`,
           left: `${position.left}px`,
@@ -46,7 +50,7 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
               <span className="text-gray-400 italic">Sin contenido</span>
             )}
           </div>
-          <Button variant={"outline"}>
+          <Button variant={"outline"} onClick={onClick}>
             <SendHorizontal />
           </Button>
         </div>

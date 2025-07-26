@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface PopupPosition {
   top: number;
@@ -6,7 +6,7 @@ interface PopupPosition {
   width: number;
 }
 
-const POPUP_OFFSET = 120;
+const POPUP_OFFSET = 100;
 
 const calculatePosition = (element: HTMLElement): PopupPosition => {
   const rect = element.getBoundingClientRect();
@@ -17,8 +17,15 @@ const calculatePosition = (element: HTMLElement): PopupPosition => {
   };
 };
 
-export const usePopupPosition = (element: HTMLElement | null, isVisible: boolean) => {
-  const [position, setPosition] = useState<PopupPosition>({ top: 0, left: 0, width: 0 });
+export const usePopupPosition = (
+  element: HTMLElement | null,
+  isVisible: boolean,
+) => {
+  const [position, setPosition] = useState<PopupPosition>({
+    top: 0,
+    left: 0,
+    width: 0,
+  });
 
   useEffect(() => {
     if (!element || !isVisible) return;
@@ -35,13 +42,13 @@ export const usePopupPosition = (element: HTMLElement | null, isVisible: boolean
     const resizeObserver = new ResizeObserver(updatePosition);
     resizeObserver.observe(element);
 
-    window.addEventListener('scroll', updatePosition);
-    window.addEventListener('resize', updatePosition);
+    window.addEventListener("scroll", updatePosition);
+    window.addEventListener("resize", updatePosition);
 
     return () => {
       resizeObserver.disconnect();
-      window.removeEventListener('scroll', updatePosition);
-      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener("scroll", updatePosition);
+      window.removeEventListener("resize", updatePosition);
     };
   }, [element, isVisible]);
 
