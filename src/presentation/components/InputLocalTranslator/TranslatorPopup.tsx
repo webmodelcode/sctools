@@ -1,7 +1,5 @@
 import { forwardRef } from "react";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
-import { Button } from "../ui/button";
-import { SendHorizontal } from "lucide-react";
 
 interface PopupPosition {
   top: number;
