@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useState, useEffect } from "react";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 
 interface PopupPosition {
