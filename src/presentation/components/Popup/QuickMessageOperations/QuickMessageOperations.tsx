@@ -18,7 +18,7 @@ const quickMessageOptions: readonly ("add" | "update" | "delete")[] = [
 
 export const QuickMessageOperations = () => {
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center">
       <Label className="text-sm">Quick Message Operations</Label>
       <div className="flex flex-row">
         {quickMessageOptions.map((opt) => (

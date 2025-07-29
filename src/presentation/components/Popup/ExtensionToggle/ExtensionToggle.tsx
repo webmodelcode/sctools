@@ -15,10 +15,13 @@ interface ExtensionToggleProps {
   onToggle: (checked: boolean) => void;
 }
 
-export const ExtensionToggle = ({ isEnabled, onToggle }: ExtensionToggleProps) => {
+export const ExtensionToggle = ({
+  isEnabled,
+  onToggle,
+}: ExtensionToggleProps) => {
   return (
-    <div className="flex flex-col items-center justify-start">
-      <Label className="pb-4 text-sm">Enable Extension</Label>
+    <div className="mx-4 flex items-center justify-end gap-4">
+      <Label className="text-sm">Enable Extension</Label>
       <Switch checked={isEnabled} onCheckedChange={onToggle} />
     </div>
   );

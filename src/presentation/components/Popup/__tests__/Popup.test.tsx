@@ -25,8 +25,7 @@ describe("Popup Component", () => {
     expect(screen.getByText("ScTools")).toBeInTheDocument();
     expect(screen.getByText("by Estrellas Webcam")).toBeInTheDocument();
     
-    // Verify that the extension toggle renders
-    expect(screen.getByText("Enable Extension")).toBeInTheDocument();
+    // Verify that the extension toggle renders (now directly in Popup component)
     expect(screen.getByRole("switch")).toBeInTheDocument();
     
     // Verify that quick message operations render

@@ -14,14 +14,14 @@ describe("ExtensionToggle Component", () => {
 
     // Verify that the label renders
     expect(screen.getByText("Enable Extension")).toBeInTheDocument();
-    
+
     // Verify that the switch renders
     expect(screen.getByRole("switch")).toBeInTheDocument();
   });
 
   it("should reflect the enabled state correctly", () => {
     const { rerender } = render(
-      <ExtensionToggle isEnabled={false} onToggle={mockOnToggle} />
+      <ExtensionToggle isEnabled={false} onToggle={mockOnToggle} />,
     );
 
     const switchElement = screen.getByRole("switch");
@@ -46,9 +46,9 @@ describe("ExtensionToggle Component", () => {
     render(<ExtensionToggle isEnabled={false} onToggle={mockOnToggle} />);
 
     const container = screen.getByText("Enable Extension").parentElement;
-    expect(container).toHaveClass("flex", "flex-col", "items-center", "justify-start");
-    
+    expect(container).toHaveClass("flex", "items-center", "justify-end");
+
     const label = screen.getByText("Enable Extension");
-    expect(label).toHaveClass("pb-4", "text-sm");
+    expect(label).toHaveClass("text-sm");
   });
 });

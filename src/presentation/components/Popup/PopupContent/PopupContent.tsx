@@ -8,25 +8,12 @@
  */
 
 import { CardContent } from "../../ui/card";
-import { ExtensionToggle } from "../ExtensionToggle/ExtensionToggle";
 import { QuickMessageOperations } from "../QuickMessageOperations/QuickMessageOperations";
 
-interface PopupContentProps {
-  isQuickMenuEnabled: boolean;
-  onToggleExtension: (checked: boolean) => void;
-}
-
-export const PopupContent = ({
-  isQuickMenuEnabled,
-  onToggleExtension,
-}: PopupContentProps) => {
+export const PopupContent = () => {
   return (
     <CardContent className="p-4">
-      <div className="flex items-start justify-between gap-4 rounded-lg border p-3 shadow-sm">
-        <ExtensionToggle
-          isEnabled={isQuickMenuEnabled}
-          onToggle={onToggleExtension}
-        />
+      <div className="flex items-center justify-center gap-4 rounded-lg border p-3 shadow-sm">
         <QuickMessageOperations />
       </div>
     </CardContent>

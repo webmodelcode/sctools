@@ -16,17 +16,19 @@ import { PopupContent } from "./PopupContent/PopupContent";
 import { useExtensionState } from "~@/presentation/hooks/useExtensionState/useExtensionState";
 
 import "~@/presentation/assets/globals.css";
+import { ExtensionToggle } from "./ExtensionToggle/ExtensionToggle";
 
 export const Popup = memo(() => {
   const { isQuickMenuEnabled, handleToggleExtension } = useExtensionState();
 
   return (
-    <Card className="min-h-[200px] min-w-[350px] !rounded-none !bg-ew-star-color text-white">
-      <PopupHeader />
-      <PopupContent
-        isQuickMenuEnabled={isQuickMenuEnabled}
-        onToggleExtension={handleToggleExtension}
+    <Card className="flex min-h-[200px] min-w-[350px] flex-col !rounded-none !bg-ew-star-color text-white">
+      <ExtensionToggle
+        isEnabled={isQuickMenuEnabled}
+        onToggle={handleToggleExtension}
       />
+      <PopupHeader />
+      <PopupContent />
     </Card>
   );
 });
