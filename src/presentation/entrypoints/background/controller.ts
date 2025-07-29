@@ -1,3 +1,4 @@
+import { localLanguageDetector } from "~@/infrastructure/datasource/chromeLanguageDetector.local.datasource";
 import { localTranslator } from "~@/infrastructure/datasource/chromeTranslator.local.datasource";
 
 /**
@@ -13,9 +14,11 @@ import { localTranslator } from "~@/infrastructure/datasource/chromeTranslator.l
 
 export const backgroundController = {
   handleChatMessage: async (message: string) => {
-    if (localTranslator.isAvailable()) {
+    if (localTranslator.isAvailable() && localLanguageDetector.isAvailable()) {
+      const detectedLanguage =
+        await localLanguageDetector.detectLanguage(message);
       const translator = await localTranslator.create({
-        sourceLanguage: "en",
+        sourceLanguage: detectedLanguage ?? "en",
         targetLanguage: "es",
       });
       const msg = await translator.translate(message);
