@@ -1,4 +1,4 @@
-export interface LocalTranslatorCreateParams {
+interface ILocalTranslator {
   sourceLanguage: string;
   targetLanguage: string;
 }
@@ -21,7 +21,7 @@ export const localTranslator = {
   create: async ({
     sourceLanguage,
     targetLanguage,
-  }: LocalTranslatorCreateParams): Promise<Translator> => {
+  }: ILocalTranslator): Promise<Translator> => {
     const translator = await Translator.create({
       sourceLanguage,
       targetLanguage,
