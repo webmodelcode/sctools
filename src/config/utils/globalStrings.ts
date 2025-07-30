@@ -9,6 +9,7 @@ interface IStorageKeys {
   QUICK_MENU_IS_ACTIVE: string;
   QUICK_MESSAGES_IS_ACTIVE: string;
   QUICK_MESSAGES: string;
+  LOCAL_TRANSLATOR_TARGET_LANGUAGE: string;
 }
 
 interface IErrorMessages {
@@ -41,6 +42,8 @@ export const GLOBAL_STRINGS: IGlobalStrings = {
     QUICK_MESSAGES_IS_ACTIVE: "quickMessagesIsActive",
     /** Key for storing quick messages in local storage */
     QUICK_MESSAGES: "quickMessages",
+    /** Key for storing local translator target language in local storage */
+    LOCAL_TRANSLATOR_TARGET_LANGUAGE: "localTranslatorTargetLanguage",
   },
   ERROR_MESSAGES: {
     /** Error message for when StripChat elements are not ready */
