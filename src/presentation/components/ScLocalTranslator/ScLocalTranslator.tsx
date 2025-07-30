@@ -1,18 +1,31 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { scAdapter } from "~@/config/scAdapter/sc.adapter";
 import { TranslatedMessage } from "../TranslatedMessage/TranslatedMessage";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 import { useMutationObserver } from "~@/presentation/hooks/useMutationObserver/useMutationObserver";
+import { useQuickMenuIsActive } from "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive";
 
 export const ScLocalTranslator = () => {
   const chatRef = useRef(scAdapter.getScElementByClassName("messages"));
+  const { getItem, watchItem } = useQuickMenuIsActive();
+  const [isExtActive, setIsExtActive] = useState(false);
+
+  watchItem((value) => {
+    setIsExtActive(value);
+  });
+
+  useEffect(() => {
+    (async () => {
+      setIsExtActive(await getItem());
+    })();
+  }, [getItem]);
 
   useMutationObserver({
     ref: chatRef,
     callback: (mutations) => {
       mutations.forEach((mutation) => {
-        if (mutation.type === "childList") {
+        if (mutation.type === "childList" && isExtActive) {
           const firstNode = mutation.addedNodes[0];
           if (firstNode?.firstChild?.lastChild) {
             const msgContainer = firstNode.firstChild;
