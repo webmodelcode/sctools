@@ -26,11 +26,11 @@ export const backgroundController = {
       return msg;
     }
   },
-  handleInputMessage: async (message: string) => {
+  handleInputMessage: async (message: string, target?: string) => {
     if (localTranslator.isAvailable()) {
       const translator = await localTranslator.create({
         sourceLanguage: "es",
-        targetLanguage: "en",
+        targetLanguage: target ?? "en",
       });
       const msg = await translator.translate(message);
 

@@ -1,5 +1,6 @@
 import { forwardRef, useState, useEffect } from "react";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
+import { useLocalTranslatorTargetLanguage } from "~@/presentation/hooks/useLocalTranslatorTargetLanguage/useLocalTranslatorTargetLanguage";
 
 interface PopupPosition {
   top: number;
@@ -15,6 +16,18 @@ interface TranslatorPopupProps {
 export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
   ({ position, inputValue }, ref) => {
     const [translatedValue, setTranslatedValue] = useState<string>("");
+    const [targetLanguage, setTargetLanguage] = useState<string>("");
+    const { getItem, watchItem } = useLocalTranslatorTargetLanguage();
+
+    useEffect(() => {
+      getItem().then((value) => {
+        setTargetLanguage(value);
+      });
+    }, []);
+
+    watchItem((value) => {
+      setTargetLanguage(value);
+    });
 
     const insertTranslate = () => {
       document.execCommand("insertText", false, translatedValue);
@@ -24,6 +37,7 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
       {
         type: GLOBAL_STRINGS.BG_MESSAGE_TYPE.INPUT_MESSAGE,
         data: inputValue,
+        target: targetLanguage,
       },
       (data: string) => {
         setTranslatedValue(data);

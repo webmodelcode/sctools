@@ -17,6 +17,7 @@ export default defineBackground(() => {
         (async () => {
           const result = await backgroundController.handleInputMessage(
             message.data,
+            message.target,
           );
           sendResponse(result);
         })();
