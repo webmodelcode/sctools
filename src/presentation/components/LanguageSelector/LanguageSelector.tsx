@@ -14,10 +14,31 @@ import { LANGUAGE_SELECTOR } from "./languageSelector.strings.json";
 import { cn } from "~@/presentation/lib/utils";
 import { Button } from "../ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { useLocalTranslatorTargetLanguage } from "~@/presentation/hooks/useLocalTranslatorTargetLanguage/useLocalTranslatorTargetLanguage";
 
 export const LanguageSelector = () => {
+  const { setItem, getItem, watchItem } = useLocalTranslatorTargetLanguage();
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>("");
+
+  const init = async () => {
+    const currentValue = await getItem();
+    setValue(currentValue);
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
+  watchItem((newValue) => {
+    setValue(newValue);
+  });
+
+  const handleSelect = async (currentValue: string) => {
+    await setItem(currentValue);
+    setOpen(false);
+  };
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -47,10 +68,7 @@ export const LanguageSelector = () => {
                 <CommandItem
                   key={language.value}
                   value={language.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
+                  onSelect={handleSelect}
                 >
                   {language.label}
                   <Check
