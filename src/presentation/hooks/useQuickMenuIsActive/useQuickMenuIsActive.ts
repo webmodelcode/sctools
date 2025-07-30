@@ -54,8 +54,8 @@ export const useQuickMenuIsActive = (): IUseQuickMenuIsActive => {
      * @param {function} callback - The callback function to be invoked when the state changes.
      */
     watchItem: async (callback: (value: boolean) => void) => {
-      await quickMenuIsActive.watch((newInstallDate, oldInstallDate) => {
-        callback(newInstallDate ?? false);
+      await quickMenuIsActive.watch((newValue) => {
+        callback(newValue);
       });
     },
   };
