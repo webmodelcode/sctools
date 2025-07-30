@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Popup } from "../Popup";
+import { QUICK_MESSAGE_OPERATIONS } from "../QuickMessageOperations/strings.json";
 
 // Mock the useExtensionState hook
 vi.mock("~@/presentation/hooks/useExtensionState/useExtensionState", () => ({
@@ -24,17 +25,19 @@ describe("Popup Component", () => {
     // Verify that the header renders correctly
     expect(screen.getByText("ScTools")).toBeInTheDocument();
     expect(screen.getByText("by Estrellas Webcam")).toBeInTheDocument();
-    
+
     // Verify that the extension toggle renders (now directly in Popup component)
     expect(screen.getByRole("switch")).toBeInTheDocument();
-    
+
     // Verify that quick message operations render
-    expect(screen.getByText("Quick Message Operations")).toBeInTheDocument();
+    expect(
+      screen.getByText(QUICK_MESSAGE_OPERATIONS.TITLE),
+    ).toBeInTheDocument();
   });
 
   it("should render with modular components structure", () => {
     render(<Popup />);
-    
+
     // Verify that the modular structure is present using content as reference
     const titleElement = screen.getByText("ScTools");
     const card = titleElement.closest('[class*="min-h-[200px]"]');
@@ -44,7 +47,7 @@ describe("Popup Component", () => {
   it("switch should be initially unchecked", () => {
     render(<Popup />);
     const switchElement = screen.getByRole("switch");
-    
+
     expect(switchElement).not.toBeChecked();
   });
 });
