@@ -9,14 +9,17 @@
 
 import { CardHeader, CardTitle } from "../../ui/card";
 import { EwLogo } from "../../EwLogo/EwLogo";
+import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 
 export const PopupHeader = () => {
   return (
     <CardHeader className="flex flex-row items-center justify-around space-y-0 p-3">
       <CardTitle className="text-2xl font-bold">
         <EwLogo className="mx-auto h-32" />
-        <span>ScTools</span>
-        <span className="pl-2 text-sm">by Estrellas Webcam</span>
+        <span>{GLOBAL_STRINGS.APP_INFORMATION.APP_NAME}</span>
+        <span className="pl-2 text-sm">
+          by {GLOBAL_STRINGS.APP_INFORMATION.APP_PROVIDER}
+        </span>
       </CardTitle>
     </CardHeader>
   );

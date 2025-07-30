@@ -16,12 +16,18 @@ interface IErrorMessages {
   QM_NOT_MESSAGES: string;
 }
 
+interface IAppInformation {
+  APP_NAME: string;
+  APP_PROVIDER: string;
+}
+
 type IBgMessageType = "CHAT_MESSAGE" | "INPUT_MESSAGE";
 
 interface IGlobalStrings {
   STORAGE_KEYS: IStorageKeys;
   ERROR_MESSAGES: IErrorMessages;
   BG_MESSAGE_TYPE: { [key in IBgMessageType]: IBgMessageType };
+  APP_INFORMATION: IAppInformation;
 }
 
 /**
@@ -45,6 +51,10 @@ export const GLOBAL_STRINGS: IGlobalStrings = {
   BG_MESSAGE_TYPE: {
     CHAT_MESSAGE: "CHAT_MESSAGE",
     INPUT_MESSAGE: "INPUT_MESSAGE",
+  },
+  APP_INFORMATION: {
+    APP_NAME: "ScTools",
+    APP_PROVIDER: "Estrellas Webcam",
   },
 };
 
