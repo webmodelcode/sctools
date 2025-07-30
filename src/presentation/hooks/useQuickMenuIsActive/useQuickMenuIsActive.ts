@@ -7,7 +7,6 @@
  */
 
 import { storage } from "#imports";
-import { Unwatch } from "wxt/utils/storage";
 
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 
