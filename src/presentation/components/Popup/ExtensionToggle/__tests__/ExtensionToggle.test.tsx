@@ -47,7 +47,7 @@ describe("ExtensionToggle Component", () => {
     render(<ExtensionToggle isEnabled={false} onToggle={mockOnToggle} />);
 
     const container = screen.getByText(EXTENSION_TOGGLE.LABEL).parentElement;
-    expect(container).toHaveClass("flex", "items-center", "justify-end");
+    expect(container).toHaveClass("flex", "items-center", "justify-center");
 
     const label = screen.getByText(EXTENSION_TOGGLE.LABEL);
     expect(label).toHaveClass("text-sm");
