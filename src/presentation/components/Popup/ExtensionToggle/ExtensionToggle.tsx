@@ -21,7 +21,7 @@ export const ExtensionToggle = ({
   onToggle,
 }: ExtensionToggleProps) => {
   return (
-    <div className="mx-4 flex items-center justify-end gap-4">
+    <div className="flex flex-col items-center justify-center gap-4">
       <Label className="text-sm">{EXTENSION_TOGGLE.LABEL}</Label>
       <Switch checked={isEnabled} onCheckedChange={onToggle} />
     </div>
