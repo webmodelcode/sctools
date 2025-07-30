@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExtensionToggle } from "../ExtensionToggle";
+import { EXTENSION_TOGGLE } from "../ExtensionToggle.strings.json";
 
 describe("ExtensionToggle Component", () => {
   const mockOnToggle = vi.fn();
@@ -13,7 +14,7 @@ describe("ExtensionToggle Component", () => {
     render(<ExtensionToggle isEnabled={false} onToggle={mockOnToggle} />);
 
     // Verify that the label renders
-    expect(screen.getByText("Enable Extension")).toBeInTheDocument();
+    expect(screen.getByText(EXTENSION_TOGGLE.LABEL)).toBeInTheDocument();
 
     // Verify that the switch renders
     expect(screen.getByRole("switch")).toBeInTheDocument();
@@ -45,10 +46,10 @@ describe("ExtensionToggle Component", () => {
   it("should have correct CSS structure", () => {
     render(<ExtensionToggle isEnabled={false} onToggle={mockOnToggle} />);
 
-    const container = screen.getByText("Enable Extension").parentElement;
+    const container = screen.getByText(EXTENSION_TOGGLE.LABEL).parentElement;
     expect(container).toHaveClass("flex", "items-center", "justify-end");
 
-    const label = screen.getByText("Enable Extension");
+    const label = screen.getByText(EXTENSION_TOGGLE.LABEL);
     expect(label).toHaveClass("text-sm");
   });
 });
