@@ -12,7 +12,6 @@ export const ScLocalTranslatorMessenger = () => {
   );
   const { getItem, watchItem } = useQuickMenuIsActive();
   const [isExtActive, setIsExtActive] = useState(false);
-  const [haveMessenger, setHaveMessenger] = useState(false);
 
   watchItem((value) => {
     setIsExtActive(value);
@@ -22,7 +21,7 @@ export const ScLocalTranslatorMessenger = () => {
     (async () => {
       setIsExtActive(await getItem());
     })();
-  }, [getItem, haveMessenger]);
+  }, [getItem]);
 
   useMutationObserver({
     ref: messengerContainer,
