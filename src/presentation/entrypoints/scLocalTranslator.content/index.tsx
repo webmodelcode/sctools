@@ -5,6 +5,7 @@ import { scAdapter } from "~@/config/scAdapter/sc.adapter";
 import { ScLocalTranslator } from "~@/presentation/components/ScLocalTranslator/ScLocalTranslator";
 
 import "~@/presentation/assets/globals.css";
+import { ScLocalTranslatorMessenger } from "~@/presentation/components/ScLocalTranslator/ScLocalTranslatorMessenger";
 
 export default defineContentScript({
   matches: ["https://*.stripchat.com/*"],
@@ -25,7 +26,12 @@ export default defineContentScript({
 
         // Create a root on the UI container and render a component
         const root = ReactDOM.createRoot(app);
-        root.render(<ScLocalTranslator />);
+        root.render(
+          <>
+            <ScLocalTranslator />
+            <ScLocalTranslatorMessenger />
+          </>,
+        );
         return root;
       },
       onRemove: (root) => {
