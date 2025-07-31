@@ -63,6 +63,16 @@ export const addQuickMessage = async (
 };
 
 /**
+ * Import quick messages from a file.
+ * @param messages Array of quick messages to import.
+ */
+export const importQuickMessages = async (
+  messages: IQuickMessage[],
+): Promise<void> => {
+  await saveQuickMessages(messages);
+};
+
+/**
  * Update an existing quick message in storage.
  * @param index The index of the message to update.
  * @param message The updated quick message.
