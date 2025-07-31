@@ -6,6 +6,7 @@ import {
   addQuickMessage,
   updateQuickMessage,
   deleteQuickMessage,
+  getQuickMessages,
 } from "~@/infrastructure/datasource/quickMessages.local.datasource";
 
 import { ErrorMessage, ERROR_MESSAGES } from "./types";
@@ -26,7 +27,7 @@ export const handleAddMessage = async (
   titleRef: React.RefObject<HTMLInputElement | null>,
   messageRef: React.RefObject<HTMLInputElement | null>,
   setErrorMsg: (error: ErrorMessage) => void,
-  setIsOpen: (open: boolean) => void
+  setIsOpen: (open: boolean) => void,
 ): Promise<void> => {
   const quickMessage = createQuickMessageFromInputs(titleRef, messageRef);
   if (!quickMessage) {
@@ -55,7 +56,7 @@ export const handleUpdateMessage = async (
   titleRef: React.RefObject<HTMLInputElement | null>,
   messageRef: React.RefObject<HTMLInputElement | null>,
   setErrorMsg: (error: ErrorMessage) => void,
-  setIsOpen: (open: boolean) => void
+  setIsOpen: (open: boolean) => void,
 ): Promise<void> => {
   const quickMessage = createQuickMessageFromInputs(titleRef, messageRef);
   if (!quickMessage) {
@@ -82,7 +83,7 @@ export const handleUpdateMessage = async (
 export const handleDeleteMessage = async (
   titleRef: React.RefObject<HTMLInputElement | null>,
   setErrorMsg: (error: ErrorMessage) => void,
-  setIsOpen: (open: boolean) => void
+  setIsOpen: (open: boolean) => void,
 ): Promise<void> => {
   const title = getTitleFromInput(titleRef);
   if (!title) {
@@ -98,4 +99,14 @@ export const handleDeleteMessage = async (
 
   await deleteQuickMessage(existingIndex);
   setIsOpen(false);
+};
+
+/**
+ * Handler for exporting quick messages
+ * @returns Promise that resolves to an array of quick messages
+ */
+export const handleExportQuickMessages = async () => {
+  const quickMessages = await getQuickMessages();
+  if (!quickMessages) return [];
+  return quickMessages;
 };

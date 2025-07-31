@@ -8,14 +8,11 @@
  */
 
 import { QuickMessageOptions } from "../../QuickMessages/QuickMessageOptions/QuickMessageOptions";
+import { LabelOptions } from "../../QuickMessages/QuickMessageOptions/types";
 import { Label } from "../../ui/label";
 import { QUICK_MESSAGE_OPERATIONS } from "./strings.json";
 
-const quickMessageOptions: readonly ("add" | "update" | "delete")[] = [
-  "add",
-  "update",
-  "delete",
-] as const;
+const quickMessageOptions: LabelOptions[] = ["add", "update", "delete"];
 
 export const QuickMessageOperations = () => {
   return (
