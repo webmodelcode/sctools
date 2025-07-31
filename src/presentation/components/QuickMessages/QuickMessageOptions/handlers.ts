@@ -7,6 +7,8 @@ import {
   updateQuickMessage,
   deleteQuickMessage,
   getQuickMessages,
+  IQuickMessage,
+  importQuickMessages,
 } from "~@/infrastructure/datasource/quickMessages.local.datasource";
 
 import { ErrorMessage, ERROR_MESSAGES } from "./types";
@@ -109,4 +111,15 @@ export const handleExportQuickMessages = async () => {
   const quickMessages = await getQuickMessages();
   if (!quickMessages) return [];
   return quickMessages;
+};
+
+/**
+ * Handler for importing quick messages
+ * @param messages Array of quick messages to import
+ */
+export const handleImportQuickMessages = async (
+  messages: IQuickMessage[],
+): Promise<void> => {
+  if (!messages) return;
+  await importQuickMessages(messages);
 };
