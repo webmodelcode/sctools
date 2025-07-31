@@ -32,8 +32,6 @@ export const QuickMessageDataOperations = () => {
       buttonClassName: "m-1 px-2",
       havePopUp: true,
       dialogHeader: "Exportar mensajes",
-      dialogDescription:
-        "Copia y pega el contenido de los mensajes para crear un respaldo",
       dialogContent: (
         <ExportForm
           onSuccess={() => {

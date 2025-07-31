@@ -13,7 +13,7 @@ vi.mock("../handlers", () => ({
 }));
 
 // Mock clipboard API
-Object.defineProperty(navigator, 'clipboard', {
+Object.defineProperty(navigator, "clipboard", {
   value: {
     writeText: vi.fn(),
   },
@@ -29,10 +29,10 @@ const mockWriteText = vi.mocked(navigator.clipboard.writeText);
 describe("ExportForm", () => {
   const mockOnSuccess = vi.fn();
   const mockOnError = vi.fn();
-  
+
   const mockMessages = [
     { label: "test1", text: "message1" },
-    { label: "test2", text: "message2" }
+    { label: "test2", text: "message2" },
   ];
 
   beforeEach(() => {
@@ -44,22 +44,28 @@ describe("ExportForm", () => {
   describe("rendering", () => {
     it("should render the form with textarea and copy button", () => {
       render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
-      
-      expect(screen.getByLabelText("Mensajes exportados (JSON)")).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: "Copiar al portapapeles" })).toBeInTheDocument();
+
+      expect(screen.getByLabelText("Mensajes exportados")).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Copiar al portapapeles" }),
+      ).toBeInTheDocument();
     });
 
     it("should show description text", () => {
       render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
-      
-      expect(screen.getByText("Copia este JSON para importarlo en otra instancia o como respaldo.")).toBeInTheDocument();
+
+      expect(
+        screen.getByText(
+          "Copia y pega el contenido de los mensajes para crear un respaldo.",
+        ),
+      ).toBeInTheDocument();
     });
   });
 
   describe("data loading", () => {
     it("should load and display messages on mount", async () => {
       render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
-      
+
       await waitFor(() => {
         expect(mockHandleExportQuickMessages).toHaveBeenCalled();
       });
@@ -69,14 +75,16 @@ describe("ExportForm", () => {
   describe("copy to clipboard functionality", () => {
     it("should copy content to clipboard when button is clicked", async () => {
       render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
-      
+
       await waitFor(() => {
         expect(mockHandleExportQuickMessages).toHaveBeenCalled();
       });
-      
-      const copyButton = screen.getByRole("button", { name: "Copiar al portapapeles" });
+
+      const copyButton = screen.getByRole("button", {
+        name: "Copiar al portapapeles",
+      });
       fireEvent.click(copyButton);
-      
+
       await waitFor(() => {
         expect(mockWriteText).toHaveBeenCalled();
       });
@@ -86,11 +94,11 @@ describe("ExportForm", () => {
   describe("accessibility", () => {
     it("should have proper labels and form structure", () => {
       render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
-      
-      const textarea = screen.getByLabelText("Mensajes exportados (JSON)");
+
+      const textarea = screen.getByLabelText("Mensajes exportados");
       expect(textarea).toHaveAttribute("id", "exportData");
-      
-      const label = screen.getByText("Mensajes exportados (JSON)");
+
+      const label = screen.getByText("Mensajes exportados");
       expect(label).toHaveAttribute("for", "exportData");
     });
   });

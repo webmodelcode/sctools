@@ -54,7 +54,7 @@ export const ExportForm = ({ onSuccess, onError }: ExportFormProps) => {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="exportData">Mensajes exportados (JSON)</Label>
+        <Label htmlFor="exportData">Mensajes exportados</Label>
         <textarea
           id="exportData"
           value={exportData}
