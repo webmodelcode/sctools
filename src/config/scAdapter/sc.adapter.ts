@@ -25,6 +25,15 @@ const getScElementByClassName = (elmClass: ScClasses) => {
   }
 };
 
+const getScMultipleElementsByClassName = (elmClass: ScClasses) => {
+  try {
+    return document.getElementsByClassName(elmClass);
+  } catch (error) {
+    console.warn(error);
+    return [];
+  }
+};
+
 /**
  * Retrieves a DOM element by its ID.
  *
@@ -78,11 +87,20 @@ export const scAdapter = {
    * @returns {Element | null} - The DOM element or null if not found.
    */
   getScElementByClassName,
+
+  /**
+   * @param {string} elmClass - The class name of the elements to retrieve.
+   * @returns {HTMLCollectionOf<Element>} - The DOM elements or an empty array if not found.
+   */
+  getScMultipleElementsByClassName,
   /**
    * @param {string} elmID - The ID of the element to retrieve.
    * @returns {HTMLElement | null} - The DOM element or null if not found.
    */
   getScElementById,
+  /**
+   * @returns {boolean} - True if all required elements are found, false otherwise.
+   */
   isScElementsReady,
   /**
    * Checks if a given DOM node represents an error in the StripChat application.

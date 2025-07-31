@@ -21,6 +21,7 @@ export const SC_STRINGS: ScStrings = {
     "BroadcastContainer__aside#AX",
     "messages",
   ],
+  SC_HIDDEN_CLASSES: ["messenger-chat__messages-wrapper"],
   SC_IDS: ["external-switcher"],
   BROADCAST_CONTAINER: {
     CLASS: "BroadcastContainer__main#ka",

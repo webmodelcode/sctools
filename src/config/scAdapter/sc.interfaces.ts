@@ -15,7 +15,9 @@ export type ScClasses =
   | "BroadcastContainer__members#Go"
   | "player-panel-status-connection"
   | "BroadcastContainer__aside#AX"
-  | "messages";
+  | "messages"
+  | "messenger-chats"
+  | "messenger-chat__messages-wrapper";
 
 /**
  * Type representing StripChat DOM element IDs.
@@ -27,6 +29,7 @@ export type ScIds = "external-switcher";
  */
 export interface ScStrings {
   SC_CLASSES: ScClasses[];
+  SC_HIDDEN_CLASSES: ScClasses[];
   SC_IDS: ScIds[];
   ERROR_CONTAINER: {
     CLASS: ScClasses;
