@@ -13,7 +13,6 @@ export const QuickMessageDataOperations = () => {
       buttonClassName: "m-1 px-2",
       havePopUp: true,
       dialogHeader: "Importar mensajes",
-      dialogDescription: "Pega los mensajes que exportaste previamente",
       dialogContent: (
         <ImportForm
           onSuccess={() => {
@@ -51,7 +50,6 @@ export const QuickMessageDataOperations = () => {
       buttonClassName={opt.buttonClassName}
       havePopUp={opt.havePopUp}
       dialogHeader={opt.dialogHeader}
-      dialogDescription={opt.dialogDescription}
       dialogContent={opt.dialogContent}
     />
   ));

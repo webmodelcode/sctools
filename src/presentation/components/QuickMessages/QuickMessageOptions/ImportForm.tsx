@@ -101,21 +101,24 @@ export const ImportForm = ({ onSuccess, onError }: ImportFormProps) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-2">
-          <label htmlFor="jsonData" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Datos JSON</label>
+          <label
+            htmlFor="jsonData"
+            className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Mensajes
+          </label>
           <textarea
             id="jsonData"
             placeholder={`Ejemplo:\n[\n  {"label": "importado1", "text": "msg importado 1"},\n  {"label": "importado2", "text": "msg importado 2"}\n]`}
             className={cn(
-              "flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm font-mono ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              "flex max-h-[250px] min-h-[200px] w-full rounded-md border border-input bg-background px-3 py-2 font-mono text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
             )}
             {...form.register("jsonData")}
           />
           <p className="text-sm text-muted-foreground">
-            Ingresa un array JSON con los mensajes rápidos a importar.
+            Pega los mensajes que exportaste previamente.
           </p>
-          {error && (
-            <p className="text-sm text-destructive">{error}</p>
-          )}
+          {error && <p className="text-sm text-destructive">{error}</p>}
         </div>
         <Button type="submit" disabled={isLoading} className="w-full">
           {isLoading ? "Importando..." : "Importar Mensajes"}
