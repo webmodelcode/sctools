@@ -30,7 +30,7 @@ export const backgroundController = {
     if (localTranslator.isAvailable()) {
       const translator = await localTranslator.create({
         sourceLanguage: "es",
-        targetLanguage: target ?? "en",
+        targetLanguage: target || "en",
       });
       const msg = await translator.translate(message);
 
