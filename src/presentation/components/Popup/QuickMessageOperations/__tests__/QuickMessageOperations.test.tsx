@@ -42,6 +42,6 @@ describe("QuickMessageOperations Component", () => {
     const optionsContainer = screen.getByText(
       QUICK_MESSAGE_OPERATIONS.TITLE,
     ).nextElementSibling;
-    expect(optionsContainer?.children).toHaveLength(3);
+    expect(optionsContainer?.children).toHaveLength(5);
   });
 });

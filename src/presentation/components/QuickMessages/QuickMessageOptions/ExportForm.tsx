@@ -54,6 +54,7 @@ export const ExportForm = ({ onSuccess, onError }: ExportFormProps) => {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
+        <Label htmlFor="exportData">Mensajes exportados (JSON)</Label>
         <textarea
           id="exportData"
           value={exportData}
@@ -65,6 +66,9 @@ export const ExportForm = ({ onSuccess, onError }: ExportFormProps) => {
             isLoading ? "Cargando mensajes..." : "No hay mensajes para exportar"
           }
         />
+        <p className="text-sm text-muted-foreground">
+          Copia y pega el contenido de los mensajes para crear un respaldo.
+        </p>
       </div>
 
       <Button
