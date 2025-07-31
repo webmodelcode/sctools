@@ -112,14 +112,3 @@ export const handleExportQuickMessages = async () => {
   if (!quickMessages) return [];
   return quickMessages;
 };
-
-/**
- * Handler for importing quick messages
- * @param messages Array of quick messages to import
- */
-export const handleImportQuickMessages = async (
-  messages: IQuickMessage[],
-): Promise<void> => {
-  if (!messages) return;
-  await importQuickMessages(messages);
-};

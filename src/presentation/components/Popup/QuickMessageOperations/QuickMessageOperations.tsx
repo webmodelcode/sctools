@@ -7,10 +7,12 @@
  * @returns {JSX.Element} - Returns the JSX element representing the quick message operations.
  */
 
+import { Download, Upload } from "lucide-react";
 import { QuickMessageOptions } from "../../QuickMessages/QuickMessageOptions/QuickMessageOptions";
 import { LabelOptions } from "../../QuickMessages/QuickMessageOptions/types";
 import { Label } from "../../ui/label";
 import { QUICK_MESSAGE_OPERATIONS } from "./strings.json";
+import { QuickMessageDataOperations } from "../../QuickMessages/QuickMessageOptions/QuickMessageDataOperations";
 
 const quickMessageOptions: LabelOptions[] = ["add", "update", "delete"];
 
@@ -22,6 +24,7 @@ export const QuickMessageOperations = () => {
         {quickMessageOptions.map((opt) => (
           <QuickMessageOptions label={opt} key={opt} />
         ))}
+        <QuickMessageDataOperations />
       </div>
     </div>
   );

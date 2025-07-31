@@ -1,36 +1,62 @@
+import { cn } from "~@/presentation/lib/utils";
 import { Button, ButtonVariant } from "../ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { ReactNode } from "react";
 
 interface Props {
   label: string;
   buttonLabel: string | ReactNode;
-  buttonHandler: () => void;
+  buttonHandler?: () => void;
   buttonClassName?: string;
-  buttonVariant?: ButtonVariant;
+  havePopUp?: boolean;
+  dialogHeader?: string;
+  dialogDescription?: string;
+  dialogContent?: ReactNode;
 }
 
 export const TooltipButton = ({
   label,
   buttonLabel,
   buttonClassName,
-  buttonVariant,
   buttonHandler,
+  havePopUp,
+  dialogHeader,
+  dialogDescription,
+  dialogContent,
 }: Props) => {
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Button
-          variant={buttonVariant}
-          className={buttonClassName}
-          onClick={buttonHandler}
-        >
-          {buttonLabel}
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent>
-        <p>{label}</p>
-      </TooltipContent>
-    </Tooltip>
+    <Dialog>
+      <DialogTrigger
+        className={cn(
+          buttonClassName,
+          "rounded-md border hover:bg-accent-foreground",
+        )}
+        onClick={buttonHandler}
+      >
+        <Tooltip>
+          <TooltipTrigger asChild>{buttonLabel}</TooltipTrigger>
+          <TooltipContent>
+            <p>{label}</p>
+          </TooltipContent>
+        </Tooltip>
+      </DialogTrigger>
+      {havePopUp && (
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{dialogHeader}</DialogTitle>
+            <DialogDescription>{dialogDescription}</DialogDescription>
+          </DialogHeader>
+          {dialogContent}
+        </DialogContent>
+      )}
+    </Dialog>
   );
 };
