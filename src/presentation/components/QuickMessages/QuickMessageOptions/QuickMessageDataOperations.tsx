@@ -1,18 +1,18 @@
 import { Download, Upload } from "lucide-react";
 import { TooltipButton } from "../../TooltipButton/TooltipButton";
-import { ButtonVariant } from "../../ui/button";
 import { ImportForm } from "./ImportForm";
 import { ExportForm } from "./ExportForm";
+import { QUICK_MESSAGE_DATA_OPERATIONS } from "./quickMessageOptions.strings.json";
 
 export const QuickMessageDataOperations = () => {
   return [
     {
-      label: "Importar",
+      label: QUICK_MESSAGE_DATA_OPERATIONS.IMPORT.LABEL,
       buttonLabel: <Upload />,
       buttonVariant: "outline",
       buttonClassName: "m-1 px-2",
       havePopUp: true,
-      dialogHeader: "Importar mensajes",
+      dialogHeader: QUICK_MESSAGE_DATA_OPERATIONS.IMPORT.DIALOG_HEADER,
       dialogContent: (
         <ImportForm
           onSuccess={() => {

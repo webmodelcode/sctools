@@ -32,5 +32,12 @@
       "INVALID_CONTENT": "El mensaje debe contener \"label\" y \"text\". Error en mensaje numero: ",
       "GENERIC_ERROR": "Error al procesar los datos."
     }
+  },
+  "QUICK_MESSAGE_DATA_OPERATIONS": {
+    "IMPORT": {
+      "LABEL": "Importar",
+      "DIALOG_HEADER": "Importar mensajes"
+    },
+    "EXPORT": "Exportar"
   }
 }
