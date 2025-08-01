@@ -63,16 +63,11 @@ describe("ContentMenu", () => {
     vi.mocked(useQuickMenuIsActiveModule.useQuickMenuIsActive).mockReturnValue({
       setItem: vi.fn(),
       getItem: vi.fn().mockResolvedValue(true),
+      watchItem: vi.fn().mockResolvedValue(true),
     });
   });
 
   it("should render the component with status indicator when isActive is true", async () => {
-    // Arrange: Set up the hook to return isActive as true
-    vi.mocked(useQuickMenuIsActiveModule.useQuickMenuIsActive).mockReturnValue({
-      setItem: vi.fn(),
-      getItem: vi.fn().mockResolvedValue(true),
-    });
-
     // Act: Render the component
     render(<ContentMenu />);
 
@@ -81,12 +76,6 @@ describe("ContentMenu", () => {
   });
 
   it("should not render any menu items when isActive is false", () => {
-    // Arrange: Set up the hook to return isActive as false
-    vi.mocked(useQuickMenuIsActiveModule.useQuickMenuIsActive).mockReturnValue({
-      setItem: vi.fn(),
-      getItem: vi.fn().mockResolvedValue(false),
-    });
-
     // Act: Render the component
     render(<ContentMenu />);
 
@@ -101,13 +90,6 @@ describe("ContentMenu", () => {
         hostname: "stripchat.com",
       },
       writable: true,
-    });
-
-    // Mock the useQuickMenuIsActive hook to return isActive as true
-    const mockGetItem = vi.fn().mockResolvedValue(true);
-    vi.mocked(useQuickMenuIsActiveModule.useQuickMenuIsActive).mockReturnValue({
-      setItem: vi.fn(),
-      getItem: mockGetItem,
     });
 
     // Act: Render the component
@@ -128,13 +110,6 @@ describe("ContentMenu", () => {
       writable: true,
     });
 
-    // Mock the useQuickMenuIsActive hook to return isActive as true
-    const mockGetItem = vi.fn().mockResolvedValue(true);
-    vi.mocked(useQuickMenuIsActiveModule.useQuickMenuIsActive).mockReturnValue({
-      setItem: vi.fn(),
-      getItem: mockGetItem,
-    });
-
     // Act: Render the component
     render(<ContentMenu />);
 
@@ -145,14 +120,6 @@ describe("ContentMenu", () => {
   });
 
   it("should conditionally render components based on hostname", async () => {
-    // Mock the useQuickMenuIsActive hook to return isActive as true
-    // This is crucial because the component first checks isExtActive before rendering anything
-    const mockGetItem = vi.fn().mockResolvedValue(true);
-    vi.mocked(useQuickMenuIsActiveModule.useQuickMenuIsActive).mockReturnValue({
-      setItem: vi.fn(),
-      getItem: mockGetItem,
-    });
-
     // Test with stripchat.com
     Object.defineProperty(window, "location", {
       value: {
@@ -214,6 +181,7 @@ describe("ContentMenu", () => {
     vi.mocked(useQuickMenuIsActiveModule.useQuickMenuIsActive).mockReturnValue({
       setItem: vi.fn(),
       getItem: mockGetItem,
+      watchItem: vi.fn().mockResolvedValue(true),
     });
 
     // Act: Render the component (which triggers useEffect)
@@ -235,6 +203,7 @@ describe("ContentMenu", () => {
     vi.mocked(useQuickMenuIsActiveModule.useQuickMenuIsActive).mockReturnValue({
       setItem: vi.fn(),
       getItem: mockGetItem,
+      watchItem: vi.fn().mockResolvedValue(false),
     });
 
     // Act: Render the component

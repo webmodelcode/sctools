@@ -1,0 +1,51 @@
+{
+  "COMPONENTS": {
+    "GET_DIALOG_TITLE": {
+      "ADD": "Añadir Mensaje Rápido",
+      "UPDATE": "Actualizar Mensaje Rápido",
+      "DELETE": "Eliminar Mensaje Rápido"
+    },
+    "GET_DIALOG_DESCRIPTION": {
+      "ADD": "Añade un mensaje rápido aquí. Haz clic en guardar cuando estés listo.",
+      "UPDATE": "Actualiza un mensaje rápido aquí. Haz clic en guardar cuando estés listo.",
+      "DELETE": "Elimina un mensaje rápido aquí. Haz clic en guardar cuando estés listo."
+    }
+  },
+  "EXPORT_FORM": {
+    "LABEL": "Mensajes exportados",
+    "LOADING_MESSAGES": "Cargando mensajes...",
+    "NO_MESSAGES": "No hay mensajes para exportar",
+    "DESCRIPTION": "Copia y pega el contenido de los mensajes para crear un respaldo.",
+    "COPY_SUCCESS": "¡Copiado!",
+    "COPY_BUTTON": "Copiar al portapapeles",
+    "ERROR_COPY": "Error al copiar los mensajes"
+  },
+  "IMPORT_FORM": {
+    "LABEL": "Mensajes",
+    "DESCRIPTION": "Pega los mensajes que exportaste previamente.",
+    "IMPORT_BUTTON": "Importar Mensajes",
+    "LOADING_IMPORT": "Importando...",
+    "EXAMPLE_PLACEHOLDER": "Ejemplo:\n[\n  {\"label\": \"importado1\", \"text\": \"msg importado 1\"},\n  {\"label\": \"importado2\", \"text\": \"msg importado 2\"}\n]",
+    "FORM_VALIDATION_MSG": {
+      "REQUIRED": "Asegúrate de ingresar los mensajes que quieres importar.",
+      "INVALID_FORMAT": "Asegúrate de que los datos luzcan como el ejemplo.",
+      "INVALID_CONTENT": "El mensaje debe contener \"label\" y \"text\". Error en mensaje numero: ",
+      "GENERIC_ERROR": "Error al procesar los datos."
+    }
+  },
+  "QUICK_MESSAGE_DATA_OPERATIONS": {
+    "IMPORT": {
+      "LABEL": "Importar",
+      "DIALOG_HEADER": "Importar mensajes"
+    },
+    "EXPORT": "Exportar"
+  },
+  "QUICK_MESSAGE_OPTIONS": {
+    "LABEL_NOT_FOUND": "Etiqueta no encontrada: ",
+    "FORM": {
+      "TITLE": "Titulo",
+      "MESSAGE": "Mensaje",
+      "BUTTON": "Guardar"
+    }
+  }
+}

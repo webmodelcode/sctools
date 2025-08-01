@@ -42,6 +42,14 @@ export const getQuickMessages = async (): Promise<IQuickMessage[]> => {
   }
 };
 
+export const watchQuickMessages = (
+  callback: (messages: IQuickMessage[]) => void,
+) => {
+  quickMessageStorage.watch((newValue) => {
+    callback(newValue);
+  });
+};
+
 /**
  * Add a new quick message to storage.
  * @param message The quick message to add.
@@ -51,6 +59,16 @@ export const addQuickMessage = async (
 ): Promise<void> => {
   const messages = await getQuickMessages();
   messages.push(message);
+  await saveQuickMessages(messages);
+};
+
+/**
+ * Import quick messages from a file.
+ * @param messages Array of quick messages to import.
+ */
+export const importQuickMessages = async (
+  messages: IQuickMessage[],
+): Promise<void> => {
   await saveQuickMessages(messages);
 };
 

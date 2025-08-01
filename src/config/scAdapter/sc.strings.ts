@@ -19,7 +19,9 @@ export const SC_STRINGS: ScStrings = {
     "broadcast-player-wrapper view-cam-resizer view-cam-resizer-boundary-x view-cam-resizer-broadcast",
     "player-panel-status-connection",
     "BroadcastContainer__aside#AX",
+    "messages",
   ],
+  SC_HIDDEN_CLASSES: ["messenger-chat__messages-wrapper"],
   SC_IDS: ["external-switcher"],
   BROADCAST_CONTAINER: {
     CLASS: "BroadcastContainer__main#ka",

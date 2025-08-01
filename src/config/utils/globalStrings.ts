@@ -9,6 +9,7 @@ interface IStorageKeys {
   QUICK_MENU_IS_ACTIVE: string;
   QUICK_MESSAGES_IS_ACTIVE: string;
   QUICK_MESSAGES: string;
+  LOCAL_TRANSLATOR_TARGET_LANGUAGE: string;
 }
 
 interface IErrorMessages {
@@ -16,9 +17,18 @@ interface IErrorMessages {
   QM_NOT_MESSAGES: string;
 }
 
+interface IAppInformation {
+  APP_NAME: string;
+  APP_PROVIDER: string;
+}
+
+type IBgMessageType = "CHAT_MESSAGE" | "INPUT_MESSAGE";
+
 interface IGlobalStrings {
   STORAGE_KEYS: IStorageKeys;
   ERROR_MESSAGES: IErrorMessages;
+  BG_MESSAGE_TYPE: { [key in IBgMessageType]: IBgMessageType };
+  APP_INFORMATION: IAppInformation;
 }
 
 /**
@@ -32,12 +42,22 @@ export const GLOBAL_STRINGS: IGlobalStrings = {
     QUICK_MESSAGES_IS_ACTIVE: "quickMessagesIsActive",
     /** Key for storing quick messages in local storage */
     QUICK_MESSAGES: "quickMessages",
+    /** Key for storing local translator target language in local storage */
+    LOCAL_TRANSLATOR_TARGET_LANGUAGE: "localTranslatorTargetLanguage",
   },
   ERROR_MESSAGES: {
     /** Error message for when StripChat elements are not ready */
     SC_ELEMENTS_NOT_READY: "Some elements are not available yet.",
     /** Error message for when quick messages are not found */
     QM_NOT_MESSAGES: "No messages found.",
+  },
+  BG_MESSAGE_TYPE: {
+    CHAT_MESSAGE: "CHAT_MESSAGE",
+    INPUT_MESSAGE: "INPUT_MESSAGE",
+  },
+  APP_INFORMATION: {
+    APP_NAME: "ScTools",
+    APP_PROVIDER: "Estrellas Webcam",
   },
 };
 

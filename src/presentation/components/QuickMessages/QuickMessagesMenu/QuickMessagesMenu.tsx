@@ -12,7 +12,10 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 import { isEditableElement } from "~@/config/utils/isTextElement";
-import { getQuickMessages } from "~@/infrastructure/datasource/quickMessages.local.datasource";
+import {
+  getQuickMessages,
+  watchQuickMessages,
+} from "~@/infrastructure/datasource/quickMessages.local.datasource";
 import type { IQuickMessage } from "~@/infrastructure/datasource/quickMessages.local.datasource";
 
 import {
@@ -26,7 +29,7 @@ import { BotMessageSquare } from "lucide-react";
 import { useQuickMenuIsActive } from "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive";
 
 export const QuickMessagesMenu = () => {
-  const { getItem } = useQuickMenuIsActive();
+  const { getItem, watchItem } = useQuickMenuIsActive();
   const [extIsActive, setExtIsActive] = useState(false);
   const [value, setValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -61,6 +64,10 @@ export const QuickMessagesMenu = () => {
     setIsOpen(true);
   }, []);
 
+  watchItem((value) => {
+    setExtIsActive(value);
+  });
+
   useEffect(() => {
     const checkExtIsActive = async () => {
       setExtIsActive(await getItem());
@@ -69,8 +76,13 @@ export const QuickMessagesMenu = () => {
   }, [getItem]);
 
   useEffect(() => {
+    watchQuickMessages(setQuickMessages);
     reloadMessages();
   }, [reloadMessages]);
+
+  useEffect(() => {
+    watchQuickMessages(setQuickMessages);
+  }, [quickMessages]);
 
   useEffect(() => {
     document.addEventListener("selectionchange", eventHandler, true);
