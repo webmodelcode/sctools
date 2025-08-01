@@ -15,6 +15,7 @@ import {
 } from "~@/infrastructure/datasource/quickMessages.local.datasource";
 import type { IQuickMessage } from "~@/infrastructure/datasource/quickMessages.local.datasource";
 import { cn } from "~@/presentation/lib/utils";
+import { IMPORT_FORM } from "./quickMessageOptions.strings.json";
 
 interface FormData {
   jsonData: string;
@@ -42,7 +43,7 @@ export const ImportForm = ({ onSuccess, onError }: ImportFormProps) => {
     try {
       // Validate input is not empty
       if (!values.jsonData.trim()) {
-        throw new Error("Por favor ingresa los datos JSON.");
+        throw new Error(IMPORT_FORM.FORM_VALIDATION_MSG.REQUIRED);
       }
 
       // Parse JSON data
@@ -50,14 +51,14 @@ export const ImportForm = ({ onSuccess, onError }: ImportFormProps) => {
 
       // Validate that it's an array
       if (!Array.isArray(parsedData)) {
-        throw new Error("Los datos deben ser un array de mensajes.");
+        throw new Error(IMPORT_FORM.FORM_VALIDATION_MSG.INVALID_FORMAT);
       }
 
       // Validate each message has required properties
       const validMessages: IQuickMessage[] = parsedData.map((item, index) => {
         if (!item.label || !item.text) {
           throw new Error(
-            `El mensaje en la posición ${index + 1} debe tener 'label' y 'text'.`,
+            `${IMPORT_FORM.FORM_VALIDATION_MSG.INVALID_CONTENT}${index + 1}`,
           );
         }
         return {
@@ -83,12 +84,12 @@ export const ImportForm = ({ onSuccess, onError }: ImportFormProps) => {
     } catch (error) {
       let errorMessage: string;
       if (error instanceof SyntaxError) {
-        errorMessage = "JSON inválido. Verifica el formato.";
+        errorMessage = IMPORT_FORM.FORM_VALIDATION_MSG.INVALID_FORMAT;
       } else {
         errorMessage =
           error instanceof Error
             ? error.message
-            : "Error al procesar los datos JSON.";
+            : IMPORT_FORM.FORM_VALIDATION_MSG.GENERIC_ERROR;
       }
       setError(errorMessage);
       onError?.(errorMessage);
@@ -105,23 +106,23 @@ export const ImportForm = ({ onSuccess, onError }: ImportFormProps) => {
             htmlFor="jsonData"
             className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
-            Mensajes
+            {IMPORT_FORM.LABEL}
           </label>
           <textarea
             id="jsonData"
-            placeholder={`Ejemplo:\n[\n  {"label": "importado1", "text": "msg importado 1"},\n  {"label": "importado2", "text": "msg importado 2"}\n]`}
+            placeholder={IMPORT_FORM.EXAMPLE_PLACEHOLDER}
             className={cn(
               "flex max-h-[250px] min-h-[200px] w-full rounded-md border border-input bg-background px-3 py-2 font-mono text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
             )}
             {...form.register("jsonData")}
           />
           <p className="text-sm text-muted-foreground">
-            Pega los mensajes que exportaste previamente.
+            {IMPORT_FORM.DESCRIPTION}
           </p>
           {error && <p className="text-sm text-destructive">{error}</p>}
         </div>
         <Button type="submit" disabled={isLoading} className="w-full">
-          {isLoading ? "Importando..." : "Importar Mensajes"}
+          {isLoading ? IMPORT_FORM.LOADING_IMPORT : IMPORT_FORM.IMPORT_BUTTON}
         </Button>
       </form>
     </Form>

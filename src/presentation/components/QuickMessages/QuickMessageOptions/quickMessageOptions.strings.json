@@ -19,5 +19,18 @@
     "COPY_SUCCESS": "¡Copiado!",
     "COPY_BUTTON": "Copiar al portapapeles",
     "ERROR_COPY": "Error al copiar los mensajes"
+  },
+  "IMPORT_FORM": {
+    "LABEL": "Mensajes",
+    "DESCRIPTION": "Pega los mensajes que exportaste previamente.",
+    "IMPORT_BUTTON": "Importar Mensajes",
+    "LOADING_IMPORT": "Importando...",
+    "EXAMPLE_PLACEHOLDER": "Ejemplo:\n[\n  {\"label\": \"importado1\", \"text\": \"msg importado 1\"},\n  {\"label\": \"importado2\", \"text\": \"msg importado 2\"}\n]",
+    "FORM_VALIDATION_MSG": {
+      "REQUIRED": "Asegúrate de ingresar los mensajes que quieres importar.",
+      "INVALID_FORMAT": "Asegúrate de que los datos luzcan como el ejemplo.",
+      "INVALID_CONTENT": "El mensaje debe contener \"label\" y \"text\". Error en mensaje numero: ",
+      "GENERIC_ERROR": "Error al procesar los datos."
+    }
   }
 }

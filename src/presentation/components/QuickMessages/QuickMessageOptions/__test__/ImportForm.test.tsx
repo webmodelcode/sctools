@@ -78,7 +78,9 @@ describe("ImportForm", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText("Por favor ingresa los datos JSON."),
+          screen.getByText(
+            "Asegúrate de ingresar los mensajes que quieres importar.",
+          ),
         ).toBeInTheDocument();
       });
     });
@@ -96,7 +98,9 @@ describe("ImportForm", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText("JSON inválido. Verifica el formato."),
+          screen.getByText(
+            "Asegúrate de que los datos luzcan como el ejemplo.",
+          ),
         ).toBeInTheDocument();
       });
     });
@@ -114,7 +118,9 @@ describe("ImportForm", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText("Los datos deben ser un array de mensajes."),
+          screen.getByText(
+            "Asegúrate de que los datos luzcan como el ejemplo.",
+          ),
         ).toBeInTheDocument();
       });
     });
@@ -133,7 +139,7 @@ describe("ImportForm", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "El mensaje en la posición 1 debe tener 'label' y 'text'.",
+            'El mensaje debe contener "label" y "text". Error en mensaje numero: 1',
           ),
         ).toBeInTheDocument();
       });
@@ -275,7 +281,7 @@ describe("ImportForm", () => {
 
       await waitFor(() => {
         expect(mockOnError).toHaveBeenCalledWith(
-          "JSON inválido. Verifica el formato.",
+          "Asegúrate de que los datos luzcan como el ejemplo.",
         );
       });
     });
