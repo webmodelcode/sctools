@@ -10,5 +10,13 @@
       "UPDATE": "Actualiza un mensaje rápido aquí. Haz clic en guardar cuando estés listo.",
       "DELETE": "Elimina un mensaje rápido aquí. Haz clic en guardar cuando estés listo."
     }
+  },
+  "EXPORT_FORM": {
+    "LABEL": "Mensajes exportados",
+    "LOADING_MESSAGES": "Cargando mensajes...",
+    "NO_MESSAGES": "No hay mensajes para exportar",
+    "DESCRIPTION": "Copia y pega el contenido de los mensajes para crear un respaldo.",
+    "COPY_SUCCESS": "¡Copiado!",
+    "COPY_BUTTON": "Copiar al portapapeles"
   }
 }

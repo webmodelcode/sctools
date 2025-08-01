@@ -10,6 +10,7 @@ import { Clipboard } from "lucide-react";
 import { Button } from "~@/presentation/components/ui/button";
 import { Label } from "~@/presentation/components/ui/label";
 import { handleExportQuickMessages } from "./handlers";
+import { EXPORT_FORM } from "./quickMessageOptions.strings.json";
 import { cn } from "~@/presentation/lib/utils";
 
 interface ExportFormProps {
@@ -54,7 +55,7 @@ export const ExportForm = ({ onSuccess, onError }: ExportFormProps) => {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="exportData">Mensajes exportados</Label>
+        <Label htmlFor="exportData">{EXPORT_FORM.LABEL}</Label>
         <textarea
           id="exportData"
           value={exportData}
@@ -63,11 +64,11 @@ export const ExportForm = ({ onSuccess, onError }: ExportFormProps) => {
             "flex max-h-[250px] min-h-[200px] w-full rounded-md border border-input bg-muted px-3 py-2 font-mono text-xs ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
           )}
           placeholder={
-            isLoading ? "Cargando mensajes..." : "No hay mensajes para exportar"
+            isLoading ? EXPORT_FORM.LOADING_MESSAGES : EXPORT_FORM.NO_MESSAGES
           }
         />
         <p className="text-sm text-muted-foreground">
-          Copia y pega el contenido de los mensajes para crear un respaldo.
+          {EXPORT_FORM.DESCRIPTION}
         </p>
       </div>
 
@@ -78,7 +79,7 @@ export const ExportForm = ({ onSuccess, onError }: ExportFormProps) => {
         variant={copySuccess ? "default" : "outline"}
       >
         <Clipboard className="mr-2 h-4 w-4" />
-        {copySuccess ? "¡Copiado!" : "Copiar al portapapeles"}
+        {copySuccess ? EXPORT_FORM.COPY_SUCCESS : EXPORT_FORM.COPY_BUTTON}
       </Button>
     </div>
   );
