@@ -54,11 +54,8 @@ vi.mock("../../FloatAlert/FloatAlert", () => ({
   ),
 }));
 
-const {
-  handleAddMessage,
-  handleUpdateMessage,
-  handleDeleteMessage,
-} = vi.mocked(await import("../handlers"));
+const { handleAddMessage, handleUpdateMessage, handleDeleteMessage } =
+  vi.mocked(await import("../handlers"));
 
 const {
   getActionIcon,
@@ -75,7 +72,7 @@ describe("QuickMessageOptions Component", () => {
   describe("rendering", () => {
     it("should render trigger button with correct icon for add action", () => {
       render(<QuickMessageOptions label="add" />);
-      
+
       const button = screen.getByRole("button");
       expect(button).toBeInTheDocument();
       expect(button).toHaveAttribute("aria-label", "add quick message");
@@ -84,7 +81,7 @@ describe("QuickMessageOptions Component", () => {
 
     it("should render trigger button with correct icon for update action", () => {
       render(<QuickMessageOptions label="update" />);
-      
+
       const button = screen.getByRole("button");
       expect(button).toHaveAttribute("aria-label", "update quick message");
       expect(screen.getByTestId("notebook-pen-icon")).toBeInTheDocument();
@@ -92,7 +89,7 @@ describe("QuickMessageOptions Component", () => {
 
     it("should render trigger button with correct icon for delete action", () => {
       render(<QuickMessageOptions label="delete" />);
-      
+
       const button = screen.getByRole("button");
       expect(button).toHaveAttribute("aria-label", "delete quick message");
       expect(screen.getByTestId("delete-icon")).toBeInTheDocument();
@@ -102,57 +99,65 @@ describe("QuickMessageOptions Component", () => {
   describe("dialog functionality", () => {
     it("should open dialog when trigger button is clicked", async () => {
       render(<QuickMessageOptions label="add" />);
-      
+
       const triggerButton = screen.getByRole("button");
       fireEvent.click(triggerButton);
-      
+
       await waitFor(() => {
         expect(screen.getByText("Add Quick Message")).toBeInTheDocument();
-        expect(screen.getByText("Add a quick message here. Click save when you're done.")).toBeInTheDocument();
+        expect(
+          screen.getByText(
+            "Add a quick message here. Click save when you're done.",
+          ),
+        ).toBeInTheDocument();
       });
     });
 
     it("should show title input field", async () => {
       render(<QuickMessageOptions label="add" />);
-      
+
       const triggerButton = screen.getByRole("button");
       fireEvent.click(triggerButton);
-      
+
       await waitFor(() => {
-        expect(screen.getByLabelText("Title")).toBeInTheDocument();
-        expect(screen.getByPlaceholderText("Quick Message Title")).toBeInTheDocument();
+        expect(screen.getByLabelText("Titulo")).toBeInTheDocument();
+        expect(
+          screen.getByPlaceholderText("Quick Message Title"),
+        ).toBeInTheDocument();
       });
     });
 
     it("should show message input field for add action", async () => {
       render(<QuickMessageOptions label="add" />);
-      
+
       const triggerButton = screen.getByRole("button");
       fireEvent.click(triggerButton);
-      
+
       await waitFor(() => {
-        expect(screen.getByLabelText("Message")).toBeInTheDocument();
-        expect(screen.getByPlaceholderText("Write your quick message here")).toBeInTheDocument();
+        expect(screen.getByLabelText("Mensaje")).toBeInTheDocument();
+        expect(
+          screen.getByPlaceholderText("Write your quick message here"),
+        ).toBeInTheDocument();
       });
     });
 
     it("should show message input field for update action", async () => {
       render(<QuickMessageOptions label="update" />);
-      
+
       const triggerButton = screen.getByRole("button");
       fireEvent.click(triggerButton);
-      
+
       await waitFor(() => {
-        expect(screen.getByLabelText("Message")).toBeInTheDocument();
+        expect(screen.getByLabelText("Mensaje")).toBeInTheDocument();
       });
     });
 
     it("should not show message input field for delete action", async () => {
       render(<QuickMessageOptions label="delete" />);
-      
+
       const triggerButton = screen.getByRole("button");
       fireEvent.click(triggerButton);
-      
+
       await waitFor(() => {
         expect(screen.queryByLabelText("Message")).not.toBeInTheDocument();
       });
@@ -160,12 +165,12 @@ describe("QuickMessageOptions Component", () => {
 
     it("should show save button", async () => {
       render(<QuickMessageOptions label="add" />);
-      
+
       const triggerButton = screen.getByRole("button");
       fireEvent.click(triggerButton);
-      
+
       await waitFor(() => {
-        expect(screen.getByText("Save changes")).toBeInTheDocument();
+        expect(screen.getByText("Guardar")).toBeInTheDocument();
       });
     });
   });
@@ -173,43 +178,43 @@ describe("QuickMessageOptions Component", () => {
   describe("handler integration", () => {
     it("should call handleAddMessage when save button is clicked for add action", async () => {
       render(<QuickMessageOptions label="add" />);
-      
+
       const triggerButton = screen.getByRole("button");
       fireEvent.click(triggerButton);
-      
+
       await waitFor(() => {
-        const saveButton = screen.getByText("Save changes");
+        const saveButton = screen.getByText("Guardar");
         fireEvent.click(saveButton);
       });
-      
+
       expect(handleAddMessage).toHaveBeenCalledTimes(1);
     });
 
     it("should call handleUpdateMessage when save button is clicked for update action", async () => {
       render(<QuickMessageOptions label="update" />);
-      
+
       const triggerButton = screen.getByRole("button");
       fireEvent.click(triggerButton);
-      
+
       await waitFor(() => {
-        const saveButton = screen.getByText("Save changes");
+        const saveButton = screen.getByText("Guardar");
         fireEvent.click(saveButton);
       });
-      
+
       expect(handleUpdateMessage).toHaveBeenCalledTimes(1);
     });
 
     it("should call handleDeleteMessage when save button is clicked for delete action", async () => {
       render(<QuickMessageOptions label="delete" />);
-      
+
       const triggerButton = screen.getByRole("button");
       fireEvent.click(triggerButton);
-      
+
       await waitFor(() => {
-        const saveButton = screen.getByText("Save changes");
+        const saveButton = screen.getByText("Guardar");
         fireEvent.click(saveButton);
       });
-      
+
       expect(handleDeleteMessage).toHaveBeenCalledTimes(1);
     });
   });
@@ -217,10 +222,10 @@ describe("QuickMessageOptions Component", () => {
   describe("error handling", () => {
     it("should not show error alert when no error is present", async () => {
       render(<QuickMessageOptions label="add" />);
-      
+
       const triggerButton = screen.getByRole("button");
       fireEvent.click(triggerButton);
-      
+
       await waitFor(() => {
         expect(screen.queryByTestId("float-alert")).not.toBeInTheDocument();
       });
@@ -235,10 +240,10 @@ describe("QuickMessageOptions Component", () => {
 
     it("should call getDialogTitle and getDialogDescription when dialog opens", async () => {
       render(<QuickMessageOptions label="update" />);
-      
+
       const triggerButton = screen.getByRole("button");
       fireEvent.click(triggerButton);
-      
+
       await waitFor(() => {
         expect(getDialogTitle).toHaveBeenCalledWith("update");
         expect(getDialogDescription).toHaveBeenCalledWith("update");
@@ -247,10 +252,10 @@ describe("QuickMessageOptions Component", () => {
 
     it("should call shouldShowMessageInput with correct label", async () => {
       render(<QuickMessageOptions label="delete" />);
-      
+
       const triggerButton = screen.getByRole("button");
       fireEvent.click(triggerButton);
-      
+
       await waitFor(() => {
         expect(shouldShowMessageInput).toHaveBeenCalledWith("delete");
       });
@@ -260,20 +265,20 @@ describe("QuickMessageOptions Component", () => {
   describe("accessibility", () => {
     it("should have proper ARIA attributes", () => {
       render(<QuickMessageOptions label="add" />);
-      
+
       const button = screen.getByRole("button");
       expect(button).toHaveAttribute("aria-label", "add quick message");
     });
 
     it("should have proper form labels", async () => {
       render(<QuickMessageOptions label="add" />);
-      
+
       const triggerButton = screen.getByRole("button");
       fireEvent.click(triggerButton);
-      
+
       await waitFor(() => {
-        expect(screen.getByLabelText("Title")).toBeInTheDocument();
-        expect(screen.getByLabelText("Message")).toBeInTheDocument();
+        expect(screen.getByLabelText("Titulo")).toBeInTheDocument();
+        expect(screen.getByLabelText("Mensaje")).toBeInTheDocument();
       });
     });
   });
@@ -281,9 +286,11 @@ describe("QuickMessageOptions Component", () => {
   describe("type safety", () => {
     it("should accept all valid LabelOptions", () => {
       const validLabels: LabelOptions[] = ["add", "update", "delete"];
-      
-      validLabels.forEach(label => {
-        expect(() => render(<QuickMessageOptions label={label} />)).not.toThrow();
+
+      validLabels.forEach((label) => {
+        expect(() =>
+          render(<QuickMessageOptions label={label} />),
+        ).not.toThrow();
       });
     });
   });

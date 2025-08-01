@@ -1,13 +1,13 @@
 /**
  * QuickMessageOptions Component
- * 
+ *
  * A dialog component that provides CRUD operations for quick messages.
  * Supports adding, updating, and deleting quick messages with proper validation.
- * 
+ *
  * @param {QuickMessageOptionsProps} props - Component props
  * @returns {JSX.Element} Dialog component with form inputs and action buttons
  * @module components/QuickMessage/QuickMessageOptions
- */ 
+ */
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -38,6 +38,8 @@ import {
   getDialogDescription,
   shouldShowMessageInput,
 } from "./components";
+
+import { QUICK_MESSAGE_OPTIONS } from "./quickMessageOptions.strings.json";
 
 // Re-export types for external use
 export type { QuickMessageOptionsProps } from "./types";
@@ -91,7 +93,10 @@ export const QuickMessageOptions = ({ label }: QuickMessageOptionsProps) => {
         onDeleteMessage();
         break;
       default:
-        console.error("Invalid label for QuickMessageOptions:", label);
+        console.error(
+          `${QUICK_MESSAGE_OPTIONS.LABEL_NOT_FOUND}${label}`,
+          label,
+        );
         break;
     }
   }, [label, onAddMessage, onUpdateMessage, onDeleteMessage]);
@@ -109,17 +114,13 @@ export const QuickMessageOptions = ({ label }: QuickMessageOptionsProps) => {
       </DialogTrigger>
       <DialogContent className="!max-w-[325px]">
         <DialogHeader>
-          <DialogTitle>
-            {getDialogTitle(label)}
-          </DialogTitle>
-          <DialogDescription>
-            {getDialogDescription(label)}
-          </DialogDescription>
+          <DialogTitle>{getDialogTitle(label)}</DialogTitle>
+          <DialogDescription>{getDialogDescription(label)}</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="title" className="text-right">
-              Title
+              {QUICK_MESSAGE_OPTIONS.FORM.TITLE}
             </Label>
             <Input
               id="title"
@@ -132,7 +133,7 @@ export const QuickMessageOptions = ({ label }: QuickMessageOptionsProps) => {
           {shouldShowMessageInput(label) && (
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="message" className="text-right">
-                Message
+                {QUICK_MESSAGE_OPTIONS.FORM.MESSAGE}
               </Label>
               <Input
                 id="message"
@@ -152,7 +153,7 @@ export const QuickMessageOptions = ({ label }: QuickMessageOptionsProps) => {
               destructive
             />
           )}
-          <Button onClick={onClick}>Save changes</Button>
+          <Button onClick={onClick}>{QUICK_MESSAGE_OPTIONS.FORM.BUTTON}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

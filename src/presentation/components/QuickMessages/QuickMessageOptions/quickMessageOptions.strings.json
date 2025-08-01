@@ -39,5 +39,13 @@
       "DIALOG_HEADER": "Importar mensajes"
     },
     "EXPORT": "Exportar"
+  },
+  "QUICK_MESSAGE_OPTIONS": {
+    "LABEL_NOT_FOUND": "Etiqueta no encontrada: ",
+    "FORM": {
+      "TITLE": "Titulo",
+      "MESSAGE": "Mensaje",
+      "BUTTON": "Guardar"
+    }
   }
 }
