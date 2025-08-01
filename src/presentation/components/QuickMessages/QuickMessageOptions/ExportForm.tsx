@@ -48,7 +48,7 @@ export const ExportForm = ({ onSuccess, onError }: ExportFormProps) => {
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
     } catch (error) {
-      onError?.("Error al copiar al portapapeles");
+      onError?.(EXPORT_FORM.ERROR_COPY);
     }
   };
 

@@ -17,6 +17,7 @@
     "NO_MESSAGES": "No hay mensajes para exportar",
     "DESCRIPTION": "Copia y pega el contenido de los mensajes para crear un respaldo.",
     "COPY_SUCCESS": "¡Copiado!",
-    "COPY_BUTTON": "Copiar al portapapeles"
+    "COPY_BUTTON": "Copiar al portapapeles",
+    "ERROR_COPY": "Error al copiar los mensajes"
   }
 }
