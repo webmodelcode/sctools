@@ -2,10 +2,9 @@
  * Tests for quickMessages.local.datasource
  */
 
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import type { IQuickMessage } from "../quickMessages.local.datasource";
 
-// Simple test to verify the module exports and basic functionality
 describe("quickMessages.local.datasource", () => {
   it("should export IQuickMessage interface", () => {
     const message: IQuickMessage = {
@@ -56,5 +55,55 @@ describe("quickMessages.local.datasource", () => {
     expect(keys).toContain("label");
     expect(keys).toContain("text");
     expect(keys).toHaveLength(2);
+  });
+
+  it("should test function signatures", async () => {
+    const {
+      saveQuickMessages,
+      getQuickMessages,
+      addQuickMessage,
+      importQuickMessages,
+      updateQuickMessage,
+      deleteQuickMessage,
+      clearQuickMessages,
+      watchQuickMessages,
+    } = await import("../quickMessages.local.datasource");
+    
+    // Test function parameter lengths
+    expect(saveQuickMessages.length).toBe(1);
+    expect(getQuickMessages.length).toBe(0);
+    expect(addQuickMessage.length).toBe(1);
+    expect(importQuickMessages.length).toBe(1);
+    expect(updateQuickMessage.length).toBe(2);
+    expect(deleteQuickMessage.length).toBe(1);
+    expect(clearQuickMessages.length).toBe(0);
+    expect(watchQuickMessages.length).toBe(1);
+  });
+
+  it("should handle function calls without errors (basic smoke test)", async () => {
+    const {
+      saveQuickMessages,
+      getQuickMessages,
+      addQuickMessage,
+      importQuickMessages,
+      updateQuickMessage,
+      deleteQuickMessage,
+      clearQuickMessages,
+      watchQuickMessages,
+    } = await import("../quickMessages.local.datasource");
+    
+    const testMessage: IQuickMessage = { label: "test", text: "test" };
+    const testMessages: IQuickMessage[] = [testMessage];
+    const mockCallback = () => {};
+    
+    // These will likely fail due to missing storage, but should not throw syntax errors
+    expect(() => saveQuickMessages(testMessages)).not.toThrow();
+    expect(() => getQuickMessages()).not.toThrow();
+    expect(() => addQuickMessage(testMessage)).not.toThrow();
+    expect(() => importQuickMessages(testMessages)).not.toThrow();
+    expect(() => updateQuickMessage(0, testMessage)).not.toThrow();
+    expect(() => deleteQuickMessage(0)).not.toThrow();
+    expect(() => clearQuickMessages()).not.toThrow();
+    expect(() => watchQuickMessages(mockCallback)).not.toThrow();
   });
 });

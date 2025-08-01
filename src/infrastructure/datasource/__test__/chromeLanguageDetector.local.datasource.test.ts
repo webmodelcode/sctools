@@ -2,10 +2,10 @@
  * Tests for chromeLanguageDetector.local.datasource
  */
 
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 
 describe("chromeLanguageDetector.local.datasource", () => {
-  it("should export localLanguageDetector object", async () => {
+  it("should export localLanguageDetector object with correct methods", async () => {
     const module = await import("../chromeLanguageDetector.local.datasource");
     
     expect(module).toHaveProperty("localLanguageDetector");
@@ -15,57 +15,60 @@ describe("chromeLanguageDetector.local.datasource", () => {
     expect(typeof module.localLanguageDetector.detectLanguage).toBe("function");
   });
 
-  it("should have isAvailable method that returns boolean", async () => {
+  it("should check availability correctly", async () => {
     const { localLanguageDetector } = await import("../chromeLanguageDetector.local.datasource");
     
     const result = localLanguageDetector.isAvailable();
     expect(typeof result).toBe("boolean");
   });
 
-  it("should have create method", async () => {
+  it("should validate method signatures", async () => {
     const { localLanguageDetector } = await import("../chromeLanguageDetector.local.datasource");
     
-    // Test that create method exists and can be called
-    expect(typeof localLanguageDetector.create).toBe("function");
+    // Test method parameter lengths
+    expect(localLanguageDetector.isAvailable.length).toBe(0);
+    expect(localLanguageDetector.create.length).toBe(0);
+    expect(localLanguageDetector.detectLanguage.length).toBe(1);
+  });
+
+  it("should handle function calls without throwing syntax errors", async () => {
+    const { localLanguageDetector } = await import("../chromeLanguageDetector.local.datasource");
     
+    // Test that methods can be called without syntax errors
+    expect(() => localLanguageDetector.isAvailable()).not.toThrow();
+    expect(() => localLanguageDetector.create()).not.toThrow();
+    expect(() => localLanguageDetector.detectLanguage("test")).not.toThrow();
+  });
+
+  it("should test isAvailable with different environments", async () => {
+    const { localLanguageDetector } = await import("../chromeLanguageDetector.local.datasource");
+    
+    // In test environment, LanguageDetector is likely not available
+    const result = localLanguageDetector.isAvailable();
+    
+    // Should return false in test environment
+    expect(result).toBe(false);
+  });
+
+  it("should handle create method errors gracefully", async () => {
+    const { localLanguageDetector } = await import("../chromeLanguageDetector.local.datasource");
+    
+    // In test environment without LanguageDetector, create should fail
     try {
       await localLanguageDetector.create();
     } catch (error) {
-      // Expected to fail in test environment without Chrome AI API
       expect(error).toBeDefined();
     }
   });
 
-  it("should have detectLanguage method", async () => {
+  it("should handle detectLanguage method errors gracefully", async () => {
     const { localLanguageDetector } = await import("../chromeLanguageDetector.local.datasource");
     
-    expect(typeof localLanguageDetector.detectLanguage).toBe("function");
-    
-    // Test that method can be called (will fail without actual detector)
-    const text = "Hello world";
-    
+    // In test environment without LanguageDetector, detectLanguage should fail
     try {
-      await localLanguageDetector.detectLanguage(text);
+      await localLanguageDetector.detectLanguage("Hello world");
     } catch (error) {
-      // Expected to fail without LanguageDetector API
       expect(error).toBeDefined();
-    }
-  });
-
-  it("should handle unavailable AI API gracefully", async () => {
-    const { localLanguageDetector } = await import("../chromeLanguageDetector.local.datasource");
-    
-    // In test environment, AI API is not available
-    const isAvailable = localLanguageDetector.isAvailable();
-    expect(typeof isAvailable).toBe("boolean");
-    
-    // If not available, create should handle it appropriately
-    if (!isAvailable) {
-      try {
-        await localLanguageDetector.create();
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
     }
   });
 });

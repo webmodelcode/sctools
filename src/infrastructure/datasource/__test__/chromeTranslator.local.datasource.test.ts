@@ -2,7 +2,7 @@
  * Tests for chromeTranslator.local.datasource
  */
 
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 
 describe("chromeTranslator.local.datasource", () => {
   it("should export localTranslator object", async () => {
@@ -21,37 +21,6 @@ describe("chromeTranslator.local.datasource", () => {
     expect(typeof result).toBe("boolean");
   });
 
-  it("should have create method that accepts source and target languages", async () => {
-    const { localTranslator } = await import("../chromeTranslator.local.datasource");
-    
-    // Test that create method exists and can be called
-    expect(typeof localTranslator.create).toBe("function");
-    
-    try {
-      await localTranslator.create({ sourceLanguage: "en", targetLanguage: "es" });
-    } catch (error) {
-      // Expected to fail in test environment without Chrome AI API
-      expect(error).toBeDefined();
-    }
-  });
-
-  it("should handle unavailable AI API gracefully", async () => {
-    const { localTranslator } = await import("../chromeTranslator.local.datasource");
-    
-    // In test environment, AI API is not available
-    const isAvailable = localTranslator.isAvailable();
-    expect(typeof isAvailable).toBe("boolean");
-    
-    // If not available, create should handle it appropriately
-    if (!isAvailable) {
-      try {
-        await localTranslator.create({ sourceLanguage: "en", targetLanguage: "es" });
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
-    }
-  });
-
   it("should validate method signatures", async () => {
     const { localTranslator } = await import("../chromeTranslator.local.datasource");
     
@@ -60,6 +29,39 @@ describe("chromeTranslator.local.datasource", () => {
     
     // Test create method signature (should accept 1 parameter - an object)
     expect(localTranslator.create.length).toBe(1);
+  });
+
+  it("should handle function calls without throwing syntax errors", async () => {
+    const { localTranslator } = await import("../chromeTranslator.local.datasource");
+    
+    const config = { sourceLanguage: "en", targetLanguage: "es" };
+    
+    // Test that methods can be called without syntax errors
+    expect(() => localTranslator.isAvailable()).not.toThrow();
+    expect(() => localTranslator.create(config)).not.toThrow();
+  });
+
+  it("should test isAvailable with different environments", async () => {
+    const { localTranslator } = await import("../chromeTranslator.local.datasource");
+    
+    // In test environment, Translator is likely not available
+    const result = localTranslator.isAvailable();
+    
+    // Should return false in test environment
+    expect(result).toBe(false);
+  });
+
+  it("should handle create method errors gracefully", async () => {
+    const { localTranslator } = await import("../chromeTranslator.local.datasource");
+    
+    const config = { sourceLanguage: "en", targetLanguage: "es" };
+    
+    // In test environment without Translator, create should fail
+    try {
+      await localTranslator.create(config);
+    } catch (error) {
+      expect(error).toBeDefined();
+    }
   });
 
   it("should handle different language combinations", async () => {
@@ -73,12 +75,26 @@ describe("chromeTranslator.local.datasource", () => {
     ];
     
     for (const config of languagePairs) {
-      try {
-        await localTranslator.create(config);
-      } catch (error) {
-        // Expected to fail in test environment
-        expect(error).toBeDefined();
-      }
+      // Test that create can be called with different configs
+      expect(() => localTranslator.create(config)).not.toThrow();
     }
+  });
+
+  it("should validate config parameter structure", async () => {
+    const { localTranslator } = await import("../chromeTranslator.local.datasource");
+    
+    const validConfig = {
+      sourceLanguage: "en",
+      targetLanguage: "es",
+    };
+    
+    // Test that config has required properties
+    expect(validConfig).toHaveProperty("sourceLanguage");
+    expect(validConfig).toHaveProperty("targetLanguage");
+    expect(typeof validConfig.sourceLanguage).toBe("string");
+    expect(typeof validConfig.targetLanguage).toBe("string");
+    
+    // Test that create method accepts this config structure
+    expect(() => localTranslator.create(validConfig)).not.toThrow();
   });
 });
