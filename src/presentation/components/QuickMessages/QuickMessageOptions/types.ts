@@ -28,19 +28,19 @@ export interface ErrorMessage {
  */
 export const ERROR_MESSAGES = {
   ALREADY_EXISTS: (label: string): ErrorMessage => ({
-    title: `${label} Already exists`,
-    message: "Set a new label or use Update option",
+    title: `${label} Ya existe`,
+    message: "Ingrese un nuevo etiqueta o utilice la opción de actualizar",
   }),
   NOT_EXISTS: (label: string): ErrorMessage => ({
-    title: `${label} not found`,
-    message: "Check the label and try again",
+    title: `${label} No existe`,
+    message: "Ingrese una etiqueta existente",
   }),
   INVALID_INPUT: {
-    title: "Invalid input",
-    message: "Please fill in all required fields",
+    title: "Entrada inválida",
+    message: "Por favor, complete todos los campos",
   },
   DELETE_NOT_FOUND: (label: string): ErrorMessage => ({
-    title: `${label} not found`,
-    message: "Check the label and try again",
+    title: `${label} No existe`,
+    message: "Ingrese una etiqueta existente",
   }),
 } as const;
