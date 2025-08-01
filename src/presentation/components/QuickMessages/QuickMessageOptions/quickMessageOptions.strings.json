@@ -1,0 +1,14 @@
+{
+  "COMPONENTS": {
+    "GET_DIALOG_TITLE": {
+      "ADD": "Añadir Mensaje Rápido",
+      "UPDATE": "Actualizar Mensaje Rápido",
+      "DELETE": "Eliminar Mensaje Rápido"
+    },
+    "GET_DIALOG_DESCRIPTION": {
+      "ADD": "Añade un mensaje rápido aquí. Haz clic en guardar cuando estés listo.",
+      "UPDATE": "Actualiza un mensaje rápido aquí. Haz clic en guardar cuando estés listo.",
+      "DELETE": "Elimina un mensaje rápido aquí. Haz clic en guardar cuando estés listo."
+    }
+  }
+}

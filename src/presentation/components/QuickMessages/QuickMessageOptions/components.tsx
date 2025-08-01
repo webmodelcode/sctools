@@ -5,6 +5,7 @@
 import React from "react";
 import { Delete, NotebookPen, Plus } from "lucide-react";
 import { LabelOptions } from "./types";
+import { COMPONENTS } from "./quickMessageOptions.strings.json";
 
 /**
  * Returns the appropriate icon component based on the action type
@@ -17,7 +18,7 @@ export const getActionIcon = (label: LabelOptions): React.ReactElement => {
     delete: <Delete />,
     update: <NotebookPen />,
   };
-  
+
   return iconMap[label];
 };
 
@@ -27,12 +28,13 @@ export const getActionIcon = (label: LabelOptions): React.ReactElement => {
  * @returns string - The dialog title
  */
 export const getDialogTitle = (label: LabelOptions): string => {
+  const strings = COMPONENTS.GET_DIALOG_TITLE;
   const titleMap: Record<LabelOptions, string> = {
-    add: "Add Quick Message",
-    update: "Update Quick Message",
-    delete: "Delete Quick Message",
+    add: strings.ADD,
+    update: strings.UPDATE,
+    delete: strings.DELETE,
   };
-  
+
   return titleMap[label];
 };
 
@@ -42,12 +44,13 @@ export const getDialogTitle = (label: LabelOptions): string => {
  * @returns string - The dialog description
  */
 export const getDialogDescription = (label: LabelOptions): string => {
+  const strings = COMPONENTS.GET_DIALOG_DESCRIPTION;
   const descriptionMap: Record<LabelOptions, string> = {
-    add: "Add a quick message here. Click save when you're done.",
-    update: "Update a quick message here. Click save when you're done.",
-    delete: "Delete a quick message here. Click save when you're done.",
+    add: strings.ADD,
+    update: strings.UPDATE,
+    delete: strings.DELETE,
   };
-  
+
   return descriptionMap[label];
 };
 

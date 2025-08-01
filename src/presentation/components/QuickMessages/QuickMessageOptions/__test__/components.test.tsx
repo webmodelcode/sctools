@@ -18,21 +18,21 @@ describe("QuickMessageOptions Components", () => {
     it("should return an icon element for add action", () => {
       const { container } = render(getActionIcon("add"));
       const svg = container.querySelector("svg");
-      
+
       expect(svg).toBeInTheDocument();
     });
 
     it("should return an icon element for delete action", () => {
       const { container } = render(getActionIcon("delete"));
       const svg = container.querySelector("svg");
-      
+
       expect(svg).toBeInTheDocument();
     });
 
     it("should return an icon element for update action", () => {
       const { container } = render(getActionIcon("update"));
       const svg = container.querySelector("svg");
-      
+
       expect(svg).toBeInTheDocument();
     });
 
@@ -40,7 +40,7 @@ describe("QuickMessageOptions Components", () => {
       const addIcon = getActionIcon("add");
       const deleteIcon = getActionIcon("delete");
       const updateIcon = getActionIcon("update");
-      
+
       expect(addIcon).toBeDefined();
       expect(deleteIcon).toBeDefined();
       expect(updateIcon).toBeDefined();
@@ -50,34 +50,40 @@ describe("QuickMessageOptions Components", () => {
   describe("getDialogTitle", () => {
     it("should return correct title for add action", () => {
       const result = getDialogTitle("add");
-      expect(result).toBe("Add Quick Message");
+      expect(result).toBe("Añadir Mensaje Rápido");
     });
 
     it("should return correct title for update action", () => {
       const result = getDialogTitle("update");
-      expect(result).toBe("Update Quick Message");
+      expect(result).toBe("Actualizar Mensaje Rápido");
     });
 
     it("should return correct title for delete action", () => {
       const result = getDialogTitle("delete");
-      expect(result).toBe("Delete Quick Message");
+      expect(result).toBe("Eliminar Mensaje Rápido");
     });
   });
 
   describe("getDialogDescription", () => {
     it("should return correct description for add action", () => {
       const result = getDialogDescription("add");
-      expect(result).toBe("Add a quick message here. Click save when you're done.");
+      expect(result).toBe(
+        "Añade un mensaje rápido aquí. Haz clic en guardar cuando estés listo.",
+      );
     });
 
     it("should return correct description for update action", () => {
       const result = getDialogDescription("update");
-      expect(result).toBe("Update a quick message here. Click save when you're done.");
+      expect(result).toBe(
+        "Actualiza un mensaje rápido aquí. Haz clic en guardar cuando estés listo.",
+      );
     });
 
     it("should return correct description for delete action", () => {
       const result = getDialogDescription("delete");
-      expect(result).toBe("Delete a quick message here. Click save when you're done.");
+      expect(result).toBe(
+        "Elimina un mensaje rápido aquí. Haz clic en guardar cuando estés listo.",
+      );
     });
   });
 
@@ -101,8 +107,8 @@ describe("QuickMessageOptions Components", () => {
   describe("type consistency", () => {
     it("should handle all LabelOptions values", () => {
       const labels: LabelOptions[] = ["add", "update", "delete"];
-      
-      labels.forEach(label => {
+
+      labels.forEach((label) => {
         expect(() => getActionIcon(label)).not.toThrow();
         expect(() => getDialogTitle(label)).not.toThrow();
         expect(() => getDialogDescription(label)).not.toThrow();
@@ -112,8 +118,8 @@ describe("QuickMessageOptions Components", () => {
 
     it("should return consistent types", () => {
       const labels: LabelOptions[] = ["add", "update", "delete"];
-      
-      labels.forEach(label => {
+
+      labels.forEach((label) => {
         expect(typeof getDialogTitle(label)).toBe("string");
         expect(typeof getDialogDescription(label)).toBe("string");
         expect(typeof shouldShowMessageInput(label)).toBe("boolean");
