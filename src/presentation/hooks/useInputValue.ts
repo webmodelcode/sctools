@@ -3,7 +3,10 @@ import { isEditableElement } from "~@/config/utils/isTextElement";
 
 const extractElementValue = (element: HTMLElement): string => {
   if (isEditableElement(element)) {
-    return (element as HTMLInputElement | HTMLTextAreaElement).value;
+    const value =
+      (element as HTMLInputElement | HTMLTextAreaElement).value ??
+      element.textContent;
+    return value;
   }
   if (element.contentEditable === "true") {
     return element.textContent || "";
