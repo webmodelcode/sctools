@@ -17,6 +17,9 @@ const getConsentButton = (): HTMLButtonElement | null | undefined =>
     'button[data-icf-click="ModelConsentModal__Accept"]',
   );
 
+const getChatTab = (): HTMLDivElement | null =>
+  document.querySelector('div[data-ta-locator="ChatDisplay__Display"]');
+
 export const smAdapter = {
   /**
    *
@@ -33,4 +36,9 @@ export const smAdapter = {
    * @returns {HTMLButtonElement | null | undefined} - Button element for accepting consent.
    */
   getConsentButton,
+  /**
+   *
+   * @returns {HTMLDivElement | null} - The DOM element for the chat tab.
+   */
+  getChatTab,
 };

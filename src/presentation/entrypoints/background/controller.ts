@@ -14,16 +14,26 @@ import { localTranslator } from "~@/infrastructure/datasource/chromeTranslator.l
 
 export const backgroundController = {
   handleChatMessage: async (message: string) => {
-    if (localTranslator.isAvailable() && localLanguageDetector.isAvailable()) {
-      const detectedLanguage =
-        await localLanguageDetector.detectLanguage(message);
-      const translator = await localTranslator.create({
-        sourceLanguage: detectedLanguage ?? "en",
-        targetLanguage: "es",
-      });
-      const msg = await translator.translate(message);
+    try {
+      if (
+        localTranslator.isAvailable() &&
+        localLanguageDetector.isAvailable()
+      ) {
+        if (!message) return;
+        const detectedLanguage =
+          await localLanguageDetector.detectLanguage(message);
+        if (detectedLanguage === "es") return;
+        const translator = await localTranslator.create({
+          sourceLanguage: detectedLanguage ?? "en",
+          targetLanguage: "es",
+        });
+        const msg = await translator.translate(message);
 
-      return msg;
+        return msg;
+      }
+    } catch (error) {
+      console.error("Error translating message:", error);
+      return;
     }
   },
   handleInputMessage: async (message: string, target?: string) => {
