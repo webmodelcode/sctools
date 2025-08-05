@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import { scAdapter } from "~@/config/scAdapter/sc.adapter";
 import { TranslatedMessage } from "../TranslatedMessage/TranslatedMessage";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 import { useMutationObserver } from "~@/presentation/hooks/useMutationObserver/useMutationObserver";
@@ -27,10 +26,9 @@ export const ChaturLocalTranslator = () => {
     ref: messengerContainer,
     callback: (mutations) => {
       mutations.forEach((mutation) => {
-        if (!(mutation.target as Element).classList?.contains("msg-list-fvm"))
-          return;
-
         if (mutation.type === "childList" && isExtActive) {
+          if (!(mutation.target as Element).classList?.contains("msg-list-fvm"))
+            return;
           const firstNode = mutation.addedNodes[0];
           if (firstNode?.firstChild?.lastChild) {
             const msgContainer = firstNode.firstChild;
