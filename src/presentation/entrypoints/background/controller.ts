@@ -66,7 +66,7 @@ export const backgroundController = {
     if (isUpdateAvailable) {
       return {
         latestVersion,
-        downloadUrl: `${baseUrl}${downloadUrl}`,
+        downloadUrl: `${baseUrl}/descargas`,
       };
     }
   },
