@@ -22,13 +22,17 @@ interface IAppInformation {
   APP_PROVIDER: string;
 }
 
-type IBgMessageType = "CHAT_MESSAGE" | "INPUT_MESSAGE";
+type IBgMessageType = "CHAT_MESSAGE" | "INPUT_MESSAGE" | "CHECK_EXT_UPLOAD";
 
 interface IGlobalStrings {
   STORAGE_KEYS: IStorageKeys;
   ERROR_MESSAGES: IErrorMessages;
   BG_MESSAGE_TYPE: { [key in IBgMessageType]: IBgMessageType };
   APP_INFORMATION: IAppInformation;
+  ESTRELLAS_WEB_BASEURL: {
+    PRODUCTION: string;
+    DEV: string;
+  };
 }
 
 /**
@@ -54,10 +58,15 @@ export const GLOBAL_STRINGS: IGlobalStrings = {
   BG_MESSAGE_TYPE: {
     CHAT_MESSAGE: "CHAT_MESSAGE",
     INPUT_MESSAGE: "INPUT_MESSAGE",
+    CHECK_EXT_UPLOAD: "CHECK_EXT_UPLOAD",
   },
   APP_INFORMATION: {
     APP_NAME: "ScTools",
     APP_PROVIDER: "Estrellas Webcam",
+  },
+  ESTRELLAS_WEB_BASEURL: {
+    PRODUCTION: "https://www.estrellaswebcam.com",
+    DEV: "http://localhost:4321",
   },
 };
 

@@ -1,3 +1,5 @@
+import { compareSemanticVersions } from "~@/config/utils/compareSemanticVersions";
+import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 import { localLanguageDetector } from "~@/infrastructure/datasource/chromeLanguageDetector.local.datasource";
 import { localTranslator } from "~@/infrastructure/datasource/chromeTranslator.local.datasource";
 
@@ -45,6 +47,27 @@ export const backgroundController = {
       const msg = await translator.translate(message);
 
       return msg;
+    }
+  },
+  handleCheckExtUpload: async () => {
+    const isProd = import.meta.env.PROD;
+    const currentVersion = browser.runtime.getManifest().version;
+    const baseUrl = isProd
+      ? GLOBAL_STRINGS.ESTRELLAS_WEB_BASEURL.PRODUCTION
+      : GLOBAL_STRINGS.ESTRELLAS_WEB_BASEURL.DEV;
+    const { version: latestVersion, link: downloadUrl } = await fetch(
+      `${baseUrl}/downloads/sctools/metadata.json`,
+    ).then((res) => res.json());
+    const isUpdateAvailable = compareSemanticVersions(
+      latestVersion,
+      currentVersion,
+    );
+
+    if (isUpdateAvailable) {
+      return {
+        latestVersion,
+        downloadUrl: `${baseUrl}/descargas`,
+      };
     }
   },
 };
