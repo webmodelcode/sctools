@@ -29,6 +29,17 @@ const config: StorybookConfig = {
         '#imports': path.resolve(__dirname, '../__mocks__/wxt-imports.js'),
       };
     }
+    
+    // Configurar plugin de Tailwind CSS v4 para Vite
+    try {
+      const tailwindModule = await eval('import("@tailwindcss/vite")');
+      const tailwindPlugin = tailwindModule.default;
+      config.plugins = config.plugins || [];
+      config.plugins.push(tailwindPlugin());
+    } catch (error) {
+      console.warn('Could not load Tailwind CSS plugin:', error.message);
+    }
+    
     return config;
   },
 };
