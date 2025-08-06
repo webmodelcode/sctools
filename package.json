@@ -2,7 +2,7 @@
   "name": "sctools",
   "description": "manifest.json description",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": "Juan Pablo Leon Maya co.coffeecode@gmail.com",
   "type": "module",
   "scripts": {
