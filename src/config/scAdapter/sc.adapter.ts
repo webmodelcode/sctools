@@ -6,6 +6,7 @@
  * @module Config/ScAdapter
  */
 
+import { devConsole } from "../utils/developerUtils";
 import { ScClasses } from "./sc.interfaces";
 import { SC_STRINGS } from "./sc.strings";
 
@@ -20,7 +21,7 @@ const getScElementByClassName = (elmClass: ScClasses) => {
   try {
     return document.getElementsByClassName(elmClass).item(0) || null;
   } catch (error) {
-    console.warn(error);
+    devConsole.error(error as Error);
     return null;
   }
 };
@@ -29,7 +30,7 @@ const getScMultipleElementsByClassName = (elmClass: ScClasses) => {
   try {
     return document.getElementsByClassName(elmClass);
   } catch (error) {
-    console.warn(error);
+    devConsole.error(error as Error);
     return [];
   }
 };
@@ -44,7 +45,7 @@ const getScElementById = (elmID: string) => {
   try {
     return document.getElementById(elmID) || null;
   } catch (error) {
-    console.warn(error);
+    devConsole.error(error as Error);
     return null;
   }
 };
@@ -76,7 +77,7 @@ const isScErrorNode = (node: Node) => {
       .toLocaleLowerCase()
       .includes("loadableerrorboundary");
   } catch (error) {
-    console.warn(error);
+    devConsole.error(error as Error);
     return false;
   }
 };
