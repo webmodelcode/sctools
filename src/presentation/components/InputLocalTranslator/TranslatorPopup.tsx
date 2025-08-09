@@ -46,7 +46,7 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
     );
 
     useEffect(() => {
-      const handleKeyPress = (event: KeyboardEvent) => {
+      const handleKeyDown = (event: KeyboardEvent) => {
         if (event.ctrlKey && event.key.toLowerCase() === "q") {
           event.preventDefault();
           const target = event.target as HTMLInputElement;
@@ -55,10 +55,10 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
         }
       };
 
-      document.addEventListener("keypress", handleKeyPress);
+      document.addEventListener("keydown", handleKeyDown);
 
       return () => {
-        document.removeEventListener("keypress", handleKeyPress);
+        document.removeEventListener("keydown", handleKeyDown);
       };
     }, [translatedValue]);
 
