@@ -3,6 +3,7 @@ import { TooltipButton } from "../../TooltipButton/TooltipButton";
 import { ImportForm } from "./ImportForm";
 import { ExportForm } from "./ExportForm";
 import { QUICK_MESSAGE_DATA_OPERATIONS } from "./quickMessageOptions.strings.json";
+import { devConsole } from "~@/config/utils/developerUtils";
 
 export const QuickMessageDataOperations = () => {
   return [
@@ -16,10 +17,10 @@ export const QuickMessageDataOperations = () => {
       dialogContent: (
         <ImportForm
           onSuccess={() => {
-            console.log("Mensajes importados exitosamente");
+            devConsole.log("Mensajes importados exitosamente");
           }}
           onError={(error) => {
-            console.error("Error al importar:", error);
+            devConsole.error("Error al importar:", error);
           }}
         />
       ),
@@ -34,10 +35,10 @@ export const QuickMessageDataOperations = () => {
       dialogContent: (
         <ExportForm
           onSuccess={() => {
-            console.log("Mensajes exportados exitosamente");
+            devConsole.log("Mensajes exportados exitosamente");
           }}
           onError={(error) => {
-            console.error("Error al exportar:", error);
+            devConsole.error("Error al exportar:", error);
           }}
         />
       ),

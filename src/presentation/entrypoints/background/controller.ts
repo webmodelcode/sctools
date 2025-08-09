@@ -1,4 +1,5 @@
 import { compareSemanticVersions } from "~@/config/utils/compareSemanticVersions";
+import { devConsole } from "~@/config/utils/developerUtils";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 import { localLanguageDetector } from "~@/infrastructure/datasource/chromeLanguageDetector.local.datasource";
 import { localTranslator } from "~@/infrastructure/datasource/chromeTranslator.local.datasource";
@@ -34,7 +35,7 @@ export const backgroundController = {
         return msg;
       }
     } catch (error) {
-      console.error("Error translating message:", error);
+      devConsole.error("Error translating message:", error);
       return;
     }
   },
@@ -71,7 +72,7 @@ export const backgroundController = {
         };
       }
     } catch (error) {
-      console.warn(error);
+      devConsole.error("Error fetching extension metadata:", error);
     }
   },
 };

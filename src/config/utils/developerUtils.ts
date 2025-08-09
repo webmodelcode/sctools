@@ -11,9 +11,12 @@ export const devConsole = {
       console.log(`%c[⚠️] ${message}`, "color: yellow");
     }
   },
-  error: (error: Error) => {
+  error: (customMsg: string, error?: Error | unknown) => {
     if (isDevEnvironment()) {
-      console.log(`%c[❌] ${error.message ?? error}`, "color: red");
+      console.log(
+        `%c[❌] ${customMsg} ${error instanceof Error ? (error.message ?? error) : error}`,
+        "color: red",
+      );
     }
   },
 };
