@@ -55,19 +55,23 @@ export const backgroundController = {
     const baseUrl = isProd
       ? GLOBAL_STRINGS.ESTRELLAS_WEB_BASEURL.PRODUCTION
       : GLOBAL_STRINGS.ESTRELLAS_WEB_BASEURL.DEV;
-    const { version: latestVersion, link: downloadUrl } = await fetch(
-      `${baseUrl}/downloads/sctools/metadata.json`,
-    ).then((res) => res.json());
-    const isUpdateAvailable = compareSemanticVersions(
-      latestVersion,
-      currentVersion,
-    );
-
-    if (isUpdateAvailable) {
-      return {
+    try {
+      const { version: latestVersion, link: downloadUrl } = await fetch(
+        `${baseUrl}/downloads/sctools/metadata.json`,
+      ).then((res) => res.json());
+      const isUpdateAvailable = compareSemanticVersions(
         latestVersion,
-        downloadUrl: `${baseUrl}/descargas`,
-      };
+        currentVersion,
+      );
+
+      if (isUpdateAvailable) {
+        return {
+          latestVersion,
+          downloadUrl: `${baseUrl}/descargas`,
+        };
+      }
+    } catch (error) {
+      console.warn(error);
     }
   },
 };
