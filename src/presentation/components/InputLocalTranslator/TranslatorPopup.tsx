@@ -46,7 +46,7 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
     );
 
     useEffect(() => {
-      const handleKeyPress = (event: KeyboardEvent) => {
+      const handleKeyDown = (event: KeyboardEvent) => {
         if (event.ctrlKey && event.key.toLowerCase() === "q") {
           event.preventDefault();
           const target = event.target as HTMLInputElement;
@@ -55,10 +55,10 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
         }
       };
 
-      document.addEventListener("keypress", handleKeyPress);
+      document.addEventListener("keydown", handleKeyDown, true);
 
       return () => {
-        document.removeEventListener("keypress", handleKeyPress);
+        document.removeEventListener("keydown", handleKeyDown, true);
       };
     }, [translatedValue]);
 
@@ -78,8 +78,14 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
         </div>
 
         <div className="max-h-14 w-full overflow-y-auto rounded border bg-gray-50 px-2 text-center text-sm">
-          {translatedValue || (
-            <span className="text-gray-400 italic">Sin contenido</span>
+          {inputValue && !translatedValue ? (
+            <span className="text-gray-400 italic">
+              Descargando Traductor...
+            </span>
+          ) : (
+            <span className="text-gray-400 italic">
+              {translatedValue || "Sin contenido"}
+            </span>
           )}
         </div>
       </div>

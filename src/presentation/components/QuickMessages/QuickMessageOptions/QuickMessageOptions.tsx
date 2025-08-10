@@ -40,6 +40,7 @@ import {
 } from "./components";
 
 import { QUICK_MESSAGE_OPTIONS } from "./quickMessageOptions.strings.json";
+import { devConsole } from "~@/config/utils/developerUtils";
 
 // Re-export types for external use
 export type { QuickMessageOptionsProps } from "./types";
@@ -93,7 +94,7 @@ export const QuickMessageOptions = ({ label }: QuickMessageOptionsProps) => {
         onDeleteMessage();
         break;
       default:
-        console.error(
+        devConsole.error(
           `${QUICK_MESSAGE_OPTIONS.LABEL_NOT_FOUND}${label}`,
           label,
         );

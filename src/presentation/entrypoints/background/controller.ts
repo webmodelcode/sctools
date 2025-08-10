@@ -1,4 +1,5 @@
 import { compareSemanticVersions } from "~@/config/utils/compareSemanticVersions";
+import { devConsole } from "~@/config/utils/developerUtils";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 import { localLanguageDetector } from "~@/infrastructure/datasource/chromeLanguageDetector.local.datasource";
 import { localTranslator } from "~@/infrastructure/datasource/chromeTranslator.local.datasource";
@@ -34,7 +35,7 @@ export const backgroundController = {
         return msg;
       }
     } catch (error) {
-      console.error("Error translating message:", error);
+      devConsole.error("Error translating message:", error);
       return;
     }
   },
@@ -55,19 +56,23 @@ export const backgroundController = {
     const baseUrl = isProd
       ? GLOBAL_STRINGS.ESTRELLAS_WEB_BASEURL.PRODUCTION
       : GLOBAL_STRINGS.ESTRELLAS_WEB_BASEURL.DEV;
-    const { version: latestVersion, link: downloadUrl } = await fetch(
-      `${baseUrl}/downloads/sctools/metadata.json`,
-    ).then((res) => res.json());
-    const isUpdateAvailable = compareSemanticVersions(
-      latestVersion,
-      currentVersion,
-    );
-
-    if (isUpdateAvailable) {
-      return {
+    try {
+      const { version: latestVersion, link: downloadUrl } = await fetch(
+        `${baseUrl}/downloads/sctools/metadata.json`,
+      ).then((res) => res.json());
+      const isUpdateAvailable = compareSemanticVersions(
         latestVersion,
-        downloadUrl: `${baseUrl}/descargas`,
-      };
+        currentVersion,
+      );
+
+      if (isUpdateAvailable) {
+        return {
+          latestVersion,
+          downloadUrl: `${baseUrl}/descargas`,
+        };
+      }
+    } catch (error) {
+      devConsole.error("Error fetching extension metadata:", error);
     }
   },
 };

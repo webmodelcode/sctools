@@ -6,6 +6,7 @@
  * @module Config/ScAdapter
  */
 
+import { devConsole } from "../utils/developerUtils";
 import { ScClasses } from "./sc.interfaces";
 import { SC_STRINGS } from "./sc.strings";
 
@@ -20,7 +21,7 @@ const getScElementByClassName = (elmClass: ScClasses) => {
   try {
     return document.getElementsByClassName(elmClass).item(0) || null;
   } catch (error) {
-    console.warn(error);
+    devConsole.error("Failed to get element by class name:", error as Error);
     return null;
   }
 };
@@ -29,7 +30,10 @@ const getScMultipleElementsByClassName = (elmClass: ScClasses) => {
   try {
     return document.getElementsByClassName(elmClass);
   } catch (error) {
-    console.warn(error);
+    devConsole.error(
+      "Failed to get multiple elements by class name:",
+      error as Error,
+    );
     return [];
   }
 };
@@ -44,7 +48,7 @@ const getScElementById = (elmID: string) => {
   try {
     return document.getElementById(elmID) || null;
   } catch (error) {
-    console.warn(error);
+    devConsole.error("Failed to get element by ID:", error as Error);
     return null;
   }
 };
@@ -76,11 +80,18 @@ const isScErrorNode = (node: Node) => {
       .toLocaleLowerCase()
       .includes("loadableerrorboundary");
   } catch (error) {
-    console.warn(error);
+    devConsole.error("Failed to check if node is error:", error as Error);
     return false;
   }
 };
 
+/**
+ * Adapter for interacting with the DOM elements of the StripChat website.
+ * This module provides utility functions to query and manipulate DOM elements
+ * based on predefined class names and IDs.
+ *
+ * @module Config/ScAdapter
+ */
 export const scAdapter = {
   /**
    * @param {string} elmClass - The class name of the element to retrieve.

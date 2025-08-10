@@ -1,3 +1,5 @@
+import { devConsole } from "~@/config/utils/developerUtils";
+
 interface ILocalTranslator {
   sourceLanguage: string;
   targetLanguage: string;
@@ -27,7 +29,7 @@ export const localTranslator = {
       targetLanguage,
       monitor(m) {
         m.addEventListener("downloadprogress", (e) => {
-          console.log(`Downloaded ${e.loaded * 100}%`);
+          devConsole.log(`Downloaded ${e.loaded * 100}%`);
         });
       },
     });

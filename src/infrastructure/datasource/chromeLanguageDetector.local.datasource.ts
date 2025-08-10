@@ -5,13 +5,15 @@
  * The `detectLanguage` method asynchronously detects the language of a given text using the LanguageDetector instance.
  */
 
+import { devConsole } from "~@/config/utils/developerUtils";
+
 export const localLanguageDetector = {
   isAvailable: () => "LanguageDetector" in self,
   create: async () => {
     const detector = await LanguageDetector.create({
       monitor(m) {
         m.addEventListener("downloadprogress", (e) => {
-          console.log(`Downloaded ${e.loaded * 100}%`);
+          devConsole.log(`Downloaded ${e.loaded * 100}%`);
         });
       },
     });
