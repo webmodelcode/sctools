@@ -18,6 +18,12 @@ vi.mock("~@/config/utils/globalStrings", () => ({
   },
 }));
 
+// Mock selectTextInContentEditable
+const mockSelectTextInContentEditable = vi.fn();
+vi.mock("~@/config/utils/selectTextInContentEditable", () => ({
+  selectTextInContentEditable: mockSelectTextInContentEditable,
+}));
+
 // Mock the actual component
 vi.mock("../TranslatorPopup", () => ({
   TranslatorPopup: React.forwardRef<
@@ -47,7 +53,10 @@ vi.mock("../TranslatorPopup", () => ({
       const handleKeyPress = (event: KeyboardEvent) => {
         if (event.ctrlKey && event.key.toLowerCase() === "q") {
           event.preventDefault();
-          (event.target as HTMLInputElement)?.select();
+          const target = event.target as HTMLInputElement;
+          if (target) {
+            target.select ? target.select() : mockSelectTextInContentEditable(target);
+          }
           insertTranslate();
         }
       };
@@ -95,6 +104,7 @@ describe("TranslatorPopup", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockExecCommand.mockClear();
+    mockSelectTextInContentEditable.mockClear();
   });
 
   describe("rendering", () => {
@@ -397,6 +407,85 @@ describe("TranslatorPopup", () => {
       expect(() => {
         fireEvent(document, keyEvent);
       }).not.toThrow();
+    });
+
+    it("should call selectTextInContentEditable when target doesn't have select method", async () => {
+      const mockDiv = document.createElement('div');
+      mockDiv.contentEditable = 'true';
+      
+      render(
+        <TranslatorPopup 
+          position={mockPosition} 
+          inputValue={mockInputValue} 
+          ref={mockRef}
+        />
+      );
+
+      // Wait for translation to be set
+      await vi.waitFor(() => {
+        expect(screen.getByText(`Translated: ${mockInputValue}`)).toBeInTheDocument();
+      });
+
+      // Simulate Ctrl+Q keypress on contentEditable div
+      const keyEvent = new KeyboardEvent('keypress', {
+        key: 'q',
+        ctrlKey: true,
+        bubbles: true,
+      });
+      
+      Object.defineProperty(keyEvent, 'target', {
+        value: mockDiv,
+        writable: false,
+      });
+
+      fireEvent(document, keyEvent);
+
+      expect(mockSelectTextInContentEditable).toHaveBeenCalledWith(mockDiv);
+      expect(mockExecCommand).toHaveBeenCalledWith(
+        'insertText',
+        false,
+        `Translated: ${mockInputValue}`
+      );
+    });
+
+    it("should prefer select method over selectTextInContentEditable when available", async () => {
+      const mockInput = document.createElement('input');
+      mockInput.select = vi.fn();
+      
+      render(
+        <TranslatorPopup 
+          position={mockPosition} 
+          inputValue={mockInputValue} 
+          ref={mockRef}
+        />
+      );
+
+      // Wait for translation to be set
+      await vi.waitFor(() => {
+        expect(screen.getByText(`Translated: ${mockInputValue}`)).toBeInTheDocument();
+      });
+
+      // Simulate Ctrl+Q keypress on input element
+      const keyEvent = new KeyboardEvent('keypress', {
+        key: 'q',
+        ctrlKey: true,
+        bubbles: true,
+      });
+      
+      Object.defineProperty(keyEvent, 'target', {
+        value: mockInput,
+        writable: false,
+      });
+
+      fireEvent(document, keyEvent);
+
+      expect(mockInput.select).toHaveBeenCalled();
+      expect(mockSelectTextInContentEditable).not.toHaveBeenCalled();
+      expect(mockExecCommand).toHaveBeenCalledWith(
+        'insertText',
+        false,
+        `Translated: ${mockInputValue}`
+      );
     });
   });
 

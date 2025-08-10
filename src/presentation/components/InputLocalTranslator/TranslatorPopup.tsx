@@ -1,5 +1,6 @@
 import { forwardRef, useState, useEffect } from "react";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
+import { selectTextInContentEditable } from "~@/config/utils/selectTextInContentEditable";
 import { useLocalTranslatorTargetLanguage } from "~@/presentation/hooks/useLocalTranslatorTargetLanguage/useLocalTranslatorTargetLanguage";
 
 interface PopupPosition {
@@ -48,7 +49,8 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
       const handleKeyPress = (event: KeyboardEvent) => {
         if (event.ctrlKey && event.key.toLowerCase() === "q") {
           event.preventDefault();
-          (event.target as HTMLInputElement)?.select();
+          const target = event.target as HTMLInputElement;
+          target.select ? target.select() : selectTextInContentEditable(target);
           insertTranslate();
         }
       };
