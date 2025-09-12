@@ -1,4 +1,5 @@
 import { storage } from "#imports";
+import { devConsole } from "~@/config/utils/developerUtils";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 
 const STORAGE_KEY = GLOBAL_STRINGS.STORAGE_KEYS.QUICK_MESSAGES;
@@ -25,7 +26,7 @@ export const saveQuickMessages = async (
   try {
     await quickMessageStorage.setValue(messages);
   } catch (error) {
-    console.error("Failed to save quick messages:", error);
+    devConsole.error("Failed to save quick messages: ", error);
   }
 };
 
@@ -37,7 +38,7 @@ export const getQuickMessages = async (): Promise<IQuickMessage[]> => {
   try {
     return await quickMessageStorage.getValue();
   } catch (error) {
-    console.error("Failed to retrieve quick messages:", error);
+    devConsole.error("Failed to retrieve quick messages:", error);
     return [];
   }
 };
@@ -86,7 +87,7 @@ export const updateQuickMessage = async (
     messages[index] = message;
     await saveQuickMessages(messages);
   } else {
-    console.error("Invalid index for updating quick message.");
+    devConsole.error("Invalid index for updating quick message.");
   }
 };
 
@@ -100,7 +101,7 @@ export const deleteQuickMessage = async (index: number): Promise<void> => {
     messages.splice(index, 1);
     await saveQuickMessages(messages);
   } else {
-    console.error("Invalid index for deleting quick message.");
+    devConsole.error("Invalid index for deleting quick message.");
   }
 };
 
@@ -111,6 +112,6 @@ export const clearQuickMessages = async (): Promise<void> => {
   try {
     await quickMessageStorage.removeValue();
   } catch (error) {
-    console.error("Failed to clear quick messages:", error);
+    devConsole.error("Failed to clear quick messages:", error);
   }
 };

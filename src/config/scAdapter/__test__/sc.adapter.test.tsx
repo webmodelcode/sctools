@@ -4,6 +4,16 @@ import { scAdapter } from "../sc.adapter";
 import { render } from "@testing-library/react";
 import { SC_STRINGS } from "../sc.strings";
 import { ScClasses } from "../sc.interfaces";
+import { devConsole } from "../../utils/developerUtils";
+
+// Mock devConsole to avoid actual console output during tests
+vi.mock("../../utils/developerUtils", () => ({
+  devConsole: {
+    log: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+  },
+}));
 
 const elmClassName: ScClasses = "messages";
 const elmId = "id-test";
@@ -48,9 +58,8 @@ describe("sc.adapter by Classes", () => {
     vi.spyOn(document, "getElementsByClassName").mockImplementation(() => {
       throw new Error();
     });
-    const consoleWarn = vi.spyOn(console, "warn").mockImplementation(() => {});
     scAdapter.getScElementByClassName(elmClassName);
-    expect(consoleWarn).toBeCalled();
+    expect(devConsole.error).toBeCalled();
   });
 });
 
@@ -79,9 +88,8 @@ describe("sc.adapter by Id", () => {
     vi.spyOn(document, "getElementById").mockImplementation(() => {
       throw new Error();
     });
-    const consoleWarn = vi.spyOn(console, "warn").mockImplementation(() => {});
     scAdapter.getScElementById(elmId);
-    expect(consoleWarn).toBeCalled();
+    expect(devConsole.error).toBeCalled();
   });
 });
 
@@ -117,11 +125,10 @@ describe("sc.adapter by Multiple Classes", () => {
     vi.spyOn(document, "getElementsByClassName").mockImplementation(() => {
       throw new Error("Test error");
     });
-    const consoleWarn = vi.spyOn(console, "warn").mockImplementation(() => {});
-    
+
     const elements = scAdapter.getScMultipleElementsByClassName(elmClassName);
     expect(elements).toEqual([]);
-    expect(consoleWarn).toHaveBeenCalled();
+    expect(devConsole.error).toHaveBeenCalled();
   });
 });
 
@@ -134,21 +141,21 @@ describe("sc.adapter Error Node Detection", () => {
   it("should detect error node with loadableerrorboundary content", () => {
     const { container } = render(<MockErrorNode />);
     const errorNode = container.firstChild as Node;
-    
+
     expect(scAdapter.isScErrorNode(errorNode)).toBe(true);
   });
 
   it("should not detect normal node as error", () => {
     const { container } = render(<MockNormalNode />);
     const normalNode = container.firstChild as Node;
-    
+
     expect(scAdapter.isScErrorNode(normalNode)).toBe(false);
   });
 
   it("should handle case insensitive error detection", () => {
     const div = document.createElement("div");
     div.innerHTML = "LOADABLEERRORBOUNDARY";
-    
+
     expect(scAdapter.isScErrorNode(div)).toBe(true);
   });
 
@@ -156,11 +163,9 @@ describe("sc.adapter Error Node Detection", () => {
     const mockNode = {
       innerHTML: undefined,
     } as unknown as Node;
-    
-    const consoleWarn = vi.spyOn(console, "warn").mockImplementation(() => {});
-    
+
     expect(scAdapter.isScErrorNode(mockNode)).toBe(false);
-    expect(consoleWarn).toHaveBeenCalled();
+    expect(devConsole.error).toHaveBeenCalled();
   });
 });
 
@@ -219,7 +224,9 @@ describe("sc.adapter SCElements are ready", () => {
 
   it("should handle errors when checking elements", () => {
     // Simulate an error when searching for items
-    const consoleSpy = vi.spyOn(console, "warn");
+    // Reset mocks before this test to ensure clean state
+    vi.clearAllMocks();
+
     const mockDocument = {
       getElementsByClassName: () => {
         throw new Error("Test error");
@@ -234,10 +241,9 @@ describe("sc.adapter SCElements are ready", () => {
     global.document = mockDocument as unknown as Document;
 
     expect(scAdapter.isScElementsReady()).toBe(false);
-    expect(consoleSpy).toHaveBeenCalled();
+    expect(devConsole.error).toHaveBeenCalled();
 
     // Reset Original document
     global.document = originalDocument;
-    consoleSpy.mockRestore();
   });
 });
