@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import { Delete, NotebookPen, Plus } from "lucide-react";
+import { Plus, SquarePen, X } from "lucide-react";
 import { LabelOptions } from "./types";
 import { COMPONENTS } from "./quickMessageOptions.strings.json";
 
@@ -15,8 +15,8 @@ import { COMPONENTS } from "./quickMessageOptions.strings.json";
 export const getActionIcon = (label: LabelOptions): React.ReactElement => {
   const iconMap: Record<LabelOptions, React.ReactElement> = {
     add: <Plus />,
-    delete: <Delete />,
-    update: <NotebookPen />,
+    delete: <X />,
+    update: <SquarePen />,
   };
 
   return iconMap[label];
