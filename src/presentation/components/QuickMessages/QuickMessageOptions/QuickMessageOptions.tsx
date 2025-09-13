@@ -41,11 +41,15 @@ import {
 
 import { QUICK_MESSAGE_OPTIONS } from "./quickMessageOptions.strings.json";
 import { devConsole } from "~@/config/utils/developerUtils";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
 
 // Re-export types for external use
 export type { QuickMessageOptionsProps } from "./types";
 
-export const QuickMessageOptions = ({ label }: QuickMessageOptionsProps) => {
+export const QuickMessageOptions = ({
+  label,
+  msgId,
+}: QuickMessageOptionsProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState<ErrorMessage>({
     message: "",
@@ -104,14 +108,19 @@ export const QuickMessageOptions = ({ label }: QuickMessageOptionsProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="m-1 px-2 text-ew-star-color capitalize"
-          aria-label={`${label} quick message`}
-        >
-          {getActionIcon(label)}
-        </Button>
+      <DialogTrigger>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="outline"
+              className="m-1 !px-2 text-ew-star-color capitalize"
+              aria-label={`${label} quick message`}
+            >
+              {getActionIcon(label)}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{getDialogTitle(label)}</TooltipContent>
+        </Tooltip>
       </DialogTrigger>
       <DialogContent className="!max-w-[325px]">
         <DialogHeader>
@@ -128,6 +137,8 @@ export const QuickMessageOptions = ({ label }: QuickMessageOptionsProps) => {
               placeholder="Quick Message Title"
               className="col-span-3"
               autoComplete="off"
+              value={msgId}
+              disabled={msgId ? true : false}
               ref={titleRef}
             />
           </div>
