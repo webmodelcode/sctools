@@ -34,15 +34,19 @@ export const TooltipButton = ({
 }: Props) => {
   return (
     <Dialog>
-      <DialogTrigger
-        className={cn(
-          buttonClassName,
-          "rounded-md border hover:bg-accent-foreground",
-        )}
-        onClick={buttonHandler}
-      >
+      <DialogTrigger onClick={buttonHandler}>
         <Tooltip>
-          <TooltipTrigger asChild>{buttonLabel}</TooltipTrigger>
+          <TooltipTrigger asChild>
+            <Button
+              className={cn(
+                buttonClassName,
+                "rounded-md border !px-2 hover:bg-accent-foreground hover:text-white",
+              )}
+              variant={"ghost"}
+            >
+              {buttonLabel}
+            </Button>
+          </TooltipTrigger>
           <TooltipContent>
             <p>{label}</p>
           </TooltipContent>
