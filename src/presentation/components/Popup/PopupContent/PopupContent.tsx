@@ -13,8 +13,8 @@ import { QuickMessageOperations } from "../QuickMessageOperations/QuickMessageOp
 
 export const PopupContent = () => {
   return (
-    <CardContent className="p-4">
-      <div className="flex flex-col items-center justify-center gap-4 rounded-lg border p-3 shadow-sm">
+    <CardContent className="px-4">
+      <div className="flex flex-col items-center justify-center gap-2 rounded-lg border p-3 shadow-sm">
         <QuickMessageOperations />
         <QuickMessagesList />
       </div>
