@@ -74,6 +74,16 @@ export const importQuickMessages = async (
 };
 
 /**
+ * Get the index of a quick message by its label.
+ * @param label The label of the quick message.
+ * @returns The index of the quick message, or -1 if not found.
+ */
+export const getQuickMessageIndex = async (label: string): Promise<number> => {
+  const messages = await getQuickMessages();
+  return messages.findIndex((message) => message.label === label);
+};
+
+/**
  * Update an existing quick message in storage.
  * @param index The index of the message to update.
  * @param message The updated quick message.
