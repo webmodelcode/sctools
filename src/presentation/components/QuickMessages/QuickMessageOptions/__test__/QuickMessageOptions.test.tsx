@@ -73,7 +73,7 @@ describe("QuickMessageOptions Component", () => {
     it("should render trigger button with correct icon for add action", () => {
       render(<QuickMessageOptions label="add" />);
 
-      const button = screen.getByRole("button");
+      const button = screen.getByLabelText("add quick message");
       expect(button).toBeInTheDocument();
       expect(button).toHaveAttribute("aria-label", "add quick message");
       expect(screen.getByTestId("plus-icon")).toBeInTheDocument();
@@ -82,7 +82,7 @@ describe("QuickMessageOptions Component", () => {
     it("should render trigger button with correct icon for update action", () => {
       render(<QuickMessageOptions label="update" />);
 
-      const button = screen.getByRole("button");
+      const button = screen.getByLabelText("update quick message");
       expect(button).toHaveAttribute("aria-label", "update quick message");
       expect(screen.getByTestId("notebook-pen-icon")).toBeInTheDocument();
     });
@@ -90,7 +90,7 @@ describe("QuickMessageOptions Component", () => {
     it("should render trigger button with correct icon for delete action", () => {
       render(<QuickMessageOptions label="delete" />);
 
-      const button = screen.getByRole("button");
+      const button = screen.getByLabelText("delete quick message");
       expect(button).toHaveAttribute("aria-label", "delete quick message");
       expect(screen.getByTestId("delete-icon")).toBeInTheDocument();
     });
@@ -100,7 +100,7 @@ describe("QuickMessageOptions Component", () => {
     it("should open dialog when trigger button is clicked", async () => {
       render(<QuickMessageOptions label="add" />);
 
-      const triggerButton = screen.getByRole("button");
+      const triggerButton = screen.getByLabelText("add quick message");
       fireEvent.click(triggerButton);
 
       await waitFor(() => {
@@ -116,7 +116,7 @@ describe("QuickMessageOptions Component", () => {
     it("should show title input field", async () => {
       render(<QuickMessageOptions label="add" />);
 
-      const triggerButton = screen.getByRole("button");
+      const triggerButton = screen.getByLabelText("add quick message");
       fireEvent.click(triggerButton);
 
       await waitFor(() => {
@@ -130,7 +130,7 @@ describe("QuickMessageOptions Component", () => {
     it("should show message input field for add action", async () => {
       render(<QuickMessageOptions label="add" />);
 
-      const triggerButton = screen.getByRole("button");
+      const triggerButton = screen.getByLabelText("add quick message");
       fireEvent.click(triggerButton);
 
       await waitFor(() => {
@@ -144,7 +144,7 @@ describe("QuickMessageOptions Component", () => {
     it("should show message input field for update action", async () => {
       render(<QuickMessageOptions label="update" />);
 
-      const triggerButton = screen.getByRole("button");
+      const triggerButton = screen.getByLabelText("update quick message");
       fireEvent.click(triggerButton);
 
       await waitFor(() => {
@@ -155,7 +155,7 @@ describe("QuickMessageOptions Component", () => {
     it("should not show message input field for delete action", async () => {
       render(<QuickMessageOptions label="delete" />);
 
-      const triggerButton = screen.getByRole("button");
+      const triggerButton = screen.getByLabelText("delete quick message");
       fireEvent.click(triggerButton);
 
       await waitFor(() => {
@@ -166,7 +166,7 @@ describe("QuickMessageOptions Component", () => {
     it("should show save button", async () => {
       render(<QuickMessageOptions label="add" />);
 
-      const triggerButton = screen.getByRole("button");
+      const triggerButton = screen.getByLabelText("add quick message");
       fireEvent.click(triggerButton);
 
       await waitFor(() => {
@@ -179,7 +179,7 @@ describe("QuickMessageOptions Component", () => {
     it("should call handleAddMessage when save button is clicked for add action", async () => {
       render(<QuickMessageOptions label="add" />);
 
-      const triggerButton = screen.getByRole("button");
+      const triggerButton = screen.getByLabelText("add quick message");
       fireEvent.click(triggerButton);
 
       await waitFor(() => {
@@ -193,7 +193,7 @@ describe("QuickMessageOptions Component", () => {
     it("should call handleUpdateMessage when save button is clicked for update action", async () => {
       render(<QuickMessageOptions label="update" />);
 
-      const triggerButton = screen.getByRole("button");
+      const triggerButton = screen.getByLabelText("update quick message");
       fireEvent.click(triggerButton);
 
       await waitFor(() => {
@@ -207,7 +207,7 @@ describe("QuickMessageOptions Component", () => {
     it("should call handleDeleteMessage when save button is clicked for delete action", async () => {
       render(<QuickMessageOptions label="delete" />);
 
-      const triggerButton = screen.getByRole("button");
+      const triggerButton = screen.getByLabelText("delete quick message");
       fireEvent.click(triggerButton);
 
       await waitFor(() => {
@@ -223,7 +223,7 @@ describe("QuickMessageOptions Component", () => {
     it("should not show error alert when no error is present", async () => {
       render(<QuickMessageOptions label="add" />);
 
-      const triggerButton = screen.getByRole("button");
+      const triggerButton = screen.getByLabelText("add quick message");
       fireEvent.click(triggerButton);
 
       await waitFor(() => {
@@ -241,7 +241,7 @@ describe("QuickMessageOptions Component", () => {
     it("should call getDialogTitle and getDialogDescription when dialog opens", async () => {
       render(<QuickMessageOptions label="update" />);
 
-      const triggerButton = screen.getByRole("button");
+      const triggerButton = screen.getByLabelText("update quick message");
       fireEvent.click(triggerButton);
 
       await waitFor(() => {
@@ -253,7 +253,7 @@ describe("QuickMessageOptions Component", () => {
     it("should call shouldShowMessageInput with correct label", async () => {
       render(<QuickMessageOptions label="delete" />);
 
-      const triggerButton = screen.getByRole("button");
+      const triggerButton = screen.getByLabelText("delete quick message");
       fireEvent.click(triggerButton);
 
       await waitFor(() => {
@@ -266,14 +266,14 @@ describe("QuickMessageOptions Component", () => {
     it("should have proper ARIA attributes", () => {
       render(<QuickMessageOptions label="add" />);
 
-      const button = screen.getByRole("button");
+      const button = screen.getByLabelText("add quick message");
       expect(button).toHaveAttribute("aria-label", "add quick message");
     });
 
     it("should have proper form labels", async () => {
       render(<QuickMessageOptions label="add" />);
 
-      const triggerButton = screen.getByRole("button");
+      const triggerButton = screen.getByLabelText("add quick message");
       fireEvent.click(triggerButton);
 
       await waitFor(() => {

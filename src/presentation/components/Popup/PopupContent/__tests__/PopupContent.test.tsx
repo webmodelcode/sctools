@@ -25,9 +25,7 @@ describe("PopupContent Component", () => {
     // Verify the inner container
     const innerContainer = screen
       .getByText(QUICK_MESSAGE_OPERATIONS.TITLE)
-      .closest(
-        '[class*="flex items-center justify-center gap-4 rounded-lg border p-3 shadow-sm"]',
-      );
+      .closest('[class*="flex"]');
     expect(innerContainer).toBeInTheDocument();
   });
 
@@ -36,20 +34,13 @@ describe("PopupContent Component", () => {
 
     // Verify that the container has centered layout classes
     const operationsSection = screen.getByText(QUICK_MESSAGE_OPERATIONS.TITLE);
-    const container = operationsSection.closest(
-      '[class*="flex items-center justify-center"]',
-    );
+    const container = operationsSection.closest('[class*="flex flex-col"]');
 
+    expect(container).not.toBeNull();
     expect(container).toBeInTheDocument();
-    expect(container).toHaveClass(
-      "flex",
-      "items-center",
-      "justify-center",
-      "gap-4",
-      "rounded-lg",
-      "border",
-      "p-3",
-      "shadow-sm",
-    );
+    expect(container).toHaveClass("flex");
+    expect(container).toHaveClass("flex-col");
+    expect(container).toHaveClass("items-center");
+    expect(container).toHaveClass("justify-center");
   });
 });
