@@ -28,8 +28,8 @@ export const QuickMessagesList = () => {
   if (!quickMessages.length) return;
 
   return (
-    <ScrollArea className="h-fit w-full rounded-md border">
-      <div className="max-h-40">
+    <ScrollArea className="w-full rounded-md border">
+      <div className="max-h-36">
         {quickMessages.map((message) => (
           <div
             key={message.label}
