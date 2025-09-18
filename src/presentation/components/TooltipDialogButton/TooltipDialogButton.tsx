@@ -13,8 +13,8 @@ import { ReactElement } from "react";
 import { TooltipNoButton } from "../ui/own/tooltip-no-button";
 
 interface Props {
-  label: string;
-  buttonLabel: ReactElement;
+  buttonLabel: string;
+  buttonIcon?: ReactElement;
   buttonHandler?: () => void;
   buttonClassName?: string;
   havePopUp?: boolean;
@@ -24,8 +24,8 @@ interface Props {
 }
 
 export const TooltipDialogButton = ({
-  label,
   buttonLabel,
+  buttonIcon,
   buttonClassName,
   buttonHandler,
   havePopUp,
@@ -38,9 +38,9 @@ export const TooltipDialogButton = ({
       <DialogTrigger onClick={buttonHandler}>
         <TooltipNoButton
           showType="icon"
-          triggerLabel={label}
-          triggerIcon={buttonLabel}
-          textContent={label}
+          triggerLabel={buttonLabel}
+          triggerIcon={buttonIcon}
+          textContent={buttonLabel}
           variant={"outline"}
           className={cn(buttonClassName, "bg-ew-star-color")}
         />
