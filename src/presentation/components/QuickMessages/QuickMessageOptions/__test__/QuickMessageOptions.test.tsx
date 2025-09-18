@@ -122,7 +122,7 @@ describe("QuickMessageOptions Component", () => {
       await waitFor(() => {
         expect(screen.getByLabelText("Titulo")).toBeInTheDocument();
         expect(
-          screen.getByPlaceholderText("Quick Message Title"),
+          screen.getByPlaceholderText("Ingresa el título del mensaje"),
         ).toBeInTheDocument();
       });
     });
@@ -136,7 +136,7 @@ describe("QuickMessageOptions Component", () => {
       await waitFor(() => {
         expect(screen.getByLabelText("Mensaje")).toBeInTheDocument();
         expect(
-          screen.getByPlaceholderText("Write your quick message here"),
+          screen.getByPlaceholderText("Ingresa el mensaje"),
         ).toBeInTheDocument();
       });
     });

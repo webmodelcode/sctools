@@ -122,33 +122,35 @@ export const QuickMessageOptions = ({
       <DialogContent className="!max-w-[325px]">
         <DialogHeader>
           <DialogTitle>{getDialogTitle(label)}</DialogTitle>
-          <DialogDescription>{getDialogDescription(label)}</DialogDescription>
+          <DialogDescription className="text-left text-xs">
+            {getDialogDescription(label)}
+          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="flex flex-col items-start justify-center gap-1">
             <Label htmlFor="title" className="text-right">
               {QUICK_MESSAGE_OPTIONS.FORM.TITLE}
             </Label>
             <Input
               id="title"
-              placeholder="Quick Message Title"
               className="col-span-3"
               autoComplete="off"
+              placeholder={QUICK_MESSAGE_OPTIONS.FORM.TITLE_PLACEHOLDER}
               value={msgId}
               disabled={msgId ? true : false}
               ref={titleRef}
             />
           </div>
           {shouldShowMessageInput(label) && (
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="flex flex-col items-start justify-center gap-1">
               <Label htmlFor="message" className="text-right">
                 {QUICK_MESSAGE_OPTIONS.FORM.MESSAGE}
               </Label>
               <Input
                 id="message"
-                placeholder="Write your quick message here"
                 className="col-span-3"
                 autoComplete="off"
+                placeholder={QUICK_MESSAGE_OPTIONS.FORM.MESSAGE_PLACEHOLDER}
                 ref={messageRef}
               />
             </div>
