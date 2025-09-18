@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, act } from "@testing-library/react";
 import { ContentMenu } from "../ContentMenu";
 import * as useQuickMenuIsActiveModule from "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive";
 import { scAdapter } from "~@/config/scAdapter/sc.adapter";
@@ -19,13 +19,16 @@ vi.mock("~@/config/scAdapter/sc.adapter", () => ({
   },
 }));
 
-vi.mock("~@/config/smAdapter/sm.adapter", () => ({
-  smAdapter: {
-    getConsentModal: vi.fn(),
-    getConsentCheckbox: vi.fn(),
-    getConsentButton: vi.fn(),
-  },
-}));
+vi.mock(
+  "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive",
+  () => ({
+    useQuickMenuIsActive: vi.fn().mockReturnValue({
+      setItem: vi.fn(),
+      getItem: vi.fn().mockResolvedValue(true),
+      watchItem: vi.fn().mockResolvedValue(true),
+    }),
+  }),
+);
 
 // Mock the components used by ContentMenu
 vi.mock("../../MaximizeButton/MaximizeButton", () => ({
@@ -49,6 +52,22 @@ vi.mock("../../DonationSupport/DonationSupport", () => ({
 }));
 
 describe("ContentMenu", () => {
+  // Helper function to mock useQuickMenuIsActive with different values
+  const mockUseQuickMenuIsActive = (
+    isActive: boolean,
+    customMocks?: {
+      setItem?: ReturnType<typeof vi.fn>;
+      getItem?: ReturnType<typeof vi.fn>;
+      watchItem?: ReturnType<typeof vi.fn>;
+    },
+  ) => {
+    vi.mocked(useQuickMenuIsActiveModule.useQuickMenuIsActive).mockReturnValue({
+      setItem: customMocks?.setItem || vi.fn(),
+      getItem: customMocks?.getItem || vi.fn().mockResolvedValue(isActive),
+      watchItem: customMocks?.watchItem || vi.fn().mockResolvedValue(isActive),
+    });
+  };
+
   // Clear all mocks after each test
   beforeEach(() => {
     vi.resetAllMocks();
@@ -59,12 +78,9 @@ describe("ContentMenu", () => {
       },
       writable: true,
     });
-    // Mock the useQuickMenuIsActive hook to return default values
-    vi.mocked(useQuickMenuIsActiveModule.useQuickMenuIsActive).mockReturnValue({
-      setItem: vi.fn(),
-      getItem: vi.fn().mockResolvedValue(true),
-      watchItem: vi.fn().mockResolvedValue(true),
-    });
+    // Mock the useQuickMenuIsActive hook to return default values (true)
+
+    mockUseQuickMenuIsActive(true);
   });
 
   it("should render the component with status indicator when isActive is true", async () => {
@@ -75,9 +91,14 @@ describe("ContentMenu", () => {
     expect(await screen.findByTestId("status-indicator")).toBeInTheDocument();
   });
 
-  it("should not render any menu items when isActive is false", () => {
+  it("should not render any menu items when isActive is false", async () => {
+    // Arrange: Mock useQuickMenuIsActive to return false
+    mockUseQuickMenuIsActive(false);
+
     // Act: Render the component
-    render(<ContentMenu />);
+    await act(async () => {
+      render(<ContentMenu />);
+    });
 
     // Assert: Verify that no menu items are rendered
     expect(screen.queryByTestId("status-indicator")).not.toBeInTheDocument();
@@ -178,11 +199,7 @@ describe("ContentMenu", () => {
   it("should update isExtActive state when useEffect is triggered", async () => {
     // Arrange: Set up the hook with a mock getItem function that returns a promise
     const mockGetItem = vi.fn().mockResolvedValue(true);
-    vi.mocked(useQuickMenuIsActiveModule.useQuickMenuIsActive).mockReturnValue({
-      setItem: vi.fn(),
-      getItem: mockGetItem,
-      watchItem: vi.fn().mockResolvedValue(true),
-    });
+    mockUseQuickMenuIsActive(true, { getItem: mockGetItem });
 
     // Act: Render the component (which triggers useEffect)
     render(<ContentMenu />);
@@ -200,11 +217,7 @@ describe("ContentMenu", () => {
   it("should not render anything when getItem returns false", async () => {
     // Arrange: Set up the hook with a mock getItem function that returns false
     const mockGetItem = vi.fn().mockResolvedValue(false);
-    vi.mocked(useQuickMenuIsActiveModule.useQuickMenuIsActive).mockReturnValue({
-      setItem: vi.fn(),
-      getItem: mockGetItem,
-      watchItem: vi.fn().mockResolvedValue(false),
-    });
+    mockUseQuickMenuIsActive(false, { getItem: mockGetItem });
 
     // Act: Render the component
     render(<ContentMenu />);
