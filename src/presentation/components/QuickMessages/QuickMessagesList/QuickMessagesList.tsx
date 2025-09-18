@@ -28,7 +28,7 @@ export const QuickMessagesList = () => {
   if (!quickMessages.length) return;
 
   return (
-    <ScrollArea className="h-56 w-full border py-1" type="always">
+    <ScrollArea className="h-56 border py-1" type="always">
       {quickMessages.map((message) => (
         <div
           key={message.label}
