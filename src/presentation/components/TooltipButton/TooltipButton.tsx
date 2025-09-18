@@ -9,17 +9,18 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { ReactNode } from "react";
+import { ReactElement } from "react";
+import { TooltipNoButton } from "../ui/own/tooltip-no-button";
 
 interface Props {
   label: string;
-  buttonLabel: string | ReactNode;
+  buttonLabel: string | ReactElement;
   buttonHandler?: () => void;
   buttonClassName?: string;
   havePopUp?: boolean;
   dialogHeader?: string;
   dialogDescription?: string;
-  dialogContent?: ReactNode;
+  dialogContent?: ReactElement;
 }
 
 export const TooltipButton = ({
@@ -35,22 +36,12 @@ export const TooltipButton = ({
   return (
     <Dialog>
       <DialogTrigger onClick={buttonHandler}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              className={cn(
-                buttonClassName,
-                "rounded-md border !px-2 hover:bg-accent-foreground hover:text-white",
-              )}
-              variant={"ghost"}
-            >
-              {buttonLabel}
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{label}</p>
-          </TooltipContent>
-        </Tooltip>
+        <TooltipNoButton
+          triggerLabel={buttonLabel}
+          textContent={label}
+          variant={"outline"}
+          className={cn(buttonClassName, "bg-ew-star-color")}
+        />
       </DialogTrigger>
       {havePopUp && (
         <DialogContent>

@@ -42,6 +42,7 @@ import {
 import { QUICK_MESSAGE_OPTIONS } from "./quickMessageOptions.strings.json";
 import { devConsole } from "~@/config/utils/developerUtils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
+import { TooltipNoButton } from "../../ui/own/tooltip-no-button";
 
 // Re-export types for external use
 export type { QuickMessageOptionsProps } from "./types";
@@ -109,18 +110,12 @@ export const QuickMessageOptions = ({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="outline"
-              className="m-1 !px-2 text-ew-star-color capitalize"
-              aria-label={`${label} quick message`}
-            >
-              {getActionIcon(label)}
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>{getDialogTitle(label)}</TooltipContent>
-        </Tooltip>
+        <TooltipNoButton
+          triggerLabel={getActionIcon(label)}
+          textContent={getDialogTitle(label)}
+          variant={"outline"}
+          className="m-1 !px-2 text-ew-star-color"
+        />
       </DialogTrigger>
       <DialogContent className="!max-w-[325px]">
         <DialogHeader>
