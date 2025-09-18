@@ -23,7 +23,7 @@ interface Props {
   dialogContent?: ReactElement;
 }
 
-export const TooltipButton = ({
+export const TooltipDialogButton = ({
   label,
   buttonLabel,
   buttonClassName,

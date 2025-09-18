@@ -1,5 +1,5 @@
 import { Download, Upload } from "lucide-react";
-import { TooltipButton } from "../../TooltipButton/TooltipButton";
+import { TooltipDialogButton } from "../../TooltipDialogButton/TooltipDialogButton";
 import { ImportForm } from "./ImportForm";
 import { ExportForm } from "./ExportForm";
 import { QUICK_MESSAGE_DATA_OPERATIONS } from "./quickMessageOptions.strings.json";
@@ -44,7 +44,7 @@ export const QuickMessageDataOperations = () => {
       ),
     },
   ].map((opt) => (
-    <TooltipButton
+    <TooltipDialogButton
       key={opt.label}
       label={opt.label}
       buttonLabel={opt.buttonLabel}
