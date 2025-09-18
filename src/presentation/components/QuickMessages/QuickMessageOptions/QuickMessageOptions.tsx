@@ -111,7 +111,9 @@ export const QuickMessageOptions = ({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger>
         <TooltipNoButton
-          triggerLabel={getActionIcon(label)}
+          showType="icon"
+          triggerLabel={label}
+          triggerIcon={getActionIcon(label)}
           textContent={getDialogTitle(label)}
           variant={"outline"}
           className="m-1 !px-2 text-ew-star-color"
