@@ -19,7 +19,7 @@ describe("PopupContent Component", () => {
     // Verify the CardContent structure
     const content = screen
       .getByText(QUICK_MESSAGE_OPERATIONS.TITLE)
-      .closest('[class*="p-4"]');
+      .closest('[class*="px-4"]');
     expect(content).toBeInTheDocument();
 
     // Verify the inner container
