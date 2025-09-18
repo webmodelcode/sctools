@@ -24,7 +24,10 @@ export const TooltipNoButton = ({
     <Tooltip>
       <TooltipTrigger asChild>
         <div
-          className={cn(buttonVariants({ variant, className }))}
+          className={cn(
+            buttonVariants({ variant, className }),
+            "cursor-pointer",
+          )}
           aria-label={`${triggerLabel} quick message`}
         >
           {showType === "icon" ? (
