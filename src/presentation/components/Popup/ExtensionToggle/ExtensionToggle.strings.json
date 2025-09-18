@@ -1,5 +1,6 @@
 {
   "EXTENSION_TOGGLE": {
-    "LABEL": "Habilitar extensión"
+    "LABEL_ON": "Encendida",
+    "LABEL_OFF": "Apagada"
   }
 }
