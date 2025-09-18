@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import React from "react";
 
@@ -39,13 +39,7 @@ vi.mock("../TranslatorPopup", () => ({
     // Simulate translation without browser.runtime
      React.useEffect(() => {
        if (inputValue) {
-         const timeoutId = setTimeout(() => {
-           setTranslatedValue(`Translated: ${inputValue}`);
-         }, 10);
-         
-         return () => {
-           clearTimeout(timeoutId);
-         };
+         setTranslatedValue(`Translated: ${inputValue}`);
        }
      }, [inputValue]);
 
@@ -204,13 +198,15 @@ describe("TranslatorPopup", () => {
     });
 
     it("should display translated text when input value is provided", async () => {
-      render(
-        <TranslatorPopup 
-          position={mockPosition} 
-          inputValue={mockInputValue} 
-          ref={mockRef}
-        />
-      );
+      await act(async () => {
+        render(
+          <TranslatorPopup 
+            position={mockPosition} 
+            inputValue={mockInputValue} 
+            ref={mockRef}
+          />
+        );
+      });
 
       // Wait for translation to appear
       await vi.waitFor(() => {
@@ -310,13 +306,15 @@ describe("TranslatorPopup", () => {
       const mockInput = document.createElement('input');
       mockInput.select = vi.fn();
       
-      render(
-        <TranslatorPopup 
-          position={mockPosition} 
-          inputValue={mockInputValue} 
-          ref={mockRef}
-        />
-      );
+      await act(async () => {
+        render(
+          <TranslatorPopup 
+            position={mockPosition} 
+            inputValue={mockInputValue} 
+            ref={mockRef}
+          />
+        );
+      });
 
       // Wait for translation to be set
       await vi.waitFor(() => {
@@ -469,13 +467,15 @@ describe("TranslatorPopup", () => {
       const mockDiv = document.createElement('div');
       mockDiv.contentEditable = 'true';
       
-      render(
-        <TranslatorPopup 
-          position={mockPosition} 
-          inputValue={mockInputValue} 
-          ref={mockRef}
-        />
-      );
+      await act(async () => {
+        render(
+          <TranslatorPopup 
+            position={mockPosition} 
+            inputValue={mockInputValue} 
+            ref={mockRef}
+          />
+        );
+      });
 
       // Wait for translation to be set
       await vi.waitFor(() => {

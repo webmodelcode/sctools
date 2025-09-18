@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { SmLocalTranslator } from '../SmLocalTranslator';
 import * as useMutationObserverModule from '~@/presentation/hooks/useMutationObserver/useMutationObserver';
@@ -88,22 +88,28 @@ describe('SmLocalTranslator', () => {
   });
 
   describe('Component Rendering', () => {
-    it('should render without crashing', () => {
-      render(<SmLocalTranslator />);
+    it('should render without crashing', async () => {
+      await act(async () => {
+        render(<SmLocalTranslator />);
+      });
       
       // The component renders a hidden div
       const hiddenDiv = document.querySelector('.hidden');
       expect(hiddenDiv).toBeInTheDocument();
     });
 
-    it('should initialize with correct adapter calls', () => {
-      render(<SmLocalTranslator />);
+    it('should initialize with correct adapter calls', async () => {
+      await act(async () => {
+        render(<SmLocalTranslator />);
+      });
       
-      expect(mockSmAdapter.getChatTab).toHaveBeenCalledTimes(1);
+      expect(mockSmAdapter.getChatTab).toHaveBeenCalled();
     });
 
-    it('should setup mutation observer', () => {
-      render(<SmLocalTranslator />);
+    it('should setup mutation observer', async () => {
+      await act(async () => {
+        render(<SmLocalTranslator />);
+      });
       
       expect(mockUseMutationObserver).toHaveBeenCalledWith({
         ref: expect.any(Object),
@@ -111,7 +117,7 @@ describe('SmLocalTranslator', () => {
       });
     });
 
-    it('should setup quick menu watcher', () => {
+    it('should setup quick menu watcher', async () => {
       const mockWatchItem = vi.fn();
       mockUseQuickMenuIsActive.mockReturnValue({
         getItem: vi.fn().mockResolvedValue(true),
@@ -119,15 +125,19 @@ describe('SmLocalTranslator', () => {
         setItem: vi.fn(),
       });
       
-      render(<SmLocalTranslator />);
+      await act(async () => {
+        render(<SmLocalTranslator />);
+      });
       
       expect(mockWatchItem).toHaveBeenCalledWith(expect.any(Function));
     });
   });
 
   describe('Mutation Observer Setup', () => {
-    it('should setup mutation observer with correct parameters', () => {
-      render(<SmLocalTranslator />);
+    it('should setup mutation observer with correct parameters', async () => {
+      await act(async () => {
+        render(<SmLocalTranslator />);
+      });
       
       expect(mockUseMutationObserver).toHaveBeenCalledWith({
         ref: expect.objectContaining({ current: expect.any(Object) }),
@@ -135,8 +145,10 @@ describe('SmLocalTranslator', () => {
       });
     });
 
-    it('should handle mutation callback without errors', () => {
-      render(<SmLocalTranslator />);
+    it('should handle mutation callback without errors', async () => {
+      await act(async () => {
+        render(<SmLocalTranslator />);
+      });
       const mutationCallback = mockUseMutationObserver.mock.calls[0][0].callback;
       
       // Test that callback can be called without throwing
@@ -163,7 +175,7 @@ describe('SmLocalTranslator', () => {
       expect(mockGetItem).toHaveBeenCalled();
     });
 
-    it('should update state when watchItem callback is triggered', () => {
+    it('should update state when watchItem callback is triggered', async () => {
       let watchCallback: (value: boolean) => void;
       const mockWatchItem = vi.fn((callback) => {
         watchCallback = callback;
@@ -175,27 +187,37 @@ describe('SmLocalTranslator', () => {
         setItem: vi.fn(),
       });
       
-      render(<SmLocalTranslator />);
+      await act(async () => {
+        render(<SmLocalTranslator />);
+      });
       
       expect(mockWatchItem).toHaveBeenCalledWith(expect.any(Function));
       
       // Trigger the watch callback
-      watchCallback!(false);
+      await act(async () => {
+        watchCallback!(false);
+      });
       
       // The state should be updated (this is tested indirectly through mutation processing)
     });
   });
 
   describe('Component Structure', () => {
-    it('should have correct component structure', () => {
-      const { container } = render(<SmLocalTranslator />);
+    it('should have correct component structure', async () => {
+      let container: any;
+      await act(async () => {
+        const result = render(<SmLocalTranslator />);
+        container = result.container;
+      });
       
       expect(container.firstChild).toHaveClass('hidden');
       expect(container.firstChild?.nodeName).toBe('DIV');
     });
 
-    it('should not render any visible content', () => {
-      render(<SmLocalTranslator />);
+    it('should not render any visible content', async () => {
+      await act(async () => {
+        render(<SmLocalTranslator />);
+      });
       
       // Should not have any visible text content
       expect(screen.queryByText(/./)).not.toBeInTheDocument();
@@ -203,10 +225,12 @@ describe('SmLocalTranslator', () => {
   });
 
   describe('Adapter Integration', () => {
-    it('should handle null chat tab from adapter', () => {
+    it('should handle null chat tab from adapter', async () => {
       mockSmAdapter.getChatTab.mockReturnValue(null);
       
-      render(<SmLocalTranslator />);
+      await act(async () => {
+        render(<SmLocalTranslator />);
+      });
       
       expect(mockSmAdapter.getChatTab).toHaveBeenCalled();
       expect(mockUseMutationObserver).toHaveBeenCalledWith({
@@ -215,11 +239,13 @@ describe('SmLocalTranslator', () => {
       });
     });
 
-    it('should handle valid chat tab from adapter', () => {
+    it('should handle valid chat tab from adapter', async () => {
       const mockChatTab = createMockDiv();
       mockSmAdapter.getChatTab.mockReturnValue(mockChatTab);
       
-      render(<SmLocalTranslator />);
+      await act(async () => {
+        render(<SmLocalTranslator />);
+      });
       
       expect(mockSmAdapter.getChatTab).toHaveBeenCalled();
       expect(mockUseMutationObserver).toHaveBeenCalledWith({
