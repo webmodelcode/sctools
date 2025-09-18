@@ -16,6 +16,7 @@ import {
 import type { IQuickMessage } from "~@/infrastructure/datasource/quickMessages.local.datasource";
 import { cn } from "~@/presentation/lib/utils";
 import { IMPORT_FORM } from "./quickMessageOptions.strings.json";
+import { PROBLEMATIC_QUOTES_REGEX } from "~@/config/utils/globalRegex";
 
 interface FormData {
   jsonData: string;
@@ -42,12 +43,21 @@ export const ImportForm = ({ onSuccess, onError }: ImportFormProps) => {
 
     try {
       // Validate input is not empty
-      if (!values.jsonData.trim()) {
+      let trimmedJsonData = values.jsonData.trim();
+      if (!trimmedJsonData) {
         throw new Error(IMPORT_FORM.FORM_VALIDATION_MSG.REQUIRED);
       }
 
+      // Check for problematic quotes
+      if (PROBLEMATIC_QUOTES_REGEX.test(trimmedJsonData)) {
+        trimmedJsonData = trimmedJsonData.replace(
+          PROBLEMATIC_QUOTES_REGEX,
+          '"',
+        );
+      }
+
       // Parse JSON data
-      const parsedData = JSON.parse(values.jsonData);
+      const parsedData = JSON.parse(trimmedJsonData);
 
       // Validate that it's an array
       if (!Array.isArray(parsedData)) {
