@@ -14,7 +14,7 @@ import { Label } from "../../ui/label";
 import { QUICK_MESSAGE_OPERATIONS } from "./strings.json";
 import { QuickMessageDataOperations } from "../../QuickMessages/QuickMessageOptions/QuickMessageDataOperations";
 
-const quickMessageOptions: LabelOptions[] = ["add", "update", "delete"];
+const quickMessageOptions: LabelOptions[] = ["add"];
 
 export const QuickMessageOperations = () => {
   return (

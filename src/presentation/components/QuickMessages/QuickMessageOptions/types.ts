@@ -13,6 +13,8 @@ export type LabelOptions = "add" | "update" | "delete";
 export interface QuickMessageOptionsProps {
   /** The type of operation to perform (add, update, or delete) */
   label: LabelOptions;
+  /** The Message Unique Label for operate */
+  msgId?: string;
 }
 
 /**

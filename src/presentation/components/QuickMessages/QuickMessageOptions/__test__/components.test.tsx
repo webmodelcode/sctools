@@ -50,7 +50,7 @@ describe("QuickMessageOptions Components", () => {
   describe("getDialogTitle", () => {
     it("should return correct title for add action", () => {
       const result = getDialogTitle("add");
-      expect(result).toBe("Añadir Mensaje Rápido");
+      expect(result).toBe("Nuevo Mensaje Rápido");
     });
 
     it("should return correct title for update action", () => {

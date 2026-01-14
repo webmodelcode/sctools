@@ -41,7 +41,7 @@ describe("Popup Component", () => {
     // Verify that the modular structure is present using content as reference
     const titleElement = screen.getByText("ScTools");
     const card = titleElement.closest('[class*="min-h-[200px]"]');
-    expect(card).toHaveClass("min-h-[200px]", "min-w-[350px]");
+    expect(card).toHaveClass("min-h-[200px]", "min-w-md");
   });
 
   it("switch should be initially unchecked", () => {

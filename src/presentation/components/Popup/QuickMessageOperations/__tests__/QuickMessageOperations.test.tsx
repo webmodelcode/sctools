@@ -33,15 +33,14 @@ describe("QuickMessageOperations Component", () => {
     expect(optionsContainer).toHaveClass("flex", "flex-row");
   });
 
-  it("should render three quick message options", () => {
+  it("should render quick message options", () => {
     render(<QuickMessageOperations />);
 
-    // Verify that the three options are rendered (add, update, delete)
-    // Note: This depends on how QuickMessageOptions is implemented
-    // We assume each option renders some identifiable element
+    // Verify that the options are rendered (add option + data operations)
+    // The component renders 1 QuickMessageOptions (add) + 2 TooltipButton (import/export)
     const optionsContainer = screen.getByText(
       QUICK_MESSAGE_OPERATIONS.TITLE,
     ).nextElementSibling;
-    expect(optionsContainer?.children).toHaveLength(5);
+    expect(optionsContainer?.children).toHaveLength(3);
   });
 });
