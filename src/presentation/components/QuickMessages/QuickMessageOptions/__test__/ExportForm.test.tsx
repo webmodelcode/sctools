@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { ExportForm } from "../ExportForm";
 
@@ -42,8 +42,10 @@ describe("ExportForm", () => {
   });
 
   describe("rendering", () => {
-    it("should render the form with textarea and copy button", () => {
-      render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+    it("should render the form with textarea and copy button", async () => {
+      await act(async () => {
+        render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+      });
 
       expect(screen.getByLabelText("Mensajes exportados")).toBeInTheDocument();
       expect(
@@ -51,8 +53,10 @@ describe("ExportForm", () => {
       ).toBeInTheDocument();
     });
 
-    it("should show description text", () => {
-      render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+    it("should show description text", async () => {
+      await act(async () => {
+        render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+      });
 
       expect(
         screen.getByText(
@@ -64,7 +68,9 @@ describe("ExportForm", () => {
 
   describe("data loading", () => {
     it("should load and display messages on mount", async () => {
-      render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+      await act(async () => {
+        render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+      });
 
       await waitFor(() => {
         expect(mockHandleExportQuickMessages).toHaveBeenCalled();
@@ -74,7 +80,9 @@ describe("ExportForm", () => {
 
   describe("copy to clipboard functionality", () => {
     it("should copy content to clipboard when button is clicked", async () => {
-      render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+      await act(async () => {
+        render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+      });
 
       await waitFor(() => {
         expect(mockHandleExportQuickMessages).toHaveBeenCalled();
@@ -92,8 +100,10 @@ describe("ExportForm", () => {
   });
 
   describe("accessibility", () => {
-    it("should have proper labels and form structure", () => {
-      render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+    it("should have proper labels and form structure", async () => {
+      await act(async () => {
+        render(<ExportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+      });
 
       const textarea = screen.getByLabelText("Mensajes exportados");
       expect(textarea).toHaveAttribute("id", "exportData");

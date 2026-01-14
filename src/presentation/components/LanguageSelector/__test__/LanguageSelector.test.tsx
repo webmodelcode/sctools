@@ -245,10 +245,14 @@ describe("LanguageSelector", () => {
         render(<LanguageSelector />);
       });
 
-      fireEvent.click(screen.getByRole("combobox"));
+      await act(async () => {
+        fireEvent.click(screen.getByRole("combobox"));
+      });
       
       const frenchOption = screen.getByRole("option", { name: /francés/i });
-      fireEvent.click(frenchOption);
+      await act(async () => {
+        fireEvent.click(frenchOption);
+      });
       
       expect(mockSetItem).toHaveBeenCalledWith("fr");
     });

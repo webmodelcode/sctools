@@ -7,8 +7,8 @@ import { useQuickMenuIsActive } from "~@/presentation/hooks/useQuickMenuIsActive
 import { chaturAdapter } from "~@/config/chaturAdapter/chaturAdapter";
 
 export const ChaturLocalTranslator = () => {
-  const chatRef = useRef(chaturAdapter.getPublicChatTab());
-  const messengerContainer = useRef(chaturAdapter.getTabsContainer());
+  const tabsContainer = useMemo(() => chaturAdapter.getTabsContainer(), []);
+  const messengerContainer = useRef(tabsContainer);
   const { getItem, watchItem } = useQuickMenuIsActive();
   const [isExtActive, setIsExtActive] = useState(false);
 
@@ -65,5 +65,5 @@ export const ChaturLocalTranslator = () => {
     },
   });
 
-  return <div className="hidden"></div>;
+  return <div className="hidden" data-testid="chatur-local-translator"></div>;
 };

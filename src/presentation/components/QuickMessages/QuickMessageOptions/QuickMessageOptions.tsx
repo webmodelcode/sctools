@@ -40,11 +40,17 @@ import {
 } from "./components";
 
 import { QUICK_MESSAGE_OPTIONS } from "./quickMessageOptions.strings.json";
+import { devConsole } from "~@/config/utils/developerUtils";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
+import { TooltipNoButton } from "../../ui/own/tooltip-no-button";
 
 // Re-export types for external use
 export type { QuickMessageOptionsProps } from "./types";
 
-export const QuickMessageOptions = ({ label }: QuickMessageOptionsProps) => {
+export const QuickMessageOptions = ({
+  label,
+  msgId,
+}: QuickMessageOptionsProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState<ErrorMessage>({
     message: "",
@@ -93,7 +99,7 @@ export const QuickMessageOptions = ({ label }: QuickMessageOptionsProps) => {
         onDeleteMessage();
         break;
       default:
-        console.error(
+        devConsole.error(
           `${QUICK_MESSAGE_OPTIONS.LABEL_NOT_FOUND}${label}`,
           label,
         );
@@ -103,43 +109,48 @@ export const QuickMessageOptions = ({ label }: QuickMessageOptionsProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="m-1 px-2 text-ew-star-color capitalize"
-          aria-label={`${label} quick message`}
-        >
-          {getActionIcon(label)}
-        </Button>
+      <DialogTrigger>
+        <TooltipNoButton
+          showType="icon"
+          triggerLabel={label}
+          triggerIcon={getActionIcon(label)}
+          textContent={getDialogTitle(label)}
+          variant={"outline"}
+          className="m-1 !px-2 text-ew-star-color"
+        />
       </DialogTrigger>
       <DialogContent className="!max-w-[325px]">
         <DialogHeader>
           <DialogTitle>{getDialogTitle(label)}</DialogTitle>
-          <DialogDescription>{getDialogDescription(label)}</DialogDescription>
+          <DialogDescription className="text-left text-xs">
+            {getDialogDescription(label)}
+          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="flex flex-col items-start justify-center gap-1">
             <Label htmlFor="title" className="text-right">
               {QUICK_MESSAGE_OPTIONS.FORM.TITLE}
             </Label>
             <Input
               id="title"
-              placeholder="Quick Message Title"
               className="col-span-3"
               autoComplete="off"
+              placeholder={QUICK_MESSAGE_OPTIONS.FORM.TITLE_PLACEHOLDER}
+              value={msgId}
+              disabled={msgId ? true : false}
               ref={titleRef}
             />
           </div>
           {shouldShowMessageInput(label) && (
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="flex flex-col items-start justify-center gap-1">
               <Label htmlFor="message" className="text-right">
                 {QUICK_MESSAGE_OPTIONS.FORM.MESSAGE}
               </Label>
               <Input
                 id="message"
-                placeholder="Write your quick message here"
                 className="col-span-3"
                 autoComplete="off"
+                placeholder={QUICK_MESSAGE_OPTIONS.FORM.MESSAGE_PLACEHOLDER}
                 ref={messageRef}
               />
             </div>

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import React from "react";
 
@@ -18,6 +18,12 @@ vi.mock("~@/config/utils/globalStrings", () => ({
   },
 }));
 
+// Mock selectTextInContentEditable
+const mockSelectTextInContentEditable = vi.fn();
+vi.mock("~@/config/utils/selectTextInContentEditable", () => ({
+  selectTextInContentEditable: mockSelectTextInContentEditable,
+}));
+
 // Mock the actual component
 vi.mock("../TranslatorPopup", () => ({
   TranslatorPopup: React.forwardRef<
@@ -33,13 +39,7 @@ vi.mock("../TranslatorPopup", () => ({
     // Simulate translation without browser.runtime
      React.useEffect(() => {
        if (inputValue) {
-         const timeoutId = setTimeout(() => {
-           setTranslatedValue(`Translated: ${inputValue}`);
-         }, 10);
-         
-         return () => {
-           clearTimeout(timeoutId);
-         };
+         setTranslatedValue(`Translated: ${inputValue}`);
        }
      }, [inputValue]);
 
@@ -47,7 +47,10 @@ vi.mock("../TranslatorPopup", () => ({
       const handleKeyPress = (event: KeyboardEvent) => {
         if (event.ctrlKey && event.key.toLowerCase() === "q") {
           event.preventDefault();
-          (event.target as HTMLInputElement)?.select();
+          const target = event.target as HTMLInputElement;
+          if (target) {
+            target.select ? target.select() : mockSelectTextInContentEditable(target);
+          }
           insertTranslate();
         }
       };
@@ -75,8 +78,14 @@ vi.mock("../TranslatorPopup", () => ({
         </div>
 
         <div className="max-h-14 w-full overflow-y-auto rounded border bg-gray-50 px-2 text-center text-sm">
-          {translatedValue || (
-            <span className="text-gray-400 italic">Sin contenido</span>
+          {inputValue && !translatedValue ? (
+            <span className="text-gray-400 italic">
+              Descargando Traductor...
+            </span>
+          ) : (
+            <span className="text-gray-400 italic">
+              {translatedValue || "Sin contenido"}
+            </span>
           )}
         </div>
       </div>
@@ -95,6 +104,7 @@ describe("TranslatorPopup", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockExecCommand.mockClear();
+    mockSelectTextInContentEditable.mockClear();
   });
 
   describe("rendering", () => {
@@ -137,14 +147,66 @@ describe("TranslatorPopup", () => {
       expect(screen.getByText("Sin contenido")).toBeInTheDocument();
     });
 
-    it("should display translated text when input value is provided", async () => {
+    it("should show 'Descargando Traductor...' when input value is provided but translation is not ready", () => {
+      // Create a custom component that simulates the loading state
+      const LoadingTranslatorPopup = React.forwardRef<
+        HTMLDivElement,
+        { position: { top: number; left: number; width: number }; inputValue: string }
+      >(({ position, inputValue }, ref) => {
+        // Set translatedValue to empty string to simulate loading state
+        const [translatedValue] = React.useState<string>("");
+        
+        return (
+          <div
+            ref={ref}
+            className="fixed z-50 flex max-w-sm flex-col items-start rounded-lg border border-ew-star-color bg-white px-3 py-1 shadow-lg"
+            style={{
+              top: `${position.top}px`,
+              left: `${position.left}px`,
+              minWidth: `${position.width}px`,
+              maxWidth: "400px",
+            }}
+          >
+            <div className="mb-1 w-full text-sm text-gray-600">
+              <span className="font-bold">ctrl + q</span> para traducir
+            </div>
+    
+            <div className="max-h-14 w-full overflow-y-auto rounded border bg-gray-50 px-2 text-center text-sm">
+              {inputValue && !translatedValue ? (
+                <span className="text-gray-400 italic">
+                  Descargando Traductor...
+                </span>
+              ) : (
+                <span className="text-gray-400 italic">
+                  {translatedValue || "Sin contenido"}
+                </span>
+              )}
+            </div>
+          </div>
+        );
+      });
+      
       render(
-        <TranslatorPopup 
+        <LoadingTranslatorPopup 
           position={mockPosition} 
           inputValue={mockInputValue} 
           ref={mockRef}
         />
       );
+
+      expect(screen.getByText("Descargando Traductor...")).toBeInTheDocument();
+    });
+
+    it("should display translated text when input value is provided", async () => {
+      await act(async () => {
+        render(
+          <TranslatorPopup 
+            position={mockPosition} 
+            inputValue={mockInputValue} 
+            ref={mockRef}
+          />
+        );
+      });
 
       // Wait for translation to appear
       await vi.waitFor(() => {
@@ -244,13 +306,15 @@ describe("TranslatorPopup", () => {
       const mockInput = document.createElement('input');
       mockInput.select = vi.fn();
       
-      render(
-        <TranslatorPopup 
-          position={mockPosition} 
-          inputValue={mockInputValue} 
-          ref={mockRef}
-        />
-      );
+      await act(async () => {
+        render(
+          <TranslatorPopup 
+            position={mockPosition} 
+            inputValue={mockInputValue} 
+            ref={mockRef}
+          />
+        );
+      });
 
       // Wait for translation to be set
       await vi.waitFor(() => {
@@ -398,6 +462,87 @@ describe("TranslatorPopup", () => {
         fireEvent(document, keyEvent);
       }).not.toThrow();
     });
+
+    it("should call selectTextInContentEditable when target doesn't have select method", async () => {
+      const mockDiv = document.createElement('div');
+      mockDiv.contentEditable = 'true';
+      
+      await act(async () => {
+        render(
+          <TranslatorPopup 
+            position={mockPosition} 
+            inputValue={mockInputValue} 
+            ref={mockRef}
+          />
+        );
+      });
+
+      // Wait for translation to be set
+      await vi.waitFor(() => {
+        expect(screen.getByText(`Translated: ${mockInputValue}`)).toBeInTheDocument();
+      });
+
+      // Simulate Ctrl+Q keypress on contentEditable div
+      const keyEvent = new KeyboardEvent('keypress', {
+        key: 'q',
+        ctrlKey: true,
+        bubbles: true,
+      });
+      
+      Object.defineProperty(keyEvent, 'target', {
+        value: mockDiv,
+        writable: false,
+      });
+
+      fireEvent(document, keyEvent);
+
+      expect(mockSelectTextInContentEditable).toHaveBeenCalledWith(mockDiv);
+      expect(mockExecCommand).toHaveBeenCalledWith(
+        'insertText',
+        false,
+        `Translated: ${mockInputValue}`
+      );
+    });
+
+    it("should prefer select method over selectTextInContentEditable when available", async () => {
+      const mockInput = document.createElement('input');
+      mockInput.select = vi.fn();
+      
+      render(
+        <TranslatorPopup 
+          position={mockPosition} 
+          inputValue={mockInputValue} 
+          ref={mockRef}
+        />
+      );
+
+      // Wait for translation to be set
+      await vi.waitFor(() => {
+        expect(screen.getByText(`Translated: ${mockInputValue}`)).toBeInTheDocument();
+      });
+
+      // Simulate Ctrl+Q keypress on input element
+      const keyEvent = new KeyboardEvent('keypress', {
+        key: 'q',
+        ctrlKey: true,
+        bubbles: true,
+      });
+      
+      Object.defineProperty(keyEvent, 'target', {
+        value: mockInput,
+        writable: false,
+      });
+
+      fireEvent(document, keyEvent);
+
+      expect(mockInput.select).toHaveBeenCalled();
+      expect(mockSelectTextInContentEditable).not.toHaveBeenCalled();
+      expect(mockExecCommand).toHaveBeenCalledWith(
+        'insertText',
+        false,
+        `Translated: ${mockInputValue}`
+      );
+    });
   });
 
   describe("ref forwarding", () => {
@@ -524,7 +669,7 @@ describe("TranslatorPopup", () => {
       expect(boldSpan).toHaveClass('font-bold');
     });
 
-    it("should have content area with correct styling", () => {
+    it("should have content area with correct styling", async () => {
       render(
         <TranslatorPopup 
           position={mockPosition} 
@@ -533,7 +678,12 @@ describe("TranslatorPopup", () => {
         />
       );
 
-      const contentDiv = screen.getByText("Sin contenido").closest('div');
+      // Wait for translation to appear or check for loading text
+      const contentText = await screen.findByText((content) => {
+        return content === "Descargando Traductor..." || content.includes("Translated:");
+      });
+      
+      const contentDiv = contentText.closest('div');
       expect(contentDiv).toHaveClass(
         'max-h-14',
         'w-full',

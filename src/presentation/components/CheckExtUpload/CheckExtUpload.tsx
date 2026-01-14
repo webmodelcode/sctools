@@ -1,10 +1,13 @@
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 import { toast } from "sonner";
 import { Toaster } from "../ui/sonner";
+import { useState } from "react";
 
-import "~@/presentation/assets/globals.css";
 import { CloudDownload } from "lucide-react";
 import { Button } from "../ui/button";
+
+import "~@/presentation/assets/globals.css";
+import { ExportForm } from "../QuickMessages/QuickMessageOptions/ExportForm";
 
 export const CheckExtUpload = () => {
   const [isUploadAvailable, setIsUploadAvailable] = useState(false);
@@ -23,21 +26,24 @@ export const CheckExtUpload = () => {
         toast(
           () => {
             return (
-              <div className="flex flex-col items-start justify-center">
+              <div className="z-50 flex flex-col items-start justify-center">
                 <div className="flex items-start justify-between gap-4">
                   <CloudDownload />
-                  <h1 className="text-lg">{`ScTools ${response.latestVersion}`}</h1>
+                  <h1 className="text-lg">{`ScTools ${response.latestVersion} Disponible`}</h1>
                 </div>
                 <p className="text-sm">
-                  Actualiza a la ultima versión disponible, no olvides respaldar
-                  tus mensajes rápidos
+                  Antes de actualizar, no olvides respaldar tus mensajes
+                  rápidos.
                 </p>
+                <div className="my-2 rounded-md bg-white p-4 text-black">
+                  <ExportForm />
+                </div>
                 <Button
                   className="mt-2 animate-bounce self-end text-sm text-ew-star-color hover:bg-ew-star-color hover:text-white"
                   variant={"outline"}
                   onClick={() => window.open(response.downloadUrl, "_blank")}
                 >
-                  Descargar
+                  Actualizar
                 </Button>
               </div>
             );

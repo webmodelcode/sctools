@@ -79,7 +79,6 @@ export const MaximizeButton = () => {
   );
   const errorMutationCallback: MutationCallback = useCallback((mutations) => {
     mutations.forEach((mutation) => {
-      console.log(mutation);
       if (mutation.type === "childList") {
         mutation.addedNodes.forEach((node) => {
           const isError = scAdapter.isScErrorNode(node);

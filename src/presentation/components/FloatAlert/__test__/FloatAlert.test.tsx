@@ -22,7 +22,7 @@ describe("FloatAlert.test.tsx", () => {
     render(<FloatAlert message={msg} />);
     expect(screen.getByText(msg)).toBeInTheDocument();
     expect(
-      screen.getByRole("alert").classList.toString().includes("destructive")
+      screen.getByRole("alert").classList.toString().includes("destructive"),
     ).toBeFalsy();
   });
 
@@ -31,7 +31,23 @@ describe("FloatAlert.test.tsx", () => {
     render(<FloatAlert destructive={true} message={msg} />);
     expect(screen.getByText(msg)).toBeInTheDocument();
     expect(
-      screen.getByRole("alert").classList.toString().includes("destructive")
+      screen.getByRole("alert").classList.toString().includes("destructive"),
+    ).toBeTruthy();
+  });
+
+  it("should render component with success variant", () => {
+    const msg = "message of alert";
+    render(<FloatAlert success={true} message={msg} />);
+    expect(screen.getByText(msg)).toBeInTheDocument();
+    expect(screen.getByTestId("success-icon")).toBeDefined();
+  });
+
+  it("should render component with destructive variant when destructive and success are true", () => {
+    const msg = "message of alert";
+    render(<FloatAlert message={msg} destructive success />);
+    expect(screen.getByText(msg)).toBeInTheDocument();
+    expect(
+      screen.getByRole("alert").classList.toString().includes("destructive"),
     ).toBeTruthy();
   });
 });

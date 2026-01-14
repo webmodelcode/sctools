@@ -22,7 +22,9 @@ export const ExtensionToggle = ({
 }: ExtensionToggleProps) => {
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <Label className="text-sm">{EXTENSION_TOGGLE.LABEL}</Label>
+      <Label className="block min-w-24 text-center text-sm">
+        {isEnabled ? EXTENSION_TOGGLE.LABEL_ON : EXTENSION_TOGGLE.LABEL_OFF}
+      </Label>
       <Switch checked={isEnabled} onCheckedChange={onToggle} />
     </div>
   );

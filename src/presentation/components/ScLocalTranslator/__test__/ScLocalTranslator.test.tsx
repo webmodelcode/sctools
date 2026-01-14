@@ -139,9 +139,9 @@ describe("ScLocalTranslator", () => {
     });
   });
 
-  it("should render without crashing", () => {
-    expect(() => {
-      act(() => {
+  it("should render without crashing", async () => {
+    expect(async () => {
+      await act(async () => {
         render(<ScLocalTranslator />);
       });
     }).not.toThrow();

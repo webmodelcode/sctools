@@ -1,7 +1,7 @@
 {
   "COMPONENTS": {
     "GET_DIALOG_TITLE": {
-      "ADD": "Añadir Mensaje Rápido",
+      "ADD": "Nuevo Mensaje Rápido",
       "UPDATE": "Actualizar Mensaje Rápido",
       "DELETE": "Eliminar Mensaje Rápido"
     },
@@ -44,7 +44,9 @@
     "LABEL_NOT_FOUND": "Etiqueta no encontrada: ",
     "FORM": {
       "TITLE": "Titulo",
+      "TITLE_PLACEHOLDER": "Ingresa el título del mensaje",
       "MESSAGE": "Mensaje",
+      "MESSAGE_PLACEHOLDER": "Ingresa el mensaje",
       "BUTTON": "Guardar"
     }
   }

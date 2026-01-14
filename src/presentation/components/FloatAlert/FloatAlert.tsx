@@ -6,7 +6,7 @@
  * @module components/FloatAlert
  */
 
-import { Terminal, AlertCircle } from "lucide-react";
+import { Terminal, AlertCircle, CheckCircle2Icon } from "lucide-react";
 
 import {
   Alert,
@@ -17,18 +17,25 @@ import {
 export interface FloatAlertProps {
   message: string;
   title?: string;
+  success?: boolean;
   destructive?: boolean;
 }
 
 export const FloatAlert = ({
   title = "",
   message,
+  success = false,
   destructive = false,
 }: FloatAlertProps) => {
   return (
     <Alert variant={destructive ? "destructive" : "default"}>
       {destructive ? (
         <AlertCircle className="h-4 w-4 !text-destructive" />
+      ) : success ? (
+        <CheckCircle2Icon
+          className="h-4 w-4 !text-emerald-500"
+          data-testid="success-icon"
+        />
       ) : (
         <Terminal className="h-4 w-4" />
       )}

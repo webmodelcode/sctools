@@ -1,5 +1,6 @@
 import { forwardRef, useState, useEffect } from "react";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
+import { selectTextInContentEditable } from "~@/config/utils/selectTextInContentEditable";
 import { useLocalTranslatorTargetLanguage } from "~@/presentation/hooks/useLocalTranslatorTargetLanguage/useLocalTranslatorTargetLanguage";
 
 interface PopupPosition {
@@ -45,18 +46,19 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
     );
 
     useEffect(() => {
-      const handleKeyPress = (event: KeyboardEvent) => {
+      const handleKeyDown = (event: KeyboardEvent) => {
         if (event.ctrlKey && event.key.toLowerCase() === "q") {
           event.preventDefault();
-          (event.target as HTMLInputElement)?.select();
+          const target = event.target as HTMLInputElement;
+          target.select ? target.select() : selectTextInContentEditable(target);
           insertTranslate();
         }
       };
 
-      document.addEventListener("keypress", handleKeyPress);
+      document.addEventListener("keydown", handleKeyDown, true);
 
       return () => {
-        document.removeEventListener("keypress", handleKeyPress);
+        document.removeEventListener("keydown", handleKeyDown, true);
       };
     }, [translatedValue]);
 
@@ -76,8 +78,14 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
         </div>
 
         <div className="max-h-14 w-full overflow-y-auto rounded border bg-gray-50 px-2 text-center text-sm">
-          {translatedValue || (
-            <span className="text-gray-400 italic">Sin contenido</span>
+          {inputValue && !translatedValue ? (
+            <span className="text-gray-400 italic">
+              Descargando Traductor...
+            </span>
+          ) : (
+            <span className="text-gray-400 italic">
+              {translatedValue || "Sin contenido"}
+            </span>
           )}
         </div>
       </div>

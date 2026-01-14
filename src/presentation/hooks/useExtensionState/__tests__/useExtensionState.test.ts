@@ -6,12 +6,15 @@ import { useExtensionState } from "../useExtensionState";
 const mockGetItem = vi.fn();
 const mockSetItem = vi.fn();
 
-vi.mock("~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive", () => ({
-  useQuickMenuIsActive: () => ({
-    getItem: mockGetItem,
-    setItem: mockSetItem,
+vi.mock(
+  "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive",
+  () => ({
+    useQuickMenuIsActive: () => ({
+      getItem: mockGetItem,
+      setItem: mockSetItem,
+    }),
   }),
-}));
+);
 
 describe("useExtensionState Hook", () => {
   beforeEach(() => {
@@ -19,17 +22,27 @@ describe("useExtensionState Hook", () => {
     mockGetItem.mockResolvedValue(false);
   });
 
-  it("should initialize with default values", () => {
-    const { result } = renderHook(() => useExtensionState());
+  it("should initialize with default values", async () => {
+    let result: {
+      current: {
+        isQuickMenuEnabled: boolean;
+        isInitialized: boolean;
+        handleToggleExtension: (checked: boolean) => Promise<void>;
+      };
+    };
+    await act(async () => {
+      const render = renderHook(() => useExtensionState());
+      result = render.result;
+    });
 
-    expect(result.current.isQuickMenuEnabled).toBe(false);
-    expect(result.current.isInitialized).toBe(false);
-    expect(typeof result.current.handleToggleExtension).toBe("function");
+    expect(result!.current.isQuickMenuEnabled).toBe(false);
+    expect(result!.current.isInitialized).toBe(true);
+    expect(typeof result!.current.handleToggleExtension).toBe("function");
   });
 
   it("should initialize state from storage", async () => {
     mockGetItem.mockResolvedValue(true);
-    
+
     const { result } = renderHook(() => useExtensionState());
 
     await waitFor(() => {
@@ -93,7 +106,7 @@ describe("useExtensionState Hook", () => {
     rerender();
 
     // Wait a bit to ensure it doesn't get called again
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     expect(mockGetItem).toHaveBeenCalledTimes(initialCallCount);
   });

@@ -77,13 +77,19 @@ describe("InputLocalTranslator", () => {
       mockUseInputValue.mockReturnValue(mockInputValue);
     });
 
-    it("should return null and not render anything when extension is disabled", () => {
-      const { container } = render(<InputLocalTranslator />);
-      expect(container.firstChild).toBeNull();
+    it("should return null and not render anything when extension is disabled", async () => {
+      let container: HTMLElement;
+      await act(async () => {
+        const result = render(<InputLocalTranslator />);
+        container = result.container;
+      });
+      expect(container!.firstChild).toBeNull();
     });
 
-    it("should not render TranslatorPopup component when extension is disabled", () => {
-      render(<InputLocalTranslator />);
+    it("should not render TranslatorPopup component when extension is disabled", async () => {
+      await act(async () => {
+        render(<InputLocalTranslator />);
+      });
       expect(screen.queryByTestId("translator-popup")).not.toBeInTheDocument();
     });
   });
@@ -99,13 +105,19 @@ describe("InputLocalTranslator", () => {
       mockUseInputValue.mockReturnValue(mockInputValue);
     });
 
-    it("should return null and not render anything", () => {
-      const { container } = render(<InputLocalTranslator />);
-      expect(container.firstChild).toBeNull();
+    it("should return null and not render anything", async () => {
+      let container: HTMLElement;
+      await act(async () => {
+        const result = render(<InputLocalTranslator />);
+        container = result.container;
+      });
+      expect(container!.firstChild).toBeNull();
     });
 
-    it("should not render TranslatorPopup component", () => {
-      render(<InputLocalTranslator />);
+    it("should not render TranslatorPopup component", async () => {
+      await act(async () => {
+        render(<InputLocalTranslator />);
+      });
       expect(screen.queryByTestId("translator-popup")).not.toBeInTheDocument();
     });
   });
