@@ -298,4 +298,121 @@ describe("ImportForm", () => {
       expect(label).toHaveAttribute("for", "jsonData");
     });
   });
+
+  describe("success state behavior", () => {
+    it("should show import form input when success is false", () => {
+      render(<ImportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+
+      const importFormInput = screen.getByTestId("import-form-input");
+      expect(importFormInput).toBeInTheDocument();
+      expect(screen.getByLabelText(formLabel)).toBeInTheDocument();
+    });
+
+    it("should hide import form input when success is true", async () => {
+      render(<ImportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+
+      const validJson = JSON.stringify([{ label: "test", text: "message" }]);
+      const textarea = screen.getByLabelText(formLabel);
+      const submitButton = screen.getByRole("button", {
+        name: "Importar Mensajes",
+      });
+
+      fireEvent.change(textarea, { target: { value: validJson } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(mockOnSuccess).toHaveBeenCalled();
+      });
+
+      // After successful import, the input should be hidden
+      expect(screen.queryByTestId("import-form-input")).not.toBeInTheDocument();
+    });
+  });
+
+  describe("FloatAlert behavior", () => {
+    it("should show success FloatAlert when success is true", async () => {
+      render(<ImportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+
+      const validJson = JSON.stringify([{ label: "test", text: "message" }]);
+      const textarea = screen.getByLabelText(formLabel);
+      const submitButton = screen.getByRole("button", {
+        name: "Importar Mensajes",
+      });
+
+      fireEvent.change(textarea, { target: { value: validJson } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(mockOnSuccess).toHaveBeenCalled();
+        expect(screen.getByText("Mensajes importados con éxito")).toBeInTheDocument();
+        expect(screen.getByText("Ya sus mensajes están disponibles para usar")).toBeInTheDocument();
+      });
+    });
+
+    it("should show error FloatAlert when an error occurs", async () => {
+      render(<ImportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+
+      const textarea = screen.getByLabelText(formLabel);
+      const submitButton = screen.getByRole("button", {
+        name: "Importar Mensajes",
+      });
+
+      // Submit invalid JSON to trigger error
+      fireEvent.change(textarea, { target: { value: "invalid json" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("Error al importar")).toBeInTheDocument();
+        expect(screen.getByText("Asegúrate de que los datos luzcan como el ejemplo.")).toBeInTheDocument();
+      });
+    });
+
+    it("should show error FloatAlert when datasource fails", async () => {
+      mockGetQuickMessages.mockRejectedValue(new Error("Database connection failed"));
+
+      render(<ImportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+
+      const validJson = JSON.stringify([{ label: "test", text: "message" }]);
+      const textarea = screen.getByLabelText(formLabel);
+      const submitButton = screen.getByRole("button", {
+        name: "Importar Mensajes",
+      });
+
+      fireEvent.change(textarea, { target: { value: validJson } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("Error al importar")).toBeInTheDocument();
+        expect(screen.getByText("Database connection failed")).toBeInTheDocument();
+        expect(mockOnError).toHaveBeenCalledWith("Database connection failed");
+      });
+    });
+
+    it("should not show both success and error FloatAlert at the same time", async () => {
+      render(<ImportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
+
+      const textarea = screen.getByLabelText(formLabel);
+      const submitButton = screen.getByRole("button", {
+        name: "Importar Mensajes",
+      });
+
+      // First trigger an error
+      fireEvent.change(textarea, { target: { value: "invalid" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("Error al importar")).toBeInTheDocument();
+      });
+
+      // Then submit valid data
+      const validJson = JSON.stringify([{ label: "test", text: "message" }]);
+      fireEvent.change(textarea, { target: { value: validJson } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("Mensajes importados con éxito")).toBeInTheDocument();
+        expect(screen.queryByText("Error al importar")).not.toBeInTheDocument();
+      });
+    });
+  });
 });

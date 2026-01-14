@@ -1,5 +1,5 @@
 import { Download, Upload } from "lucide-react";
-import { TooltipButton } from "../../TooltipButton/TooltipButton";
+import { TooltipDialogButton } from "../../TooltipDialogButton/TooltipDialogButton";
 import { ImportForm } from "./ImportForm";
 import { ExportForm } from "./ExportForm";
 import { QUICK_MESSAGE_DATA_OPERATIONS } from "./quickMessageOptions.strings.json";
@@ -9,7 +9,7 @@ export const QuickMessageDataOperations = () => {
   return [
     {
       label: QUICK_MESSAGE_DATA_OPERATIONS.IMPORT.LABEL,
-      buttonLabel: <Upload />,
+      buttonIcon: <Upload />,
       buttonVariant: "outline",
       buttonClassName: "m-1 px-2",
       havePopUp: true,
@@ -27,7 +27,7 @@ export const QuickMessageDataOperations = () => {
     },
     {
       label: "Exportar",
-      buttonLabel: <Download />,
+      buttonIcon: <Download />,
       buttonVariant: "outline",
       buttonClassName: "m-1 px-2",
       havePopUp: true,
@@ -44,10 +44,10 @@ export const QuickMessageDataOperations = () => {
       ),
     },
   ].map((opt) => (
-    <TooltipButton
+    <TooltipDialogButton
       key={opt.label}
-      label={opt.label}
-      buttonLabel={opt.buttonLabel}
+      buttonLabel={opt.label}
+      buttonIcon={opt.buttonIcon}
       buttonClassName={opt.buttonClassName}
       havePopUp={opt.havePopUp}
       dialogHeader={opt.dialogHeader}

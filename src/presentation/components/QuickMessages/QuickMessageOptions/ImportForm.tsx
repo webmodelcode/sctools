@@ -16,6 +16,8 @@ import {
 import type { IQuickMessage } from "~@/infrastructure/datasource/quickMessages.local.datasource";
 import { cn } from "~@/presentation/lib/utils";
 import { IMPORT_FORM } from "./quickMessageOptions.strings.json";
+import { PROBLEMATIC_QUOTES_REGEX } from "~@/config/utils/globalRegex";
+import { FloatAlert } from "../../FloatAlert/FloatAlert";
 
 interface FormData {
   jsonData: string;
@@ -29,6 +31,7 @@ interface ImportFormProps {
 export const ImportForm = ({ onSuccess, onError }: ImportFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const form = useForm<FormData>({
     defaultValues: {
@@ -42,12 +45,21 @@ export const ImportForm = ({ onSuccess, onError }: ImportFormProps) => {
 
     try {
       // Validate input is not empty
-      if (!values.jsonData.trim()) {
+      let trimmedJsonData = values.jsonData.trim();
+      if (!trimmedJsonData) {
         throw new Error(IMPORT_FORM.FORM_VALIDATION_MSG.REQUIRED);
       }
 
+      // Check for problematic quotes
+      if (PROBLEMATIC_QUOTES_REGEX.test(trimmedJsonData)) {
+        trimmedJsonData = trimmedJsonData.replace(
+          PROBLEMATIC_QUOTES_REGEX,
+          '"',
+        );
+      }
+
       // Parse JSON data
-      const parsedData = JSON.parse(values.jsonData);
+      const parsedData = JSON.parse(trimmedJsonData);
 
       // Validate that it's an array
       if (!Array.isArray(parsedData)) {
@@ -81,6 +93,7 @@ export const ImportForm = ({ onSuccess, onError }: ImportFormProps) => {
       // Reset form and call success callback
       form.reset();
       onSuccess?.();
+      setSuccess(true);
     } catch (error) {
       let errorMessage: string;
       if (error instanceof SyntaxError) {
@@ -102,24 +115,41 @@ export const ImportForm = ({ onSuccess, onError }: ImportFormProps) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-2">
-          <label
-            htmlFor="jsonData"
-            className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            {IMPORT_FORM.LABEL}
-          </label>
-          <textarea
-            id="jsonData"
-            placeholder={IMPORT_FORM.EXAMPLE_PLACEHOLDER}
-            className={cn(
-              "flex max-h-[250px] min-h-[200px] w-full rounded-md border border-input bg-background px-3 py-2 font-mono text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
-            )}
-            {...form.register("jsonData")}
-          />
+          {!success && (
+            <div data-testid="import-form-input">
+              <label
+                htmlFor="jsonData"
+                className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                {IMPORT_FORM.LABEL}
+              </label>
+              <textarea
+                id="jsonData"
+                placeholder={IMPORT_FORM.EXAMPLE_PLACEHOLDER}
+                className={cn(
+                  "mt-2 flex max-h-[250px] min-h-[200px] w-full rounded-md border border-input bg-background px-3 py-2 font-mono text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+                )}
+                {...form.register("jsonData")}
+              />
+            </div>
+          )}
+          {error && (
+            <FloatAlert
+              title={"Error al importar"}
+              message={error}
+              destructive
+            />
+          )}
+          {success && (
+            <FloatAlert
+              title={"Mensajes importados con éxito"}
+              message={"Ya sus mensajes están disponibles para usar"}
+              success
+            />
+          )}
           <p className="text-sm text-muted-foreground">
             {IMPORT_FORM.DESCRIPTION}
           </p>
-          {error && <p className="text-sm text-destructive">{error}</p>}
         </div>
         <Button type="submit" disabled={isLoading} className="w-full">
           {isLoading ? IMPORT_FORM.LOADING_IMPORT : IMPORT_FORM.IMPORT_BUTTON}

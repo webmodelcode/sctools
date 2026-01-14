@@ -14,7 +14,7 @@ describe("ExtensionToggle Component", () => {
     render(<ExtensionToggle isEnabled={false} onToggle={mockOnToggle} />);
 
     // Verify that the label renders
-    expect(screen.getByText(EXTENSION_TOGGLE.LABEL)).toBeInTheDocument();
+    expect(screen.getByText(EXTENSION_TOGGLE.LABEL_OFF)).toBeInTheDocument();
 
     // Verify that the switch renders
     expect(screen.getByRole("switch")).toBeInTheDocument();
@@ -27,10 +27,14 @@ describe("ExtensionToggle Component", () => {
 
     const switchElement = screen.getByRole("switch");
     expect(switchElement).not.toBeChecked();
+    // Verify that the label renders
+    expect(screen.getByText(EXTENSION_TOGGLE.LABEL_OFF)).toBeInTheDocument();
 
     // Re-render with enabled state
     rerender(<ExtensionToggle isEnabled={true} onToggle={mockOnToggle} />);
     expect(switchElement).toBeChecked();
+    // Verify that the label renders
+    expect(screen.getByText(EXTENSION_TOGGLE.LABEL_ON)).toBeInTheDocument();
   });
 
   it("should call onToggle when switch is clicked", () => {
@@ -46,10 +50,12 @@ describe("ExtensionToggle Component", () => {
   it("should have correct CSS structure", () => {
     render(<ExtensionToggle isEnabled={false} onToggle={mockOnToggle} />);
 
-    const container = screen.getByText(EXTENSION_TOGGLE.LABEL).parentElement;
+    const container = screen.getByText(
+      EXTENSION_TOGGLE.LABEL_OFF,
+    ).parentElement;
     expect(container).toHaveClass("flex", "items-center", "justify-center");
 
-    const label = screen.getByText(EXTENSION_TOGGLE.LABEL);
+    const label = screen.getByText(EXTENSION_TOGGLE.LABEL_OFF);
     expect(label).toHaveClass("text-sm");
   });
 });

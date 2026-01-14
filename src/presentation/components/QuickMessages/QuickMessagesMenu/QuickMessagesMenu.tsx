@@ -120,9 +120,7 @@ export const QuickMessagesMenu = () => {
           </AccordionTrigger>
           <AccordionContent className="flex flex-col">
             {quickMessages.length <= 0 ? (
-              <span className="w-20 p-2 text-center">
-                {GLOBAL_STRINGS.ERROR_MESSAGES.QM_NOT_MESSAGES}
-              </span>
+              <span className="w-20 p-2 text-center">No hay mensajes</span>
             ) : (
               memoizedQuickMessages
             )}
