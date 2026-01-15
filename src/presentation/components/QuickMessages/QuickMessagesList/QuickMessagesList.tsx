@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
 import {
   IQuickMessage,
-  deleteQuickMessage,
-  getQuickMessageIndex,
   getQuickMessages,
   watchQuickMessages,
 } from "~@/infrastructure/datasource/quickMessages.local.datasource";
 import { ScrollArea } from "../../ui/scroll-area";
-import { SquarePen, X } from "lucide-react";
-import { Button } from "../../ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
 import { QuickMessageOptions } from "../QuickMessageOptions/QuickMessageOptions";
 
@@ -28,7 +24,7 @@ export const QuickMessagesList = () => {
   if (!quickMessages.length) return;
 
   return (
-    <ScrollArea className="h-56 border py-1" type="always">
+    <ScrollArea className="h-56 py-1" type="always">
       {quickMessages.map((message) => (
         <div
           key={message.label}

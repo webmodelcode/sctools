@@ -26,16 +26,12 @@ export const Popup = memo(() => {
   return (
     <Card className="flex min-h-[200px] min-w-md flex-col gap-2 !rounded-none !bg-ew-star-color text-white">
       <div className="mx-4 flex items-center justify-between gap-4">
+        <PopupHeader />
         <div className="flex flex-col items-center justify-center gap-2">
           <Label>Traducir a:</Label>
           <LanguageSelector />
         </div>
-        <ExtensionToggle
-          isEnabled={isQuickMenuEnabled}
-          onToggle={handleToggleExtension}
-        />
       </div>
-      <PopupHeader />
       <PopupContent />
     </Card>
   );

@@ -13,11 +13,13 @@ import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 
 export const PopupHeader = () => {
   return (
-    <CardHeader className="flex flex-row items-center justify-around space-y-0 p-3">
-      <CardTitle className="text-2xl font-bold">
-        <EwLogo className="mx-auto h-24" />
-        <span>{GLOBAL_STRINGS.APP_INFORMATION.APP_NAME}</span>
-        <span className="pl-2 text-sm">
+    <CardHeader className="px-3">
+      <CardTitle className="flex items-end justify-center text-sm font-bold">
+        <div>
+          <EwLogo className="mx-auto h-12" />
+          <span>{GLOBAL_STRINGS.APP_INFORMATION.APP_NAME}</span>
+        </div>
+        <span className="pl-2 text-xs">
           by {GLOBAL_STRINGS.APP_INFORMATION.APP_PROVIDER}
         </span>
       </CardTitle>
