@@ -40,6 +40,8 @@ export const PopupContent = () => {
           <ExtensionToggle
             isEnabled={isQuickMenuEnabled}
             onToggle={handleToggleExtension}
+            orientation="horizontal"
+            featureName="Mensajes Rápidos"
           />
         </TabsContent>
       </Tabs>

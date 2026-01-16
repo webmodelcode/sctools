@@ -21,8 +21,6 @@ import { LanguageSelector } from "../LanguageSelector/LanguageSelector";
 import { Label } from "../ui/label";
 
 export const Popup = memo(() => {
-  const { isQuickMenuEnabled, handleToggleExtension } = useExtensionState();
-
   return (
     <Card className="flex min-h-[200px] min-w-md flex-col gap-2 !rounded-none !bg-ew-star-color text-white">
       <div className="mx-4 flex items-center justify-between gap-4">
