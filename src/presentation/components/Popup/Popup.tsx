@@ -13,7 +13,7 @@ import { memo } from "react";
 import { Card } from "../ui/card";
 import { PopupHeader } from "./PopupHeader/PopupHeader";
 import { PopupContent } from "./PopupContent/PopupContent";
-import { useExtensionState } from "~@/presentation/hooks/useExtensionState/useExtensionState";
+import { useExtensionState } from "~@/presentation/hooks/useQuickMenuState/useQuickMenuState";
 
 import "~@/presentation/assets/globals.css";
 import { ExtensionToggle } from "./ExtensionToggle/ExtensionToggle";

@@ -1,6 +1,6 @@
 import { renderHook, act, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { useExtensionState } from "../useExtensionState";
+import { useQuickMenuState } from "../useQuickMenuState";
 
 // Mock the useQuickMenuIsActive hook
 const mockGetItem = vi.fn();
@@ -16,7 +16,7 @@ vi.mock(
   }),
 );
 
-describe("useExtensionState Hook", () => {
+describe("useQuickMenuState Hook", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockGetItem.mockResolvedValue(false);
@@ -31,7 +31,7 @@ describe("useExtensionState Hook", () => {
       };
     };
     await act(async () => {
-      const render = renderHook(() => useExtensionState());
+      const render = renderHook(() => useQuickMenuState());
       result = render.result;
     });
 
@@ -43,7 +43,7 @@ describe("useExtensionState Hook", () => {
   it("should initialize state from storage", async () => {
     mockGetItem.mockResolvedValue(true);
 
-    const { result } = renderHook(() => useExtensionState());
+    const { result } = renderHook(() => useQuickMenuState());
 
     await waitFor(() => {
       expect(result.current.isInitialized).toBe(true);
@@ -54,7 +54,7 @@ describe("useExtensionState Hook", () => {
   });
 
   it("should handle toggle extension correctly", async () => {
-    const { result } = renderHook(() => useExtensionState());
+    const { result } = renderHook(() => useQuickMenuState());
 
     await waitFor(() => {
       expect(result.current.isInitialized).toBe(true);
@@ -69,7 +69,7 @@ describe("useExtensionState Hook", () => {
   });
 
   it("should handle multiple toggle calls", async () => {
-    const { result } = renderHook(() => useExtensionState());
+    const { result } = renderHook(() => useQuickMenuState());
 
     await waitFor(() => {
       expect(result.current.isInitialized).toBe(true);
@@ -94,7 +94,7 @@ describe("useExtensionState Hook", () => {
   });
 
   it("should not initialize twice", async () => {
-    const { result, rerender } = renderHook(() => useExtensionState());
+    const { result, rerender } = renderHook(() => useQuickMenuState());
 
     await waitFor(() => {
       expect(result.current.isInitialized).toBe(true);

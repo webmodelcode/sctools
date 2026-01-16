@@ -7,7 +7,7 @@
  * @returns {JSX.Element} - Returns the JSX element representing the popup content.
  */
 
-import { useExtensionState } from "~@/presentation/hooks/useExtensionState";
+import { useQuickMenuState } from "~@/presentation/hooks/useQuickMenuState/useQuickMenuState";
 import { QuickMessagesList } from "../../QuickMessages/QuickMessagesList/QuickMessagesList";
 import { CardContent } from "../../ui/card";
 import { QuickMessageOperations } from "../QuickMessageOperations/QuickMessageOperations";
@@ -21,7 +21,7 @@ import {
 import { ExtensionToggle } from "../ExtensionToggle/ExtensionToggle";
 
 export const PopupContent = () => {
-  const { isQuickMenuEnabled, handleToggleExtension } = useExtensionState();
+  const { isQuickMenuEnabled, handleToggleExtension } = useQuickMenuState();
 
   return (
     <CardContent className="px-4">
