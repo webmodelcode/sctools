@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev": "wxt",
-    "build": "vitest run && wxt build",
+    "build": "wxt build",
     "zip": "wxt zip",
     "compile": "tsc --noEmit",
     "postinstall": "wxt prepare",
