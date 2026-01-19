@@ -1,29 +1,18 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import { useFocusedElement } from "../../hooks/useFocusedElement";
 import { usePopupPosition } from "../../hooks/usePopupPosition";
 import { useInputValue } from "../../hooks/useInputValue";
 import { TranslatorPopup } from "./TranslatorPopup";
-import { useQuickMenuIsActive } from "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive";
+import { useFeaturesStatus } from "~@/presentation/hooks/useFeaturesStatus/useFeaturesStatus";
 
 export const InputLocalTranslator = () => {
-  const { getItem, watchItem } = useQuickMenuIsActive();
+  const { translator } = useFeaturesStatus();
   const popupRef = useRef<HTMLDivElement>(null);
   const { focusedElement, isVisible } = useFocusedElement();
   const position = usePopupPosition(focusedElement, isVisible);
   const inputValue = useInputValue(focusedElement);
-  const [isExtActive, setIsExtActive] = useState(false);
 
-  watchItem((value) => {
-    setIsExtActive(value);
-  });
-
-  useEffect(() => {
-    (async () => {
-      setIsExtActive(await getItem());
-    })();
-  }, [getItem]);
-
-  if (!isExtActive || !isVisible) return;
+  if (!translator.isEnabled || !isVisible) return;
 
   return (
     <TranslatorPopup

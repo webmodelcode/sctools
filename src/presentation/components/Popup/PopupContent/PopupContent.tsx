@@ -7,7 +7,7 @@
  * @returns {JSX.Element} - Returns the JSX element representing the popup content.
  */
 
-import { useQuickMenuState } from "~@/presentation/hooks/useQuickMenuState/useQuickMenuState";
+import { useFeaturesStatus } from "~@/presentation/hooks/useFeaturesStatus/useFeaturesStatus";
 import { QuickMessagesList } from "../../QuickMessages/QuickMessagesList/QuickMessagesList";
 import { CardContent } from "../../ui/card";
 import { QuickMessageOperations } from "../QuickMessageOperations/QuickMessageOperations";
@@ -21,7 +21,7 @@ import {
 import { ExtensionToggle } from "../ExtensionToggle/ExtensionToggle";
 
 export const PopupContent = () => {
-  const { isQuickMenuEnabled, handleToggleExtension } = useQuickMenuState();
+  const { translator, quickMessages, quickMenu } = useFeaturesStatus();
 
   return (
     <CardContent className="px-4">
@@ -37,12 +37,26 @@ export const PopupContent = () => {
           </div>
         </TabsContent>
         <TabsContent value="features">
-          <ExtensionToggle
-            isEnabled={isQuickMenuEnabled}
-            onToggle={handleToggleExtension}
-            orientation="horizontal"
-            featureName="Mensajes Rápidos"
-          />
+          <div className="flex flex-col gap-4">
+            <ExtensionToggle
+              isEnabled={translator.isEnabled}
+              onToggle={translator.toggle}
+              orientation="horizontal"
+              featureName="Traductor"
+            />
+            <ExtensionToggle
+              isEnabled={quickMessages.isEnabled}
+              onToggle={quickMessages.toggle}
+              orientation="horizontal"
+              featureName="Mensajes Rápidos"
+            />
+            <ExtensionToggle
+              isEnabled={quickMenu.isEnabled}
+              onToggle={quickMenu.toggle}
+              orientation="horizontal"
+              featureName="Menú de Acceso Rápido"
+            />
+          </div>
         </TabsContent>
       </Tabs>
     </CardContent>

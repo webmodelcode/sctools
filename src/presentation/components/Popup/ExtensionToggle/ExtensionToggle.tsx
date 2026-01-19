@@ -32,13 +32,15 @@ export const ExtensionToggle = ({
         orientation === "vertical" ? "flex-col" : "flex-row",
       )}
     >
-      <Label className="block min-w-24 text-center text-sm">
+      <Label className="block min-w-24 text-sm">
         <span className="mr-2">{featureName}</span>
       </Label>
-      <Switch checked={isEnabled} onCheckedChange={onToggle} />
-      <Label className="block min-w-24 text-center text-sm">
-        {isEnabled ? EXTENSION_TOGGLE.LABEL_ON : EXTENSION_TOGGLE.LABEL_OFF}
-      </Label>
+      <div className="flex items-center gap-2">
+        <Switch checked={isEnabled} onCheckedChange={onToggle} />
+        <Label className="block min-w-24 text-center text-sm">
+          {isEnabled ? EXTENSION_TOGGLE.LABEL_ON : EXTENSION_TOGGLE.LABEL_OFF}
+        </Label>
+      </div>
     </div>
   );
 };
