@@ -15,20 +15,26 @@ vi.mock("../../../hooks/useInputValue", () => ({
   useInputValue: vi.fn(),
 }));
 
-vi.mock("~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive", () => ({
-  useQuickMenuIsActive: vi.fn(),
+vi.mock("~@/presentation/hooks/useFeaturesStatus/useFeaturesStatus", () => ({
+  useFeaturesStatus: vi.fn(),
 }));
 
 // Mock TranslatorPopup component
 vi.mock("../TranslatorPopup", () => ({
-  TranslatorPopup: React.forwardRef<HTMLDivElement, { position: any; inputValue: string }>(
-    ({ position, inputValue }, ref) => 
-      React.createElement("div", {
+  TranslatorPopup: React.forwardRef<
+    HTMLDivElement,
+    { position: any; inputValue: string }
+  >(({ position, inputValue }, ref) =>
+    React.createElement(
+      "div",
+      {
         "data-testid": "translator-popup",
         "data-position": JSON.stringify(position),
         "data-input-value": inputValue,
         ref: ref,
-      }, "Mocked TranslatorPopup")
+      },
+      "Mocked TranslatorPopup",
+    ),
   ),
 }));
 
@@ -37,13 +43,13 @@ import { InputLocalTranslator } from "../InputLocalTranslator";
 import { useFocusedElement } from "../../../hooks/useFocusedElement";
 import { usePopupPosition } from "../../../hooks/usePopupPosition";
 import { useInputValue } from "../../../hooks/useInputValue";
-import { useQuickMenuIsActive } from "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive";
+import { useFeaturesStatus } from "~@/presentation/hooks/useFeaturesStatus/useFeaturesStatus";
 
 // Get mocked functions
 const mockUseFocusedElement = vi.mocked(useFocusedElement);
 const mockUsePopupPosition = vi.mocked(usePopupPosition);
 const mockUseInputValue = vi.mocked(useInputValue);
-const mockUseQuickMenuIsActive = vi.mocked(useQuickMenuIsActive);
+const mockUseFeaturesStatus = vi.mocked(useFeaturesStatus);
 
 describe("InputLocalTranslator", () => {
   const mockElement = document.createElement("input");
@@ -52,21 +58,23 @@ describe("InputLocalTranslator", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    
+
     // Default mock for useQuickMenuIsActive
-    mockUseQuickMenuIsActive.mockReturnValue({
-      getItem: vi.fn().mockResolvedValue(true),
-      setItem: vi.fn(),
-      watchItem: vi.fn(),
+    mockUseFeaturesStatus.mockReturnValue({
+      translator: { isEnabled: true, toggle: vi.fn() },
+      quickMessages: { isEnabled: true, toggle: vi.fn() },
+      quickMenu: { isEnabled: true, toggle: vi.fn() },
+      isInitialized: true,
     });
   });
 
   describe("when extension is not active", () => {
     beforeEach(() => {
-      mockUseQuickMenuIsActive.mockReturnValue({
-        getItem: vi.fn().mockResolvedValue(false),
-        setItem: vi.fn(),
-        watchItem: vi.fn(),
+      mockUseFeaturesStatus.mockReturnValue({
+        translator: { isEnabled: false, toggle: vi.fn() },
+        quickMessages: { isEnabled: true, toggle: vi.fn() },
+        quickMenu: { isEnabled: true, toggle: vi.fn() },
+        isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
         focusedElement: mockElement,
@@ -124,10 +132,11 @@ describe("InputLocalTranslator", () => {
 
   describe("when isVisible is true and extension is active", () => {
     beforeEach(() => {
-      mockUseQuickMenuIsActive.mockReturnValue({
-        getItem: vi.fn().mockResolvedValue(true),
-        setItem: vi.fn(),
-        watchItem: vi.fn(),
+      mockUseFeaturesStatus.mockReturnValue({
+        translator: { isEnabled: true, toggle: vi.fn() },
+        quickMessages: { isEnabled: true, toggle: vi.fn() },
+        quickMenu: { isEnabled: true, toggle: vi.fn() },
+        isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
         focusedElement: mockElement,
@@ -173,10 +182,11 @@ describe("InputLocalTranslator", () => {
 
   describe("hook integration", () => {
     beforeEach(() => {
-      mockUseQuickMenuIsActive.mockReturnValue({
-        getItem: vi.fn().mockResolvedValue(true),
-        setItem: vi.fn(),
-        watchItem: vi.fn(),
+      mockUseFeaturesStatus.mockReturnValue({
+        translator: { isEnabled: true, toggle: vi.fn() },
+        quickMessages: { isEnabled: true, toggle: vi.fn() },
+        quickMenu: { isEnabled: true, toggle: vi.fn() },
+        isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
         focusedElement: mockElement,
@@ -208,20 +218,21 @@ describe("InputLocalTranslator", () => {
       expect(mockUseInputValue).toHaveBeenCalledWith(mockElement);
     });
 
-    it("should call useQuickMenuIsActive hook", async () => {
+    it("should call useFeaturesStatus hook", async () => {
       await act(async () => {
         render(<InputLocalTranslator />);
       });
-      expect(mockUseQuickMenuIsActive).toHaveBeenCalled();
+      expect(mockUseFeaturesStatus).toHaveBeenCalled();
     });
   });
 
   describe("edge cases", () => {
     it("should handle null focusedElement", async () => {
-      mockUseQuickMenuIsActive.mockReturnValue({
-        getItem: vi.fn().mockResolvedValue(true),
-        setItem: vi.fn(),
-        watchItem: vi.fn(),
+      mockUseFeaturesStatus.mockReturnValue({
+        translator: { isEnabled: true, toggle: vi.fn() },
+        quickMessages: { isEnabled: true, toggle: vi.fn() },
+        quickMenu: { isEnabled: true, toggle: vi.fn() },
+        isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
         focusedElement: null,
@@ -239,10 +250,11 @@ describe("InputLocalTranslator", () => {
     });
 
     it("should handle empty inputValue", async () => {
-      mockUseQuickMenuIsActive.mockReturnValue({
-        getItem: vi.fn().mockResolvedValue(true),
-        setItem: vi.fn(),
-        watchItem: vi.fn(),
+      mockUseFeaturesStatus.mockReturnValue({
+        translator: { isEnabled: true, toggle: vi.fn() },
+        quickMessages: { isEnabled: true, toggle: vi.fn() },
+        quickMenu: { isEnabled: true, toggle: vi.fn() },
+        isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
         focusedElement: mockElement,
@@ -263,10 +275,11 @@ describe("InputLocalTranslator", () => {
 
     it("should handle zero position values", async () => {
       const zeroPosition = { top: 0, left: 0, width: 0 };
-      mockUseQuickMenuIsActive.mockReturnValue({
-        getItem: vi.fn().mockResolvedValue(true),
-        setItem: vi.fn(),
-        watchItem: vi.fn(),
+      mockUseFeaturesStatus.mockReturnValue({
+        translator: { isEnabled: true, toggle: vi.fn() },
+        quickMessages: { isEnabled: true, toggle: vi.fn() },
+        quickMenu: { isEnabled: true, toggle: vi.fn() },
+        isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
         focusedElement: mockElement,
@@ -291,10 +304,11 @@ describe("InputLocalTranslator", () => {
 
   describe("component lifecycle", () => {
     it("should create a ref for the popup", async () => {
-      mockUseQuickMenuIsActive.mockReturnValue({
-        getItem: vi.fn().mockResolvedValue(true),
-        setItem: vi.fn(),
-        watchItem: vi.fn(),
+      mockUseFeaturesStatus.mockReturnValue({
+        translator: { isEnabled: true, toggle: vi.fn() },
+        quickMessages: { isEnabled: true, toggle: vi.fn() },
+        quickMenu: { isEnabled: true, toggle: vi.fn() },
+        isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
         focusedElement: mockElement,
@@ -316,10 +330,11 @@ describe("InputLocalTranslator", () => {
   describe("re-rendering behavior", () => {
     it("should re-render when isVisible changes from false to true", async () => {
       // First render with isVisible false
-      mockUseQuickMenuIsActive.mockReturnValue({
-        getItem: vi.fn().mockResolvedValue(true),
-        setItem: vi.fn(),
-        watchItem: vi.fn(),
+      mockUseFeaturesStatus.mockReturnValue({
+        translator: { isEnabled: true, toggle: vi.fn() },
+        quickMessages: { isEnabled: true, toggle: vi.fn() },
+        quickMenu: { isEnabled: true, toggle: vi.fn() },
+        isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
         focusedElement: mockElement,
@@ -330,10 +345,10 @@ describe("InputLocalTranslator", () => {
       mockUseInputValue.mockReturnValue(mockInputValue);
 
       let rerender: any;
-       await act(async () => {
-         const result = render(<InputLocalTranslator />);
-         rerender = result.rerender;
-       });
+      await act(async () => {
+        const result = render(<InputLocalTranslator />);
+        rerender = result.rerender;
+      });
       expect(screen.queryByTestId("translator-popup")).not.toBeInTheDocument();
 
       // Second render with isVisible true
@@ -342,7 +357,7 @@ describe("InputLocalTranslator", () => {
         isVisible: true,
         setIsVisible: vi.fn(),
       });
-      
+
       await act(async () => {
         rerender(<InputLocalTranslator />);
       });
@@ -355,10 +370,11 @@ describe("InputLocalTranslator", () => {
       const newInputValue = "updated input value";
       const newPosition = { top: 200, left: 100, width: 300 };
 
-      mockUseQuickMenuIsActive.mockReturnValue({
-        getItem: vi.fn().mockResolvedValue(true),
-        setItem: vi.fn(),
-        watchItem: vi.fn(),
+      mockUseFeaturesStatus.mockReturnValue({
+        translator: { isEnabled: true, toggle: vi.fn() },
+        quickMessages: { isEnabled: true, toggle: vi.fn() },
+        quickMenu: { isEnabled: true, toggle: vi.fn() },
+        isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
         focusedElement: mockElement,

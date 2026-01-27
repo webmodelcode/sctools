@@ -2,42 +2,33 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 
 import { QuickMessagesMenu } from "../QuickMessagesMenu";
-import { useQuickMenuIsActive } from "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive";
+import { useFeaturesStatus } from "~@/presentation/hooks/useFeaturesStatus/useFeaturesStatus";
 
 import { isEditableElement } from "~@/config/utils/isTextElement";
 
 // Mock the isEditableElement function
 vi.mock("~@/config/utils/isTextElement", async (importOriginal) => {
-  const actual = await importOriginal();
+  await importOriginal();
   return {
     isEditableElement: vi.fn(),
-    // your mocked methods
   };
 });
 
-vi.mock(
-  "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive",
-  () => ({
-    useQuickMenuIsActive: vi.fn(),
-  }),
-);
-
-// Define the interface for the mock to match the actual implementation
-interface MockUseQuickMenuIsActive {
-  getItem: () => Promise<boolean | string>;
-  setItem: (value: boolean) => Promise<void>;
-}
+vi.mock("~@/presentation/hooks/useFeaturesStatus/useFeaturesStatus", () => ({
+  useFeaturesStatus: vi.fn(),
+}));
 
 describe("QuickMessagesMenu.tsx", () => {
   beforeEach(() => {
     // Reset all mocks before each test
     vi.clearAllMocks();
 
-    // Mock the useQuickMenuIsActive hook
-    vi.mocked(useQuickMenuIsActive).mockReturnValue({
-      getItem: vi.fn().mockResolvedValue(true),
-      setItem: vi.fn(),
-      watchItem: vi.fn().mockResolvedValue(true),
+    // Mock the useFeaturesStatus hook
+    vi.mocked(useFeaturesStatus).mockReturnValue({
+      quickMessages: { isEnabled: true, toggle: vi.fn() },
+      translator: { isEnabled: true, toggle: vi.fn() },
+      quickMenu: { isEnabled: true, toggle: vi.fn() },
+      isInitialized: true,
     });
 
     // Mock the isEditableElement function

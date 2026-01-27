@@ -1,32 +1,21 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 import { createRoot } from "react-dom/client";
 import { TranslatedMessage } from "../TranslatedMessage/TranslatedMessage";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 import { useMutationObserver } from "~@/presentation/hooks/useMutationObserver/useMutationObserver";
-import { useQuickMenuIsActive } from "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive";
+import { useFeaturesStatus } from "~@/presentation/hooks/useFeaturesStatus/useFeaturesStatus";
 import { chaturAdapter } from "~@/config/chaturAdapter/chaturAdapter";
 
 export const ChaturLocalTranslator = () => {
   const tabsContainer = useMemo(() => chaturAdapter.getTabsContainer(), []);
   const messengerContainer = useRef(tabsContainer);
-  const { getItem, watchItem } = useQuickMenuIsActive();
-  const [isExtActive, setIsExtActive] = useState(false);
-
-  watchItem((value) => {
-    setIsExtActive(value);
-  });
-
-  useEffect(() => {
-    (async () => {
-      setIsExtActive(await getItem());
-    })();
-  }, [getItem]);
+  const { translator } = useFeaturesStatus();
 
   useMutationObserver({
     ref: messengerContainer,
     callback: (mutations) => {
       mutations.forEach((mutation) => {
-        if (mutation.type === "childList" && isExtActive) {
+        if (mutation.type === "childList" && translator.isEnabled) {
           if (!(mutation.target as Element).classList?.contains("msg-list-fvm"))
             return;
           const firstNode = mutation.addedNodes[0];
