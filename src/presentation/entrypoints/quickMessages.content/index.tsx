@@ -8,6 +8,7 @@ export default defineContentScript({
     "https://*.stripchat.com/*",
     "https://*.chaturbate.com/*",
     "https://performerclient.streamatemodels.com/*",
+    "https://*.camsoda.com/*",
   ],
   // 2. Set cssInjectionMode
   cssInjectionMode: "ui",
