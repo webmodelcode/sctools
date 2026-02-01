@@ -83,7 +83,7 @@ export const QuickMessagesMenu = () => {
   return (
     <div
       className={
-        "sct-component fixed right-0 bottom-0 z-40 min-w-12 rounded-t-2xl border border-ew-star-color bg-background/70 pt-2 text-foreground"
+        "sct-component fixed right-0 bottom-0 z-1000000 min-w-12 rounded-t-2xl border border-ew-star-color bg-background/70 pt-2 text-foreground"
       }
     >
       <Accordion
