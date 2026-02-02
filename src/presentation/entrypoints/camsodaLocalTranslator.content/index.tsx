@@ -4,6 +4,7 @@ import { camsodaAdapter } from "~@/config/camsodaAdapter/camsodaAdapter";
 
 import "~@/presentation/assets/globals.css";
 import { CamsodaLocalTranslator } from "~@/presentation/components/CamsodaLocalTranslator/CamsodaLocalTranslator";
+import { CamsodaLocalTranslatorMessenger } from "~@/presentation/components/CamsodaLocalTranslator/CamsodaLocalTranslatorMessenger";
 
 export default defineContentScript({
   matches: ["https://*.camsoda.com/*"],
@@ -24,7 +25,12 @@ export default defineContentScript({
 
         // Create a root on the UI container and render a component
         const root = ReactDOM.createRoot(app);
-        root.render(<CamsodaLocalTranslator />);
+        root.render(
+          <>
+            <CamsodaLocalTranslator />
+            <CamsodaLocalTranslatorMessenger />
+          </>,
+        );
         return root;
       },
       onRemove: (root) => {
