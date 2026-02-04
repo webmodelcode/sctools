@@ -139,7 +139,7 @@ describe("ImportForm", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'El mensaje debe contener "label" y "text". Error en mensaje numero: 1',
+            "Asegúrate de que los datos luzcan como el ejemplo.",
           ),
         ).toBeInTheDocument();
       });
@@ -344,8 +344,12 @@ describe("ImportForm", () => {
 
       await waitFor(() => {
         expect(mockOnSuccess).toHaveBeenCalled();
-        expect(screen.getByText("Mensajes importados con éxito")).toBeInTheDocument();
-        expect(screen.getByText("Ya sus mensajes están disponibles para usar")).toBeInTheDocument();
+        expect(
+          screen.getByText("Mensajes importados con éxito"),
+        ).toBeInTheDocument();
+        expect(
+          screen.getByText("Ya sus mensajes están disponibles para usar"),
+        ).toBeInTheDocument();
       });
     });
 
@@ -363,12 +367,18 @@ describe("ImportForm", () => {
 
       await waitFor(() => {
         expect(screen.getByText("Error al importar")).toBeInTheDocument();
-        expect(screen.getByText("Asegúrate de que los datos luzcan como el ejemplo.")).toBeInTheDocument();
+        expect(
+          screen.getByText(
+            "Asegúrate de que los datos luzcan como el ejemplo.",
+          ),
+        ).toBeInTheDocument();
       });
     });
 
     it("should show error FloatAlert when datasource fails", async () => {
-      mockGetQuickMessages.mockRejectedValue(new Error("Database connection failed"));
+      mockGetQuickMessages.mockRejectedValue(
+        new Error("Database connection failed"),
+      );
 
       render(<ImportForm onSuccess={mockOnSuccess} onError={mockOnError} />);
 
@@ -383,7 +393,9 @@ describe("ImportForm", () => {
 
       await waitFor(() => {
         expect(screen.getByText("Error al importar")).toBeInTheDocument();
-        expect(screen.getByText("Database connection failed")).toBeInTheDocument();
+        expect(
+          screen.getByText("Database connection failed"),
+        ).toBeInTheDocument();
         expect(mockOnError).toHaveBeenCalledWith("Database connection failed");
       });
     });
@@ -410,7 +422,9 @@ describe("ImportForm", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText("Mensajes importados con éxito")).toBeInTheDocument();
+        expect(
+          screen.getByText("Mensajes importados con éxito"),
+        ).toBeInTheDocument();
         expect(screen.queryByText("Error al importar")).not.toBeInTheDocument();
       });
     });

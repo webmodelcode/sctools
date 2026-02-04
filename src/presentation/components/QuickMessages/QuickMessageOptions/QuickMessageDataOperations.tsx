@@ -1,6 +1,6 @@
 import { Download, Upload } from "lucide-react";
 import { TooltipDialogButton } from "../../TooltipDialogButton/TooltipDialogButton";
-import { ImportForm } from "./ImportForm";
+import { ImportForm } from "./ImportForm/ImportForm";
 import { ExportForm } from "./ExportForm";
 import { QUICK_MESSAGE_DATA_OPERATIONS } from "./quickMessageOptions.strings.json";
 import { devConsole } from "~@/config/utils/developerUtils";
