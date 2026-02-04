@@ -16,9 +16,8 @@ import {
 import type { IQuickMessage } from "~@/infrastructure/datasource/quickMessages.local.datasource";
 import { cn } from "~@/presentation/lib/utils";
 import { IMPORT_FORM } from "./quickMessageOptions.strings.json";
-import { PROBLEMATIC_QUOTES_REGEX } from "~@/config/utils/globalRegex";
-import { FloatAlert } from "../../FloatAlert/FloatAlert";
 
+import { FloatAlert } from "../../FloatAlert/FloatAlert";
 interface FormData {
   jsonData: string;
 }
@@ -27,6 +26,46 @@ interface ImportFormProps {
   onSuccess?: () => void;
   onError?: (error: string) => void;
 }
+
+/**
+ * Normalizes a malformed JSON string by segmenting it into individual objects.
+ * It identifies label/text pairs regardless of the type of quotes used.
+ */
+const normalizeJsonEntries = (input: string): IQuickMessage[] => {
+  // Regex pattern to capture content between any quote-like delimiters for label and text
+  // The 's' flag allows the dot (.) to match newlines within the text
+  const entryPattern =
+    /\{[\s\n]*["'“‘´’]label["'”’´]\s*:\s*["'“‘´’](.*?)["'”’´]\s*,\s*["'“‘´’]text["'”’´]\s*:\s*["'“‘´’](.*?)["'”’´][\s\n]*\}/gs;
+
+  const results: IQuickMessage[] = [];
+  let match: RegExpExecArray | null;
+
+  while ((match = entryPattern.exec(input)) !== null) {
+    // match[1] corresponds to label content, match[2] to text content
+    const [_, rawLabel, rawText] = match;
+
+    results.push({
+      label: cleanInternalText(rawLabel),
+      text: cleanInternalText(rawText),
+    });
+  }
+
+  return results;
+};
+
+/**
+ * Sanitizes the captured internal content without breaking emojis or special characters.
+ */
+const cleanInternalText = (content: string): string => {
+  return (
+    content
+      .trim()
+      // Normalizes smart apostrophes (e.g., Don’t -> Don't) to standard single quotes
+      .replaceAll(/[\u2018\u2019]/g, "'")
+      // Normalizes smart double quotes to standard double quotes
+      .replaceAll(/[\u201C\u201D]/g, '"')
+  );
+};
 
 export const ImportForm = ({ onSuccess, onError }: ImportFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -45,25 +84,18 @@ export const ImportForm = ({ onSuccess, onError }: ImportFormProps) => {
 
     try {
       // Validate input is not empty
-      let trimmedJsonData = values.jsonData.trim();
+      // Validate input is not empty
+      const trimmedJsonData = values.jsonData.trim();
       if (!trimmedJsonData) {
         throw new Error(IMPORT_FORM.FORM_VALIDATION_MSG.REQUIRED);
       }
 
-      // Check for problematic quotes
-      if (PROBLEMATIC_QUOTES_REGEX.test(trimmedJsonData)) {
-        trimmedJsonData = trimmedJsonData.replace(
-          PROBLEMATIC_QUOTES_REGEX,
-          '"',
-        );
-      }
+      // Parse JSON data using robust normalizer
+      const parsedData = normalizeJsonEntries(trimmedJsonData);
 
-      // Parse JSON data
-      const parsedData = JSON.parse(trimmedJsonData);
-
-      // Validate that it's an array
-      if (!Array.isArray(parsedData)) {
-        throw new Error(IMPORT_FORM.FORM_VALIDATION_MSG.INVALID_FORMAT);
+      // Validate that we found at least one entry
+      if (parsedData.length === 0) {
+        throw new TypeError(IMPORT_FORM.FORM_VALIDATION_MSG.INVALID_FORMAT);
       }
 
       // Validate each message has required properties
