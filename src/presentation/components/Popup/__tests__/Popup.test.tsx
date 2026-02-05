@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Popup } from "../Popup";
-import { QUICK_MESSAGE_OPERATIONS } from "../QuickMessageOperations/strings.json";
 
 // Mock child components
 vi.mock("../PopupContent/PopupContent", () => ({
@@ -57,12 +56,7 @@ describe("Popup Component", () => {
 
     const card = screen.getByTestId("popup-card");
     expect(card).toHaveClass(
-      "flex",
-      "min-h-[200px]",
-      "min-w-md",
-      "flex-col",
-      "gap-2",
-      "!bg-ew-star-color",
+      "flex min-h-130 min-w-md flex-col gap-2 rounded-none! bg-ew-star-color! text-white",
     );
   });
 });
