@@ -1,36 +1,72 @@
+import { ArrowDown } from "lucide-react";
 import { FloatDropDown } from "../FloatDropDown/FloatDropDown";
 import { TranslatedMessage } from "../TranslatedMessage/TranslatedMessage";
+import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
 import { useCamsodaMessages } from "./hooks/useCamsodaMessages";
+import { useChatScroll } from "./hooks/useChatScroll";
 
 export const CamsodaLocalTranslator = () => {
   const { messages } = useCamsodaMessages();
+
+  const {
+    scrollRef,
+    showScrollBottomButton,
+    scrollToBottom,
+    handleScrollStateChange,
+  } = useChatScroll(messages);
 
   return (
     <FloatDropDown
       direction="left"
       className="fixed right-0 bottom-1/3 z-9999 min-h-20 max-w-1/2 rounded-l-md border border-ew-star-color bg-gray-300 text-black"
     >
-      <ScrollArea className="h-96" data-testid="camsoda-local-translator">
-        {messages.map((message) => (
-          <div key={message.id} className="border-b border-gray-200 p-2">
-            <img
-              className="mx-2 inline h-4 w-4 rounded-full"
-              src={message.user.avatar}
-              alt={message.user.name}
-            />
-            <span className="font-bold" style={{ color: message.user.color }}>
-              {message.user.name}
-            </span>
-            <span className="px-2">|</span>
-            <span>{message.message}</span>
-            <TranslatedMessage
-              message={message.translation || ""}
-              bgColor="rgba(255, 0, 0, 0.1)"
-            />
-          </div>
-        ))}
-      </ScrollArea>
+      <div className="relative">
+        <ScrollArea
+          ref={scrollRef}
+          className="h-96"
+          data-testid="camsoda-local-translator"
+          onScrollStateChange={handleScrollStateChange}
+        >
+          {messages.map((message) => {
+            return (
+              <div key={message.id} className="border-b border-gray-200 p-2">
+                <img
+                  className="mx-2 inline h-4 w-4 rounded-full"
+                  src={message.user.avatar}
+                  alt={message.user.name}
+                />
+                <span
+                  className="font-bold"
+                  style={{ color: message.user.color }}
+                >
+                  {message.user.name}
+                </span>
+                <span className="px-2">|</span>
+                <span>{message.message}</span>
+                <TranslatedMessage
+                  message={message.translation || ""}
+                  bgColor="rgba(255, 0, 0, 0.1)"
+                />
+              </div>
+            );
+          })}
+          {!messages.length && (
+            <div className="border-b border-gray-200 p-2">
+              <span className="font-bold">No messages</span>
+            </div>
+          )}
+        </ScrollArea>
+        {showScrollBottomButton && (
+          <Button
+            size="icon"
+            className="absolute right-4 bottom-4 h-8 w-8 animate-bounce cursor-pointer rounded-full shadow-md"
+            onClick={scrollToBottom}
+          >
+            <ArrowDown className="h-4 w-4" />
+          </Button>
+        )}
+      </div>
     </FloatDropDown>
   );
 };
