@@ -27,8 +27,12 @@ export const PopupContent = () => {
     <CardContent className="px-4">
       <Tabs defaultValue="quickMessages" className="w-full">
         <TabsList className="w-full bg-secondary/30">
-          <TabsTrigger value="quickMessages">Mensajes Rápidos</TabsTrigger>
-          <TabsTrigger value="features">Funcionalidades</TabsTrigger>
+          <TabsTrigger className="cursor-pointer" value="quickMessages">
+            Mensajes Rápidos
+          </TabsTrigger>
+          <TabsTrigger className="cursor-pointer" value="features">
+            Funcionalidades
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="quickMessages">
           <div className="flex flex-col items-center justify-center gap-2 rounded-lg p-3">
@@ -43,18 +47,21 @@ export const PopupContent = () => {
               onToggle={translator.toggle}
               orientation="horizontal"
               featureName="Traductor"
+              tooltipText="Traduce automáticamente tus mensajes al chatear con tus usuarios"
             />
             <ExtensionToggle
               isEnabled={quickMessages.isEnabled}
               onToggle={quickMessages.toggle}
               orientation="horizontal"
               featureName="Mensajes Rápidos"
+              tooltipText="Podrás guardar y enviar rápidamente mensajes dentro de tu chat"
             />
             <ExtensionToggle
               isEnabled={quickMenu.isEnabled}
               onToggle={quickMenu.toggle}
               orientation="horizontal"
               featureName="Menú de Acceso Rápido"
+              tooltipText="Tendrás acceso a funciones especiales dentro de cada plataforma"
             />
           </div>
         </TabsContent>

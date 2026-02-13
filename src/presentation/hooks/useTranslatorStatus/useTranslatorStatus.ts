@@ -42,7 +42,7 @@ interface IUseTranslatorStatus {
 const translatorStatus = storage.defineItem<boolean>(
   `local:${GLOBAL_STRINGS.STORAGE_KEYS.TRANSLATOR_IS_ACTIVE}`,
   {
-    fallback: false,
+    fallback: true,
   },
 );
 

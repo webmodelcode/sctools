@@ -1,4 +1,4 @@
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, BadgeInfo } from "lucide-react";
 import { FloatDropDown } from "../FloatDropDown/FloatDropDown";
 import { TranslatedMessage } from "../TranslatedMessage/TranslatedMessage";
 import { Button } from "../ui/button";
@@ -22,6 +22,13 @@ export const CamsodaLocalTranslator = () => {
       className="fixed right-0 bottom-1/3 z-9999 min-h-20 max-w-1/2 rounded-l-md border border-ew-star-color bg-gray-300 text-black"
     >
       <div className="relative">
+        <div className="flex items-center justify-center gap-2 bg-ew-star-color/10 px-5 py-2 text-white">
+          <BadgeInfo className="h-8 w-8" />
+          <span className="text-xs">
+            Esta ventana filtra bots y notificaciones para mostrar únicamente
+            las conversaciones y su traducción al español.
+          </span>
+        </div>
         <ScrollArea
           ref={scrollRef}
           className="h-96"
@@ -53,7 +60,9 @@ export const CamsodaLocalTranslator = () => {
           })}
           {!messages.length && (
             <div className="border-b border-gray-200 p-2">
-              <span className="font-bold">No messages</span>
+              <span className="font-bold">
+                No hay mensajes o el traductor esta apagado
+              </span>
             </div>
           )}
         </ScrollArea>
