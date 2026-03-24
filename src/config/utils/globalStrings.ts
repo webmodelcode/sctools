@@ -20,6 +20,8 @@ export const GLOBAL_STRINGS = {
     LOCAL_TRANSLATOR_TARGET_LANGUAGE: "localTranslatorTargetLanguage",
     /** Key for storing translator active state in local storage */
     TRANSLATOR_IS_ACTIVE: "translatorIsActive",
+    /** Key for storing last shown timestamp of update notification in session storage */
+    UPDATE_NOTIFICATION_LAST_SHOWN: "updateNotificationLastShown",
   },
   ERROR_MESSAGES: {
     /** Error message for when StripChat elements are not ready */

@@ -6,7 +6,13 @@ import { CheckExtUpload } from "~@/presentation/components/CheckExtUpload/CheckE
 import "~@/presentation/assets/globals.css";
 
 export default defineContentScript({
-  matches: ["<all_urls>"],
+  matches: [
+    "https://*.stripchat.com/*",
+    "https://*.chaturbate.com/*",
+    "https://performerclient.streamatemodels.com/*",
+    "https://*.camsoda.com/*",
+    "https://*.flirt4free.com/*",
+  ],
   // 2. Set cssInjectionMode
   cssInjectionMode: "ui",
 
