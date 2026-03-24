@@ -16,7 +16,7 @@ export const SC_STRINGS: ScStrings = {
     "BroadcastContainer__main#ka",
     "BroadcastContainer__members#Go",
     "main-layout-main-content",
-    "broadcast-player-wrapper view-cam-resizer view-cam-resizer-boundary-x view-cam-resizer-broadcast",
+    "broadcast-player-wrapper broadcast-resizer broadcast-resizer-boundary-x broadcast-resizer-with-settings",
     "player-panel-status-connection",
     "BroadcastContainer__aside#AX",
     "messages",
@@ -32,7 +32,7 @@ export const SC_STRINGS: ScStrings = {
   },
   BROADCAST_WRAPPER: {
     CLASS:
-      "broadcast-player-wrapper view-cam-resizer view-cam-resizer-boundary-x view-cam-resizer-broadcast",
+      "broadcast-player-wrapper broadcast-resizer broadcast-resizer-boundary-x broadcast-resizer-with-settings",
   },
   BROADCAST_SWITCH: {
     ID: "external-switcher",

@@ -42,7 +42,7 @@ interface IUseQuickMessagesStatus {
 const quickMessagesStatus = storage.defineItem<boolean>(
   `local:${GLOBAL_STRINGS.STORAGE_KEYS.QUICK_MESSAGES_IS_ACTIVE}`,
   {
-    fallback: false,
+    fallback: true,
   },
 );
 

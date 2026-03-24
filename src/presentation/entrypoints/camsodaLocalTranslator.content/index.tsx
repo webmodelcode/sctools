@@ -1,16 +1,14 @@
 // 1. Import the style
 import ReactDOM from "react-dom/client";
-import { ContentMenu } from "~@/presentation/components/ContentMenu/ContentMenu";
+import { camsodaAdapter } from "~@/config/camsodaAdapter/camsodaAdapter";
 
 import "~@/presentation/assets/globals.css";
+import { CamsodaLocalTranslator } from "~@/presentation/components/CamsodaLocalTranslator/CamsodaLocalTranslator";
+import { CamsodaLocalTranslatorMessenger } from "~@/presentation/components/CamsodaLocalTranslator/CamsodaLocalTranslatorMessenger";
 
 export default defineContentScript({
-  matches: [
-    "https://*.stripchat.com/*",
-    "https://*.chaturbate.com/*",
-    "https://performerclient.streamatemodels.com/*",
-    "https://*.camsoda.com/*",
-  ],
+  matches: ["https://*.camsoda.com/*"],
+
   // 2. Set cssInjectionMode
   cssInjectionMode: "ui",
 
@@ -27,7 +25,12 @@ export default defineContentScript({
 
         // Create a root on the UI container and render a component
         const root = ReactDOM.createRoot(app);
-        root.render(<ContentMenu />);
+        root.render(
+          <>
+            <CamsodaLocalTranslator />
+            <CamsodaLocalTranslatorMessenger />
+          </>,
+        );
         return root;
       },
       onRemove: (root) => {
@@ -37,6 +40,11 @@ export default defineContentScript({
     });
 
     // 4. Mount the UI
-    ui.mount();
+    const domCheckInterval = setInterval(() => {
+      if (camsodaAdapter.isPublicChatTabReady()) {
+        clearInterval(domCheckInterval);
+        ui.mount();
+      }
+    }, 100);
   },
 });
