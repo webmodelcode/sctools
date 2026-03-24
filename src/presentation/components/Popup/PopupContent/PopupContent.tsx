@@ -27,10 +27,16 @@ export const PopupContent = () => {
     <CardContent className="px-4">
       <Tabs defaultValue="quickMessages" className="w-full">
         <TabsList className="w-full bg-secondary/30">
-          <TabsTrigger className="cursor-pointer" value="quickMessages">
+          <TabsTrigger
+            className="cursor-pointer text-white data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
+            value="quickMessages"
+          >
             Mensajes Rápidos
           </TabsTrigger>
-          <TabsTrigger className="cursor-pointer" value="features">
+          <TabsTrigger
+            className="cursor-pointer text-white data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
+            value="features"
+          >
             Funcionalidades
           </TabsTrigger>
         </TabsList>
