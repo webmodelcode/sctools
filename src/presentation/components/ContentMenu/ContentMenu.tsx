@@ -8,7 +8,7 @@
  * @returns {JSX.Element} - Returns the JSX element representing the content menu.
  */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -18,23 +18,12 @@ import {
 import { StatusIndicator } from "../StatusIndicator/StatusIndicator";
 import { MaximizeButton } from "../MaximizeButton/MaximizeButton";
 import { SmCheckTerms } from "../SmCheckTerms/SmCheckTerms";
-import { useQuickMenuIsActive } from "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive";
+import { useFeaturesStatus } from "~@/presentation/hooks/useFeaturesStatus/useFeaturesStatus";
 
 export const ContentMenu = () => {
-  const { getItem, watchItem } = useQuickMenuIsActive();
-  const [isExtActive, setIsExtActive] = useState(false);
+  const { quickMenu } = useFeaturesStatus();
 
-  watchItem((value) => {
-    setIsExtActive(value);
-  });
-
-  useEffect(() => {
-    (async () => {
-      setIsExtActive(await getItem());
-    })();
-  }, [getItem]);
-
-  if (!isExtActive) return null;
+  if (!quickMenu.isEnabled) return null;
 
   return (
     <div className="fixed bottom-0 left-10 z-[9999] max-w-20 min-w-14 rounded-t-md border border-ew-star-color bg-gray-300/80 text-black">

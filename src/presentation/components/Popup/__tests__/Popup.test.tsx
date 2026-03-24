@@ -1,53 +1,62 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Popup } from "../Popup";
-import { QUICK_MESSAGE_OPERATIONS } from "../QuickMessageOperations/strings.json";
 
-// Mock the useExtensionState hook
-vi.mock("~@/presentation/hooks/useExtensionState/useExtensionState", () => ({
-  useExtensionState: () => ({
-    isQuickMenuEnabled: false,
-    isInitialized: true,
-    handleToggleExtension: vi.fn(),
-  }),
+// Mock child components
+vi.mock("../PopupContent/PopupContent", () => ({
+  PopupContent: () => <div data-testid="popup-content">PopupContent</div>,
+}));
+
+vi.mock("../PopupHeader/PopupHeader", () => ({
+  PopupHeader: () => <div data-testid="popup-header">PopupHeader</div>,
+}));
+
+vi.mock("../../LanguageSelector/LanguageSelector", () => ({
+  LanguageSelector: () => (
+    <div data-testid="language-selector">LanguageSelector</div>
+  ),
+}));
+
+// Mock ui components
+vi.mock("../../ui/card", () => ({
+  Card: ({
+    children,
+    className,
+  }: {
+    children: React.ReactNode;
+    className?: string;
+  }) => (
+    <div data-testid="popup-card" className={className}>
+      {children}
+    </div>
+  ),
+}));
+
+vi.mock("../../ui/label", () => ({
+  Label: ({ children }: { children: React.ReactNode }) => (
+    <label>{children}</label>
+  ),
 }));
 
 describe("Popup Component", () => {
   beforeEach(() => {
-    // Mock chrome API
-    browser.tabs.reload = vi.fn();
     vi.resetAllMocks();
   });
 
-  it("should render all elements correctly", () => {
+  it("should render all main sections correctly", () => {
     render(<Popup />);
 
-    // Verify that the header renders correctly
-    expect(screen.getByText("ScTools")).toBeInTheDocument();
-    expect(screen.getByText("by Estrellas Webcam")).toBeInTheDocument();
-
-    // Verify that the extension toggle renders (now directly in Popup component)
-    expect(screen.getByRole("switch")).toBeInTheDocument();
-
-    // Verify that quick message operations render
-    expect(
-      screen.getByText(QUICK_MESSAGE_OPERATIONS.TITLE),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("popup-header")).toBeInTheDocument();
+    expect(screen.getByTestId("language-selector")).toBeInTheDocument();
+    expect(screen.getByTestId("popup-content")).toBeInTheDocument();
   });
 
-  it("should render with modular components structure", () => {
+  it("should render with correct layout classes", () => {
     render(<Popup />);
 
-    // Verify that the modular structure is present using content as reference
-    const titleElement = screen.getByText("ScTools");
-    const card = titleElement.closest('[class*="min-h-[200px]"]');
-    expect(card).toHaveClass("min-h-[200px]", "min-w-md");
-  });
-
-  it("switch should be initially unchecked", () => {
-    render(<Popup />);
-    const switchElement = screen.getByRole("switch");
-
-    expect(switchElement).not.toBeChecked();
+    const card = screen.getByTestId("popup-card");
+    expect(card).toHaveClass(
+      "flex min-h-130 min-w-md flex-col gap-2 rounded-none! bg-ew-star-color! text-white",
+    );
   });
 });

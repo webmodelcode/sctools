@@ -11,7 +11,7 @@
 export type ScClasses =
   | "main-layout-main-content"
   | "BroadcastContainer__main#ka"
-  | "broadcast-player-wrapper view-cam-resizer view-cam-resizer-boundary-x view-cam-resizer-broadcast"
+  | "broadcast-player-wrapper broadcast-resizer broadcast-resizer-boundary-x broadcast-resizer-with-settings"
   | "BroadcastContainer__members#Go"
   | "player-panel-status-connection"
   | "BroadcastContainer__aside#AX"

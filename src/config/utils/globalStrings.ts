@@ -5,40 +5,10 @@
  * @module Config/utils/GlobalStrings
  */
 
-interface IStorageKeys {
-  QUICK_MENU_IS_ACTIVE: string;
-  QUICK_MESSAGES_IS_ACTIVE: string;
-  QUICK_MESSAGES: string;
-  LOCAL_TRANSLATOR_TARGET_LANGUAGE: string;
-}
-
-interface IErrorMessages {
-  SC_ELEMENTS_NOT_READY: string;
-  QM_NOT_MESSAGES: string;
-}
-
-interface IAppInformation {
-  APP_NAME: string;
-  APP_PROVIDER: string;
-}
-
-type IBgMessageType = "CHAT_MESSAGE" | "INPUT_MESSAGE" | "CHECK_EXT_UPLOAD";
-
-interface IGlobalStrings {
-  STORAGE_KEYS: IStorageKeys;
-  ERROR_MESSAGES: IErrorMessages;
-  BG_MESSAGE_TYPE: { [key in IBgMessageType]: IBgMessageType };
-  APP_INFORMATION: IAppInformation;
-  ESTRELLAS_WEB_BASEURL: {
-    PRODUCTION: string;
-    DEV: string;
-  };
-}
-
 /**
  * Global configuration constants.
  */
-export const GLOBAL_STRINGS: IGlobalStrings = {
+export const GLOBAL_STRINGS = {
   STORAGE_KEYS: {
     /** Key for storing quick menu active state in local storage */
     QUICK_MENU_IS_ACTIVE: "quickMenuIsActive",
@@ -48,6 +18,8 @@ export const GLOBAL_STRINGS: IGlobalStrings = {
     QUICK_MESSAGES: "quickMessages",
     /** Key for storing local translator target language in local storage */
     LOCAL_TRANSLATOR_TARGET_LANGUAGE: "localTranslatorTargetLanguage",
+    /** Key for storing translator active state in local storage */
+    TRANSLATOR_IS_ACTIVE: "translatorIsActive",
   },
   ERROR_MESSAGES: {
     /** Error message for when StripChat elements are not ready */
@@ -68,6 +40,6 @@ export const GLOBAL_STRINGS: IGlobalStrings = {
     PRODUCTION: "https://www.estrellaswebcam.com",
     DEV: "http://localhost:4321",
   },
-};
+} as const;
 
 Object.freeze(GLOBAL_STRINGS);

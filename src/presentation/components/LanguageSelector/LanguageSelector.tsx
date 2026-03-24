@@ -15,6 +15,7 @@ import { cn } from "~@/presentation/lib/utils";
 import { Button } from "../ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useLocalTranslatorTargetLanguage } from "~@/presentation/hooks/useLocalTranslatorTargetLanguage/useLocalTranslatorTargetLanguage";
+import { TooltipTriggerAsChild } from "../ui/own/tooltip-trigger-aschild";
 
 export const LanguageSelector = () => {
   const { setItem, getItem, watchItem } = useLocalTranslatorTargetLanguage();
@@ -41,19 +42,21 @@ export const LanguageSelector = () => {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="justify-between bg-ew-star-color"
-        >
-          {value
-            ? languagesSupported.find((language) => language.value === value)
-                ?.label
-            : LANGUAGE_SELECTOR.SELECT_LANGUAGE}
-          <ChevronsUpDown />
-        </Button>
+      <PopoverTrigger>
+        <TooltipTriggerAsChild tooltipText="Selecciona el idioma al que deseas traducir tus mensajes">
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="justify-between bg-ew-star-color"
+          >
+            {value
+              ? languagesSupported.find((language) => language.value === value)
+                  ?.label
+              : LANGUAGE_SELECTOR.SELECT_LANGUAGE}
+            <ChevronsUpDown />
+          </Button>
+        </TooltipTriggerAsChild>
       </PopoverTrigger>
       <PopoverContent className="w-52 p-0">
         <Command>

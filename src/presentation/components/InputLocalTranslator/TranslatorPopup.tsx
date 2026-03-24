@@ -65,7 +65,7 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
     return (
       <div
         ref={ref}
-        className="fixed z-50 flex max-w-sm flex-col items-start rounded-lg border border-ew-star-color bg-white px-3 py-1 shadow-lg"
+        className="fixed z-999999 flex max-w-sm flex-col items-start rounded-lg border border-ew-star-color bg-white px-3 py-1 shadow-lg"
         style={{
           top: `${position.top}px`,
           left: `${position.left}px`,

@@ -10,7 +10,6 @@
 
 import { useEffect, useState, useCallback, useMemo } from "react";
 
-import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 import { isEditableElement } from "~@/config/utils/isTextElement";
 import {
   getQuickMessages,
@@ -26,11 +25,10 @@ import {
 } from "~@/presentation/components/ui/accordion";
 import { QuickMessage } from "../QuickMessage/QuickMessage";
 import { BotMessageSquare } from "lucide-react";
-import { useQuickMenuIsActive } from "~@/presentation/hooks/useQuickMenuIsActive/useQuickMenuIsActive";
+import { useFeaturesStatus } from "~@/presentation/hooks/useFeaturesStatus/useFeaturesStatus";
 
 export const QuickMessagesMenu = () => {
-  const { getItem, watchItem } = useQuickMenuIsActive();
-  const [extIsActive, setExtIsActive] = useState(false);
+  const { quickMessages: quickMessagesStatus } = useFeaturesStatus();
   const [value, setValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [quickMessages, setQuickMessages] = useState<IQuickMessage[]>([]);
@@ -64,17 +62,6 @@ export const QuickMessagesMenu = () => {
     setIsOpen(true);
   }, []);
 
-  watchItem((value) => {
-    setExtIsActive(value);
-  });
-
-  useEffect(() => {
-    const checkExtIsActive = async () => {
-      setExtIsActive(await getItem());
-    };
-    checkExtIsActive();
-  }, [getItem]);
-
   useEffect(() => {
     watchQuickMessages(setQuickMessages);
     reloadMessages();
@@ -91,12 +78,12 @@ export const QuickMessagesMenu = () => {
     };
   }, [eventHandler]);
 
-  if (!isOpen || !extIsActive) return null;
+  if (!isOpen || !quickMessagesStatus.isEnabled) return null;
 
   return (
     <div
       className={
-        "sct-component fixed right-0 bottom-0 z-40 min-w-12 rounded-t-2xl border border-ew-star-color bg-background/70 pt-2 text-foreground"
+        "sct-component fixed right-0 bottom-0 z-1000000 min-w-12 rounded-t-2xl border border-ew-star-color bg-background/70 pt-2 text-foreground"
       }
     >
       <Accordion
@@ -114,7 +101,7 @@ export const QuickMessagesMenu = () => {
         <AccordionItem value="item-1">
           <AccordionTrigger
             showArrowIcon={false}
-            className="w-12 animate-bounce flex-col-reverse items-center justify-around py-[0.25rem]"
+            className="w-12 animate-bounce flex-col-reverse items-center justify-around py-1"
           >
             <BotMessageSquare size={15} />
           </AccordionTrigger>

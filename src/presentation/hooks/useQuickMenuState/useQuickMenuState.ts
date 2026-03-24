@@ -10,7 +10,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useQuickMenuIsActive } from "../useQuickMenuIsActive/useQuickMenuIsActive";
 
-export const useExtensionState = () => {
+export const useQuickMenuState = () => {
   const quickMenuIsActive = useQuickMenuIsActive();
   const [isQuickMenuEnabled, setIsQuickMenuEnabled] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -32,7 +32,7 @@ export const useExtensionState = () => {
       quickMenuIsActive.setItem(checked);
       setIsQuickMenuEnabled(checked);
     },
-    [quickMenuIsActive]
+    [quickMenuIsActive],
   );
 
   return {
