@@ -34,7 +34,7 @@ export const QuickMessagesList = () => {
             <span>{message.label}</span>
             <Tooltip>
               <TooltipTrigger asChild>
-                <span className="w-56 overflow-hidden text-nowrap text-ellipsis text-gray-500">
+                <span className="w-56 overflow-hidden text-nowrap text-ellipsis text-foreground">
                   {message.text}
                 </span>
               </TooltipTrigger>
