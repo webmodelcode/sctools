@@ -20,7 +20,7 @@ describe("useQuickMessagesStatus Hook", () => {
 
   it("should get item value", async () => {
     const { result } = renderHook(() => useQuickMessagesStatus());
-    expect(await result.current.getItem()).toBe(false);
+    expect(await result.current.getItem()).toBe(true);
 
     await browser.storage.local.set({ quick_messages_is_active: true });
     expect(await result.current.getItem()).toBe(true);

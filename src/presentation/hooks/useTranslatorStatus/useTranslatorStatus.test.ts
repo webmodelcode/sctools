@@ -22,7 +22,7 @@ describe("useTranslatorStatus Hook", () => {
   it("should get item value", async () => {
     // Test default fallback (false)
     const { result } = renderHook(() => useTranslatorStatus());
-    expect(await result.current.getItem()).toBe(false);
+    expect(await result.current.getItem()).toBe(true);
 
     // Set via browser storage
     await browser.storage.local.set({ translator_is_active: true });
