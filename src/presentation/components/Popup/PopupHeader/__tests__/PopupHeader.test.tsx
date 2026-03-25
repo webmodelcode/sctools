@@ -6,48 +6,46 @@ describe("PopupHeader Component", () => {
   it("should render the logo and title correctly", () => {
     render(<PopupHeader />);
 
-    // Verify that the main title renders
-    expect(screen.getByText("ScTools")).toBeInTheDocument();
-
-    // Verify that the subtitle renders
-    expect(screen.getByText("by Estrellas Webcam")).toBeInTheDocument();
+    expect(screen.getByText("Redna")).toBeInTheDocument();
+    expect(screen.getByText("Models")).toBeInTheDocument();
+    expect(screen.getByText("Estrellas Webcam")).toBeInTheDocument();
   });
 
-  it("should have correct CSS classes", () => {
-    render(<PopupHeader />);
-
-    // Verify that the CardHeader has the correct classes
-    const titleElement = screen.getByText("ScTools");
-    // The structure is CardHeader > CardTitle > div > (EwLogo + span)
-    // CardHeader has "px-3"
-    // CardTitle has "flex items-end justify-center text-sm font-bold"
-
-    // Check CardTitle classes
-    const cardTitle = titleElement.closest("h3"); // CardTitle renders as h3 by default in shadcn/ui usually, or check parent
-    // Alternatively, find by hierarchy
-    const containerDiv = titleElement.parentElement; // div
-    const cardTitleElement = containerDiv?.parentElement; // CardTitle
-
-    expect(cardTitleElement).toHaveClass(
+  it("should CardTitle have correct CSS classes", () => {
+    const t = [
       "flex",
-      "items-end",
+      "flex-col",
+      "items-start",
       "justify-center",
       "text-sm",
       "font-bold",
-    );
+    ];
+    render(<PopupHeader />);
+
+    const cardTitle = screen.getByTestId("popup-header-title");
+    const classList = cardTitle.classList;
+    expect(classList.length).toEqual(t.length);
+    t.forEach((element) => {
+      expect(classList).toContain(element);
+    });
   });
 
   it("should render the EwLogo component", () => {
     render(<PopupHeader />);
 
-    // Verify that the logo is present (assuming EwLogo renders an SVG or similar)
-    // We can check if the title container has the correct classes
-    const titleElement = screen.getByText("ScTools");
-    const containerDiv = titleElement.parentElement;
-    const cardTitleElement = containerDiv?.parentElement;
+    const logoContainer = screen.getByTestId("popup-header-logo-container");
 
-    // Check if CardTitle contains the classes that define the look
-    expect(cardTitleElement).toBeInTheDocument();
-    expect(cardTitleElement).toHaveClass("text-sm", "font-bold");
+    expect(logoContainer).toBeInTheDocument();
+    expect(logoContainer).toHaveClass("flex", "items-end");
+    expect(logoContainer.children.length).toBe(2);
+    expect(logoContainer.children[0].tagName).toBe("IMG");
+    expect(logoContainer.children[0]).toHaveClass("h-24");
+    expect(logoContainer.children[1].tagName).toBe("DIV");
+    expect(logoContainer.children[1].children.length).toBe(2);
+    expect(logoContainer.children[1].children[0].tagName).toBe("SPAN");
+    expect(logoContainer.children[1].children[0]).toHaveClass("block");
+    expect(logoContainer.children[1].children[0]).toHaveTextContent("Redna");
+    expect(logoContainer.children[1].children[1].tagName).toBe("SPAN");
+    expect(logoContainer.children[1].children[1]).toHaveTextContent("Models");
   });
 });

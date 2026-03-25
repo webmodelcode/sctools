@@ -9,9 +9,9 @@ export const QuickMessageDataOperations = () => {
   return [
     {
       label: QUICK_MESSAGE_DATA_OPERATIONS.IMPORT.LABEL,
-      buttonIcon: <Upload />,
+      buttonIcon: <Download />,
       buttonVariant: "outline",
-      buttonClassName: "m-1 px-2",
+      buttonClassName: "m-1 p-0",
       havePopUp: true,
       dialogHeader: QUICK_MESSAGE_DATA_OPERATIONS.IMPORT.DIALOG_HEADER,
       dialogContent: (
@@ -27,7 +27,7 @@ export const QuickMessageDataOperations = () => {
     },
     {
       label: "Exportar",
-      buttonIcon: <Download />,
+      buttonIcon: <Upload />,
       buttonVariant: "outline",
       buttonClassName: "m-1 px-2",
       havePopUp: true,

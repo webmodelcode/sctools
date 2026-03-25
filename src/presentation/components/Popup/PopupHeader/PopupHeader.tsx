@@ -8,19 +8,33 @@
  */
 
 import { CardHeader, CardTitle } from "../../ui/card";
-import { EwLogo } from "../../EwLogo/EwLogo";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
+import REDNA_LOGO from "~@/presentation/assets/redna-pet-512.png";
 
 export const PopupHeader = () => {
   return (
-    <CardHeader className="px-3">
-      <CardTitle className="flex items-end justify-center text-sm font-bold">
-        <div>
-          <EwLogo className="mx-auto h-12" />
-          <span>{GLOBAL_STRINGS.APP_INFORMATION.APP_NAME}</span>
+    <CardHeader className="w-full px-3">
+      <CardTitle
+        className="flex flex-col items-start justify-center text-sm font-bold"
+        data-testid="popup-header-title"
+      >
+        <div
+          className="flex items-end"
+          data-testid="popup-header-logo-container"
+        >
+          <img src={REDNA_LOGO} alt="Redna Logo" className="m-1 h-24" />
+          <div className="text-muted-foreground">
+            <span className="block">
+              {GLOBAL_STRINGS.APP_INFORMATION.APP_NAME_SHORT}
+            </span>
+            <span>{GLOBAL_STRINGS.APP_INFORMATION.APP_DIVISION}</span>
+          </div>
         </div>
-        <span className="pl-2 text-xs">
-          by {GLOBAL_STRINGS.APP_INFORMATION.APP_PROVIDER}
+        <span className="pl-2 text-[0.65rem]">
+          by{" "}
+          <span className="text-primary">
+            {GLOBAL_STRINGS.APP_INFORMATION.APP_PROVIDER}
+          </span>
         </span>
       </CardTitle>
     </CardHeader>

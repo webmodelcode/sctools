@@ -36,7 +36,7 @@ export const FloatDropDown = ({
         <AccordionTrigger
           role="trigger"
           className={cn(
-            "animate-bounce cursor-pointer flex-col-reverse items-center justify-center py-1 [&>svg]:h-6 [&>svg]:w-6 [&>svg]:text-white",
+            "animate-bounce cursor-pointer flex-col-reverse items-center justify-center py-1 [&>svg]:h-6 [&>svg]:w-6 [&>svg]:text-ew-star-color",
             directionClasses[direction],
           )}
         />

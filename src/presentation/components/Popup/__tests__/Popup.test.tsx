@@ -56,7 +56,7 @@ describe("Popup Component", () => {
 
     const card = screen.getByTestId("popup-card");
     expect(card).toHaveClass(
-      "flex min-h-130 min-w-md flex-col gap-2 rounded-none! bg-ew-star-color! text-white",
+      "flex min-h-130 min-w-md flex-col gap-2 rounded-none! bg-brand-bg! text-foreground",
     );
   });
 });
