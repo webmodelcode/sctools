@@ -20,7 +20,7 @@ import "~@/presentation/assets/globals.css";
 
 export const Popup = memo(() => {
   return (
-    <Card className="flex min-h-130 min-w-md flex-col gap-2 rounded-none! bg-brand-bg! text-white">
+    <Card className="flex min-h-130 min-w-md flex-col gap-2 rounded-none! bg-brand-bg! text-foreground">
       <div className="mx-4 flex items-center justify-between gap-4">
         <PopupHeader />
         <div className="flex flex-col items-center justify-center gap-2">

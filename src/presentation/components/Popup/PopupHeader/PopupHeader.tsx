@@ -22,15 +22,15 @@ export const PopupHeader = () => {
           className="flex items-end"
           data-testid="popup-header-logo-container"
         >
-          <EwLogo className="h-12" />
-          <div>
+          <EwLogo className="h-16" />
+          <div className="text-muted-foreground">
             <span className="block">
               {GLOBAL_STRINGS.APP_INFORMATION.APP_NAME_SHORT}
             </span>
             <span>{GLOBAL_STRINGS.APP_INFORMATION.APP_DIVISION}</span>
           </div>
         </div>
-        <span className="pl-2 text-xs">
+        <span className="pl-2 text-[0.65rem]">
           by {GLOBAL_STRINGS.APP_INFORMATION.APP_PROVIDER}
         </span>
       </CardTitle>

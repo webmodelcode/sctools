@@ -22,7 +22,7 @@ export const CamsodaLocalTranslator = () => {
       className="fixed right-0 bottom-1/3 z-9999 min-h-20 max-w-1/2 rounded-l-md border border-ew-star-color bg-gray-300 text-black"
     >
       <div className="relative">
-        <div className="flex items-center justify-center gap-2 bg-ew-star-color/10 px-5 py-2 text-white">
+        <div className="flex items-center justify-center gap-2 bg-ew-star-color/10 px-5 py-2 text-foreground">
           <BadgeInfo className="h-8 w-8" />
           <span className="text-xs">
             Esta ventana filtra bots y notificaciones para mostrar únicamente

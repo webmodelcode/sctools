@@ -26,15 +26,15 @@ export const PopupContent = () => {
   return (
     <CardContent className="px-4">
       <Tabs defaultValue="quickMessages" className="w-full">
-        <TabsList className="w-full bg-secondary/30">
+        <TabsList className="w-full bg-secondary">
           <TabsTrigger
-            className="cursor-pointer text-white data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
+            className="cursor-pointer text-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
             value="quickMessages"
           >
             Mensajes Rápidos
           </TabsTrigger>
           <TabsTrigger
-            className="cursor-pointer text-white data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
+            className="cursor-pointer text-foreground data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
             value="features"
           >
             Funcionalidades
@@ -46,8 +46,8 @@ export const PopupContent = () => {
             <QuickMessagesList />
           </div>
         </TabsContent>
-        <TabsContent value="features">
-          <div className="flex flex-col gap-4">
+        <TabsContent value="features" className="h-full">
+          <div className="mx-auto mt-6 flex w-4/5 flex-col gap-4">
             <ExtensionToggle
               isEnabled={translator.isEnabled}
               onToggle={translator.toggle}

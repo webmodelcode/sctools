@@ -1,8 +1,9 @@
 interface IEwLogo {
   className: string;
+  fillClassName?: string;
 }
 
-export const EwLogo = ({ className }: IEwLogo) => (
+export const EwLogo = ({ className, fillClassName }: IEwLogo) => (
   <svg
     id="Capa_1"
     xmlns="http://www.w3.org/2000/svg"
@@ -14,8 +15,7 @@ export const EwLogo = ({ className }: IEwLogo) => (
     xmlSpace="preserve"
     className={className}
   >
-    <style type="text/css">{"\n\t.st0{fill:#FFFFFF;}\n"}</style>
-    <g>
+    <g className={fillClassName || "fill-ew-star-color"}>
       <path
         className="st0"
         d="M77.99,77.69c-0.61,3.51-1.97,6.77-6.44,6.7c-4.85-0.07-5.62-3.72-6.29-6.69c-0.71,2.93-0.5,4.55,1,6.68 C70.42,90.31,80.89,85.53,77.99,77.69z"

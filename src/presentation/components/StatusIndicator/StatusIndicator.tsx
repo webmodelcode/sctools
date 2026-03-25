@@ -35,7 +35,7 @@ export const StatusIndicator = () => {
   return (
     <div role={testRole} className="status-indicator">
       <div className={`indicator-dot ${scStatus}`} />
-      <p className={`status-text font-bold text-white ${scStatus}`}>
+      <p className={`status-text font-bold text-foreground ${scStatus}`}>
         {scStatus.substring(0, 3) || "..."}
       </p>
     </div>
