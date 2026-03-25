@@ -12,7 +12,6 @@ import languagesSupported from "./languagesSupported";
 import { LANGUAGE_SELECTOR } from "./languageSelector.strings.json";
 
 import { cn } from "~@/presentation/lib/utils";
-import { Button } from "../ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useLocalTranslatorTargetLanguage } from "~@/presentation/hooks/useLocalTranslatorTargetLanguage/useLocalTranslatorTargetLanguage";
 import { TooltipTriggerAsChild } from "../ui/own/tooltip-trigger-aschild";
