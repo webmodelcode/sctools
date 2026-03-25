@@ -28,7 +28,7 @@ export const QuickMessagesList = () => {
       {quickMessages.map((message) => (
         <div
           key={message.label}
-          className="my-2 mr-6 ml-4 flex items-center justify-between rounded-sm bg-background px-2 py-1 transition-transform duration-300 hover:scale-102"
+          className="my-2 mr-6 ml-4 flex items-center justify-between rounded-sm bg-background/65 px-2 py-1 transition-transform duration-300 hover:scale-102"
         >
           <div className="flex w-2/3 flex-col items-start justify-between">
             <span>{message.label}</span>
