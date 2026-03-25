@@ -8,7 +8,7 @@ describe("PopupHeader Component", () => {
 
     expect(screen.getByText("Redna")).toBeInTheDocument();
     expect(screen.getByText("Models")).toBeInTheDocument();
-    expect(screen.getByText("by Estrellas Webcam")).toBeInTheDocument();
+    expect(screen.getByText("Estrellas Webcam")).toBeInTheDocument();
   });
 
   it("should CardTitle have correct CSS classes", () => {
@@ -38,8 +38,8 @@ describe("PopupHeader Component", () => {
     expect(logoContainer).toBeInTheDocument();
     expect(logoContainer).toHaveClass("flex", "items-end");
     expect(logoContainer.children.length).toBe(2);
-    expect(logoContainer.children[0].tagName).toBe("svg");
-    expect(logoContainer.children[0]).toHaveClass("h-12");
+    expect(logoContainer.children[0].tagName).toBe("IMG");
+    expect(logoContainer.children[0]).toHaveClass("h-24");
     expect(logoContainer.children[1].tagName).toBe("DIV");
     expect(logoContainer.children[1].children.length).toBe(2);
     expect(logoContainer.children[1].children[0].tagName).toBe("SPAN");
