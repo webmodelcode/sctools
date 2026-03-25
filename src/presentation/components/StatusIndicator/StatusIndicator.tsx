@@ -21,10 +21,7 @@ export const StatusIndicator = () => {
           SC_STRINGS.STREAMING_STATUS.CLASS,
         );
 
-        setScStatus(
-          statusIndicator?.childNodes[1]?.textContent?.toLocaleLowerCase() ??
-            "",
-        );
+        setScStatus(statusIndicator?.childNodes[1]?.textContent ?? "");
       } catch (error) {
         return error;
       }
@@ -35,8 +32,10 @@ export const StatusIndicator = () => {
   return (
     <div role={testRole} className="status-indicator">
       <div className={`indicator-dot ${scStatus}`} />
-      <p className={`status-text font-bold text-foreground ${scStatus}`}>
-        {scStatus.substring(0, 3) || "..."}
+      <p
+        className={`status-text text-[0.6rem] font-bold text-foreground uppercase ${scStatus}`}
+      >
+        {scStatus || "..."}
       </p>
     </div>
   );
