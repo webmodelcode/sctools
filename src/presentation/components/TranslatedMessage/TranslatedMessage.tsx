@@ -20,6 +20,7 @@ export const TranslatedMessage: React.FC<Props> = ({ message }) => {
         gap: "0.2rem",
         alignItems: "center",
       }}
+      data-testid="translated-message-container"
     >
       <img
         src={EW_LOGO}
