@@ -25,11 +25,7 @@ export default defineContentScript({
 
         // Create a root on the UI container and render a component
         const root = ReactDOM.createRoot(app);
-        root.render(
-          <>
-            <ChaturLocalTranslator />
-          </>,
-        );
+        root.render(<ChaturLocalTranslator />);
         return root;
       },
       onRemove: (root) => {
@@ -45,6 +41,6 @@ export default defineContentScript({
         ui.mount();
       }
     }, 100);
-    // ui.mount();
+    ui.mount();
   },
 });
