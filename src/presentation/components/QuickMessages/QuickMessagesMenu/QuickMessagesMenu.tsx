@@ -24,8 +24,9 @@ import {
   AccordionTrigger,
 } from "~@/presentation/components/ui/accordion";
 import { QuickMessage } from "../QuickMessage/QuickMessage";
-import { BotMessageSquare } from "lucide-react";
 import { useFeaturesStatus } from "~@/presentation/hooks/useFeaturesStatus/useFeaturesStatus";
+import { ScrollArea } from "../../ui/scroll-area";
+import { EwLogo } from "../../EwLogo/EwLogo";
 
 export const QuickMessagesMenu = () => {
   const { quickMessages: quickMessagesStatus } = useFeaturesStatus();
@@ -83,7 +84,7 @@ export const QuickMessagesMenu = () => {
   return (
     <div
       className={
-        "sct-component fixed right-0 bottom-0 z-1000000 min-w-12 rounded-t-2xl border border-ew-star-color bg-background/70 pt-2 text-foreground"
+        "sct-component fixed right-0 bottom-0 z-1000000 min-w-12 rounded-t-md border border-ew-star-color bg-background pt-2 font-sans! text-foreground"
       }
     >
       <Accordion
@@ -101,16 +102,20 @@ export const QuickMessagesMenu = () => {
         <AccordionItem value="item-1">
           <AccordionTrigger
             showArrowIcon={false}
-            className="w-12 animate-bounce flex-col-reverse items-center justify-around py-1"
+            className="w-12 animate-bounce flex-col-reverse items-center justify-around py-1 [&[data-state=open]>svg]:animate-spin"
           >
-            <BotMessageSquare size={15} />
+            <EwLogo className="size-5" />
           </AccordionTrigger>
-          <AccordionContent className="flex flex-col">
-            {quickMessages.length <= 0 ? (
-              <span className="w-20 p-2 text-center">No hay mensajes</span>
-            ) : (
-              memoizedQuickMessages
-            )}
+          <AccordionContent className="">
+            <ScrollArea className="max-h-[70vh]">
+              <div className="flex max-h-[70vh] flex-col">
+                {quickMessages.length <= 0 ? (
+                  <span className="w-20 p-2 text-center">No hay mensajes</span>
+                ) : (
+                  memoizedQuickMessages
+                )}
+              </div>
+            </ScrollArea>
           </AccordionContent>
         </AccordionItem>
       </Accordion>

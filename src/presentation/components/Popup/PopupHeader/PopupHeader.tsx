@@ -32,9 +32,13 @@ export const PopupHeader = () => {
         </div>
         <span className="pl-2 text-[0.65rem]">
           by{" "}
-          <span className="text-primary">
+          <a
+            href="https://estrellaswebcam.com"
+            target="_blank"
+            className="text-primary"
+          >
             {GLOBAL_STRINGS.APP_INFORMATION.APP_PROVIDER}
-          </span>
+          </a>
         </span>
       </CardTitle>
     </CardHeader>

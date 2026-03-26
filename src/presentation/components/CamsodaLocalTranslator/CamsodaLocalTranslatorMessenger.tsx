@@ -47,7 +47,7 @@ export const CamsodaLocalTranslatorMessenger = () => {
                   const root = createRoot(translateContainer);
                   root.render(
                     <div style={{ marginBottom: "8px" }}>
-                      <TranslatedMessage message={data} bgColor="#99a1af" />
+                      <TranslatedMessage message={data} />
                     </div>,
                   );
                 }

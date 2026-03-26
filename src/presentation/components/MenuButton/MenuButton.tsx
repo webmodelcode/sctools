@@ -72,7 +72,7 @@ export const MenuButton = (props: Props) => {
               padding: "4px",
               fontSize: "0.8rem",
             }}
-            className="z-[10000]"
+            className="z-10000"
           >
             <p>{title}</p>
           </TooltipContent>

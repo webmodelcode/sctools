@@ -21,7 +21,7 @@ import "~@/presentation/assets/globals.css";
 
 export const Popup = memo(() => {
   return (
-    <Card className="relative flex h-140 min-w-md flex-col gap-2 overflow-hidden rounded-none! bg-brand-bg! text-foreground">
+    <Card className="flex h-140 min-w-md flex-col gap-2 overflow-hidden rounded-none! bg-brand-bg! text-foreground">
       <img
         src={EW_LOGO}
         alt=""
