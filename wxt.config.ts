@@ -5,7 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   manifest: {
     permissions: ["activeTab", "tabs", "storage", "scripting"],
-    name: "EW Model Tools",
+    name: "Redna Models",
     description:
       "Incorporamos herramientas para mejorar la experiencia de trabajo de los modelos de EW.",
   },
@@ -15,7 +15,7 @@ export default defineConfig({
   vite: () =>
     ({
       plugins: [tailwindcss()],
-    } as WxtViteConfig),
+    }) as WxtViteConfig,
   modules: ["@wxt-dev/module-react"],
   srcDir: "src/presentation",
 });

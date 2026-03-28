@@ -28,13 +28,13 @@ export const QuickMessagesList = () => {
       {quickMessages.map((message) => (
         <div
           key={message.label}
-          className="my-2 mr-6 ml-4 flex items-center justify-between rounded-sm bg-white/30 px-2 py-1 transition-transform duration-300 hover:scale-102"
+          className="my-2 mr-6 ml-4 flex items-center justify-between rounded-sm bg-background/65 px-2 py-1 transition-transform duration-300 hover:scale-102"
         >
           <div className="flex w-2/3 flex-col items-start justify-between">
             <span>{message.label}</span>
             <Tooltip>
               <TooltipTrigger asChild>
-                <span className="w-56 overflow-hidden text-nowrap text-ellipsis text-gray-500">
+                <span className="w-56 overflow-hidden text-nowrap text-ellipsis text-foreground">
                   {message.text}
                 </span>
               </TooltipTrigger>

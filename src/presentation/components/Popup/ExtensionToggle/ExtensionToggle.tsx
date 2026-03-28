@@ -32,7 +32,7 @@ export const ExtensionToggle = ({
     <TooltipTriggerAsChild tooltipText={tooltipText}>
       <div
         className={cn(
-          "flex items-center justify-between gap-4",
+          "flex items-center justify-between gap-4 rounded-sm bg-background/65 p-2",
           orientation === "vertical" ? "flex-col" : "flex-row",
         )}
       >

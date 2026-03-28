@@ -2,6 +2,7 @@ import { forwardRef, useState, useEffect } from "react";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
 import { selectTextInContentEditable } from "~@/config/utils/selectTextInContentEditable";
 import { useLocalTranslatorTargetLanguage } from "~@/presentation/hooks/useLocalTranslatorTargetLanguage/useLocalTranslatorTargetLanguage";
+import { Kbd, KbdGroup } from "~@/presentation/components/ui/kbd";
 
 interface PopupPosition {
   top: number;
@@ -47,7 +48,8 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
 
     useEffect(() => {
       const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.ctrlKey && event.key.toLowerCase() === "q") {
+        const key = event.key.toLowerCase();
+        if (event.ctrlKey && (key === "q" || key === "e")) {
           event.preventDefault();
           const target = event.target as HTMLInputElement;
           target.select ? target.select() : selectTextInContentEditable(target);
@@ -67,14 +69,23 @@ export const TranslatorPopup = forwardRef<HTMLDivElement, TranslatorPopupProps>(
         ref={ref}
         className="fixed z-999999 flex max-w-sm flex-col items-start rounded-lg border border-ew-star-color bg-white px-3 py-1 shadow-lg"
         style={{
-          top: `${position.top}px`,
+          top: `${position.top - 40}px`,
           left: `${position.left}px`,
           minWidth: `${Math.min(position.width, 200)}px`,
           maxWidth: "400px",
         }}
       >
-        <div className="mb-1 w-full text-sm text-gray-600">
-          <span className="font-bold">ctrl + q</span> para traducir
+        <div className="mb-1 flex w-full flex-col flex-wrap items-center justify-center gap-1 text-sm text-gray-600">
+          <span>Para Traducir</span>
+          <div className="flex items-center gap-2">
+            <KbdGroup>
+              <Kbd>ctrl</Kbd>+<Kbd>q</Kbd>
+            </KbdGroup>
+            <span>ó</span>
+            <KbdGroup>
+              <Kbd>ctrl</Kbd>+<Kbd>e</Kbd>
+            </KbdGroup>
+          </div>
         </div>
 
         <div className="max-h-14 w-full overflow-y-auto rounded border bg-gray-50 px-2 text-center text-sm">

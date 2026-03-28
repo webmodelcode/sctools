@@ -19,10 +19,10 @@ export const CamsodaLocalTranslator = () => {
   return (
     <FloatDropDown
       direction="left"
-      className="fixed right-0 bottom-1/3 z-9999 min-h-20 max-w-1/2 rounded-l-md border border-ew-star-color bg-gray-300 text-black"
+      className="fixed right-0 bottom-1/3 z-9999 min-h-20 max-w-2/5 rounded-l-md border border-ew-star-color bg-background text-foreground"
     >
       <div className="relative">
-        <div className="flex items-center justify-center gap-2 bg-ew-star-color/10 px-5 py-2 text-white">
+        <div className="flex items-center justify-center gap-2 bg-ew-star-color/10 px-5 py-2 text-foreground">
           <BadgeInfo className="h-8 w-8" />
           <span className="text-xs">
             Esta ventana filtra bots y notificaciones para mostrar únicamente
@@ -51,10 +51,7 @@ export const CamsodaLocalTranslator = () => {
                 </span>
                 <span className="px-2">|</span>
                 <span>{message.message}</span>
-                <TranslatedMessage
-                  message={message.translation || ""}
-                  bgColor="rgba(255, 0, 0, 0.1)"
-                />
+                <TranslatedMessage message={message.translation || ""} />
               </div>
             );
           })}

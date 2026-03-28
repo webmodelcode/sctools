@@ -6,6 +6,8 @@ import { useMutationObserver } from "~@/presentation/hooks/useMutationObserver/u
 import { useFeaturesStatus } from "~@/presentation/hooks/useFeaturesStatus/useFeaturesStatus";
 import { chaturAdapter } from "~@/config/chaturAdapter/chaturAdapter";
 
+const recentMessages = new Map<string, number>();
+
 export const ChaturLocalTranslator = () => {
   const tabsContainer = useMemo(() => chaturAdapter.getTabsContainer(), []);
   const messengerContainer = useRef(tabsContainer);
@@ -21,10 +23,16 @@ export const ChaturLocalTranslator = () => {
           const firstNode = mutation.addedNodes[0];
           if (firstNode?.firstChild?.lastChild) {
             const msgContainer = firstNode.firstChild;
+            const msgText =
+              firstNode?.firstChild.lastChild?.textContent?.trim();
+            const now = Date.now();
+            const lastSeen = recentMessages.get(msgText ?? "");
+            if (lastSeen && now - lastSeen < 500) return;
+            recentMessages.set(msgText ?? "", now);
             browser.runtime.sendMessage(
               {
                 type: GLOBAL_STRINGS.BG_MESSAGE_TYPE.CHAT_MESSAGE,
-                data: firstNode?.firstChild.lastChild?.textContent?.trim(),
+                data: msgText,
               },
               (data: string) => {
                 if (data) {
@@ -39,12 +47,7 @@ export const ChaturLocalTranslator = () => {
 
                   // Render the React component in the container
                   const root = createRoot(translateContainer);
-                  root.render(
-                    <TranslatedMessage
-                      message={data}
-                      bgColor="rgba(255, 0, 0, 0.1)"
-                    />,
-                  );
+                  root.render(<TranslatedMessage message={data} />);
                 }
               },
             );

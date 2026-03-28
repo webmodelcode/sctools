@@ -8,7 +8,6 @@
  * @returns {JSX.Element} - Returns the JSX element representing the content menu.
  */
 
-import { useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -26,7 +25,7 @@ export const ContentMenu = () => {
   if (!quickMenu.isEnabled) return null;
 
   return (
-    <div className="fixed bottom-0 left-10 z-[9999] max-w-20 min-w-14 rounded-t-md border border-ew-star-color bg-gray-300/80 text-black">
+    <div className="fixed bottom-0 left-10 z-9999 max-w-20 min-w-14 rounded-t-md border border-primary bg-background font-sans! text-foreground">
       <Accordion
         type="single"
         collapsible
@@ -34,10 +33,10 @@ export const ContentMenu = () => {
         defaultValue="item-1"
       >
         <AccordionItem value="item-1">
-          <AccordionTrigger className="flex-col-reverse items-center justify-center py-[0.25rem]">
+          <AccordionTrigger className="flex-col-reverse items-center justify-center py-1">
             <StatusIndicator />
           </AccordionTrigger>
-          <AccordionContent className="text-sm text-gray-500">
+          <AccordionContent className="text-sm">
             {location.hostname.includes("stripchat") && <MaximizeButton />}
             {location.hostname.includes("streamatemodels") && <SmCheckTerms />}
           </AccordionContent>

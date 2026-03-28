@@ -37,12 +37,7 @@ export const SmLocalTranslator = () => {
 
                   // Render the React component in the container
                   const root = createRoot(translateContainer);
-                  root.render(
-                    <TranslatedMessage
-                      message={data}
-                      bgColor="rgba(255, 0, 0, 0.1)"
-                    />,
-                  );
+                  root.render(<TranslatedMessage message={data} />);
                 }
               },
             );

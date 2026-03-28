@@ -131,6 +131,10 @@ export const MaximizeButton = () => {
     return true;
   }, [isMaximized, setIsMaximized]);
   return (
-    <MenuButton ButtonIcon={<Maximize2 />} title="Maximize" onClick={onClick} />
+    <MenuButton
+      ButtonIcon={<Maximize2 />}
+      title="Maximizar"
+      onClick={onClick}
+    />
   );
 };
