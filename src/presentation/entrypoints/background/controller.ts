@@ -57,8 +57,8 @@ export const backgroundController = {
       ? GLOBAL_STRINGS.ESTRELLAS_WEB_BASEURL.PRODUCTION
       : GLOBAL_STRINGS.ESTRELLAS_WEB_BASEURL.DEV;
     try {
-      const { version: latestVersion, link: downloadUrl } = await fetch(
-        `${baseUrl}/downloads/sctools/metadata.json`,
+      const { version: latestVersion } = await fetch(
+        `${baseUrl}/downloads/redna/models/metadata.json`,
       ).then((res) => res.json());
       const isUpdateAvailable = compareSemanticVersions(
         latestVersion,
