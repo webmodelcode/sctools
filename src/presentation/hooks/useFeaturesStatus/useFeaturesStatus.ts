@@ -111,7 +111,7 @@ export const useFeaturesStatus = (): UseFeaturesStatus => {
           url: browser.runtime.getURL("/subtitleDisplay.html" as any),
           type: "popup",
           width: 800,
-          height: 200,
+          height: 600,
         });
         if (win?.id !== undefined) {
           await speechToTranslateTabIdStorage.setItem(win.id);
