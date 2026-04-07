@@ -104,7 +104,7 @@ export const SubtitleDisplay = () => {
         onFontColorChange={handleFontColorChange}
         onClear={clearLines}
       />
-      <div className="flex flex-col items-start justify-center rounded-2xl bg-black/80 py-4">
+      <div className="flex flex-col items-start justify-center gap-2 py-4">
         {displayLines.map((line, index) => {
           const opacity = 0.3 + (0.7 * (index + 1)) / displayLines.length;
           return (

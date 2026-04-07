@@ -14,10 +14,16 @@ interface SubtitleLineProps {
  * Renders a single subtitle line with variable opacity.
  * Older lines in the history receive lower opacity values.
  */
-export const SubtitleLine = ({ text, opacity, fontSize, color }: SubtitleLineProps) => (
+export const SubtitleLine = ({
+  text,
+  opacity,
+  fontSize,
+  color,
+}: SubtitleLineProps) => (
   <p
     className={cn(
       "m-0 px-6 py-1 leading-tight font-bold drop-shadow-lg",
+      "rounded-lg bg-black/80",
       !fontSize && "text-4xl",
       !color && "text-white",
     )}
