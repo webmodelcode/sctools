@@ -33,25 +33,33 @@ export const useFeaturesStatus = (): UseFeaturesStatus => {
   const [isTranslatorEnabled, setIsTranslatorEnabled] = useState(false);
   const [isQuickMessagesEnabled, setIsQuickMessagesEnabled] = useState(false);
   const [isQuickMenuEnabled, setIsQuickMenuEnabled] = useState(false);
-  const [isSpeechToTranslateEnabled, setIsSpeechToTranslateEnabled] = useState(false);
+  const [isSpeechToTranslateEnabled, setIsSpeechToTranslateEnabled] =
+    useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
   const initFeaturesState = useCallback(async () => {
     if (isInitialized) return;
 
-    const [translator, quickMessages, quickMenu, speechToTranslate] = await Promise.all([
-      translatorStatus.getItem(),
-      quickMessagesStatus.getItem(),
-      quickMenuIsActive.getItem(),
-      speechToTranslateStatusStorage.getItem(),
-    ]);
+    const [translator, quickMessages, quickMenu, speechToTranslate] =
+      await Promise.all([
+        translatorStatus.getItem(),
+        quickMessagesStatus.getItem(),
+        quickMenuIsActive.getItem(),
+        speechToTranslateStatusStorage.getItem(),
+      ]);
 
     setIsTranslatorEnabled(translator);
     setIsQuickMessagesEnabled(quickMessages);
     setIsQuickMenuEnabled(quickMenu);
     setIsSpeechToTranslateEnabled(speechToTranslate);
     setIsInitialized(true);
-  }, [isInitialized, translatorStatus, quickMessagesStatus, quickMenuIsActive, speechToTranslateStatusStorage]);
+  }, [
+    isInitialized,
+    translatorStatus,
+    quickMessagesStatus,
+    quickMenuIsActive,
+    speechToTranslateStatusStorage,
+  ]);
 
   useEffect(() => {
     initFeaturesState();
@@ -59,7 +67,9 @@ export const useFeaturesStatus = (): UseFeaturesStatus => {
     translatorStatus.watchItem((value) => setIsTranslatorEnabled(value));
     quickMessagesStatus.watchItem((value) => setIsQuickMessagesEnabled(value));
     quickMenuIsActive.watchItem((value) => setIsQuickMenuEnabled(value));
-    speechToTranslateStatusStorage.watchItem((value) => setIsSpeechToTranslateEnabled(value));
+    speechToTranslateStatusStorage.watchItem((value) =>
+      setIsSpeechToTranslateEnabled(value),
+    );
   }, [
     initFeaturesState,
     translatorStatus,
@@ -103,7 +113,7 @@ export const useFeaturesStatus = (): UseFeaturesStatus => {
           width: 800,
           height: 200,
         });
-        if (win.id !== undefined) {
+        if (win?.id !== undefined) {
           await speechToTranslateTabIdStorage.setItem(win.id);
         }
         await speechToTranslateStatusStorage.setItem(true);
