@@ -28,6 +28,7 @@ describe("QuickMessagesMenu.tsx", () => {
       quickMessages: { isEnabled: true, toggle: vi.fn() },
       translator: { isEnabled: true, toggle: vi.fn() },
       quickMenu: { isEnabled: true, toggle: vi.fn() },
+      speechToTranslate: { isEnabled: false, toggle: vi.fn() },
       isInitialized: true,
     });
 
