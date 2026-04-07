@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { useLocalTranslatorTargetLanguage } from "~@/presentation/hooks/useLocalTranslatorTargetLanguage/useLocalTranslatorTargetLanguage";
 import { useSpeechToTranslateStatus } from "~@/presentation/hooks/useSpeechToTranslateStatus/useSpeechToTranslateStatus";
 import { useSpeechToTranslateTabId } from "~@/presentation/hooks/useSpeechToTranslateTabId/useSpeechToTranslateTabId";
+import { useSubtitleFontColor } from "~@/presentation/hooks/useSubtitleFontColor/useSubtitleFontColor";
+import { useSubtitleFontSize } from "~@/presentation/hooks/useSubtitleFontSize/useSubtitleFontSize";
+import { SubtitleControls } from "./controls/SubtitleControls";
 import { SubtitleLine } from "./SubtitleLine";
 import { SubtitleLoadingIndicator } from "./SubtitleLoadingIndicator";
 import { useSubtitleEngine } from "./useSubtitleEngine";
@@ -24,8 +27,12 @@ export const SubtitleDisplay = () => {
   const targetLanguageStorage = useLocalTranslatorTargetLanguage();
   const speechStatus = useSpeechToTranslateStatus();
   const speechTabId = useSpeechToTranslateTabId();
+  const fontSizeStorage = useSubtitleFontSize();
+  const fontColorStorage = useSubtitleFontColor();
 
   const [targetLanguage, setTargetLanguage] = useState("en");
+  const [fontSize, setFontSize] = useState(36);
+  const [fontColor, setFontColor] = useState("#ffffff");
 
   // Load target language from storage and keep it in sync.
   useEffect(() => {
@@ -33,7 +40,18 @@ export const SubtitleDisplay = () => {
     targetLanguageStorage.watchItem(setTargetLanguage);
   }, [targetLanguageStorage]);
 
-  const { lines, isTranslating, error, stop } =
+  // Load font preferences from storage and keep them in sync.
+  useEffect(() => {
+    fontSizeStorage.getItem().then(setFontSize);
+    fontSizeStorage.watchItem(setFontSize);
+  }, [fontSizeStorage]);
+
+  useEffect(() => {
+    fontColorStorage.getItem().then(setFontColor);
+    fontColorStorage.watchItem(setFontColor);
+  }, [fontColorStorage]);
+
+  const { lines, isTranslating, error, stop, clearLines } =
     useSubtitleEngine(targetLanguage);
 
   // If the feature is toggled off from the popup, stop recognition and close the tab.
@@ -57,6 +75,16 @@ export const SubtitleDisplay = () => {
     return () => window.removeEventListener("beforeunload", handleUnload);
   }, [speechStatus, speechTabId]);
 
+  const handleFontSizeChange = (size: number) => {
+    setFontSize(size);
+    fontSizeStorage.setItem(size);
+  };
+
+  const handleFontColorChange = (color: string) => {
+    setFontColor(color);
+    fontColorStorage.setItem(color);
+  };
+
   const displayLines = lines.slice(-MAX_DISPLAY_LINES);
 
   if (error) {
@@ -68,18 +96,33 @@ export const SubtitleDisplay = () => {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col justify-end bg-green-400 pb-8">
-      {displayLines.map((line, index) => {
-        const opacity = 0.3 + (0.7 * (index + 1)) / displayLines.length;
-        return (
-          <SubtitleLine
-            key={`${index}-${line}`}
-            text={line}
-            opacity={opacity}
-          />
-        );
-      })}
-      {isTranslating && <SubtitleLoadingIndicator />}
+    <div className="relative flex h-screen w-screen flex-col justify-end bg-green-400 pb-8">
+      <SubtitleControls
+        fontSize={fontSize}
+        onFontSizeChange={handleFontSizeChange}
+        fontColor={fontColor}
+        onFontColorChange={handleFontColorChange}
+        onClear={clearLines}
+      />
+      <div className="flex flex-col items-start justify-center rounded-2xl bg-black/80 py-4">
+        {displayLines.map((line, index) => {
+          const opacity = 0.3 + (0.7 * (index + 1)) / displayLines.length;
+          return (
+            <SubtitleLine
+              key={`${index}-${line}`}
+              text={line}
+              opacity={opacity}
+              fontSize={fontSize}
+              color={fontColor}
+            />
+          );
+        })}
+        {isTranslating ? (
+          <SubtitleLoadingIndicator />
+        ) : (
+          <div className="h-10" />
+        )}
+      </div>
     </div>
   );
 };

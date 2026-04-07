@@ -7,6 +7,7 @@ export interface UseTranslationStreamResult {
   isTranslating: boolean;
   setIsTranslating: (value: boolean) => void;
   handleTranscript: (transcript: string, isFinal: boolean) => Promise<void>;
+  clearLines: () => void;
 }
 
 /**
@@ -63,5 +64,7 @@ export const useTranslationStream = (
     [translatorRef],
   );
 
-  return { lines, isTranslating, setIsTranslating, handleTranscript };
+  const clearLines = useCallback(() => setLines([]), []);
+
+  return { lines, isTranslating, setIsTranslating, handleTranscript, clearLines };
 };

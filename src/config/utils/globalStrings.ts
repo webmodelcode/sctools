@@ -26,6 +26,10 @@ export const GLOBAL_STRINGS = {
     SPEECH_TO_TRANSLATE_IS_ACTIVE: "speechToTranslateIsActive",
     /** Key for storing the tab ID of the subtitle display page in local storage */
     SPEECH_TO_TRANSLATE_TAB_ID: "speechToTranslateTabId",
+    /** Key for storing the subtitle display font size in local storage */
+    SUBTITLE_FONT_SIZE: "subtitleFontSize",
+    /** Key for storing the subtitle display font color in local storage */
+    SUBTITLE_FONT_COLOR: "subtitleFontColor",
   },
   SPEECH_TO_TRANSLATE_CONFIG: {
     /** Source language for speech recognition — always Spanish */

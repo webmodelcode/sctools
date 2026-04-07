@@ -16,6 +16,8 @@ export interface SubtitleEngineResult {
   error: string | null;
   /** Explicitly stop recognition (e.g. user toggled feature off) */
   stop: () => void;
+  /** Clear all accumulated subtitle lines */
+  clearLines: () => void;
 }
 
 /**
@@ -36,7 +38,7 @@ export const useSubtitleEngine = (
     targetLanguage,
   );
 
-  const { lines, isTranslating, setIsTranslating, handleTranscript } =
+  const { lines, isTranslating, setIsTranslating, handleTranscript, clearLines } =
     useTranslationStream(translatorRef);
 
   const onSpeechStart = useCallback(
@@ -55,5 +57,6 @@ export const useSubtitleEngine = (
     isTranslating,
     error: translatorError ?? recognitionError,
     stop,
+    clearLines,
   };
 };
