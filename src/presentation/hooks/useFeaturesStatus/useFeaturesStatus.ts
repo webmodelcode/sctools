@@ -95,20 +95,23 @@ export const useFeaturesStatus = (): UseFeaturesStatus => {
   const toggleSpeechToTranslate = useCallback(
     async (checked: boolean) => {
       if (checked) {
-        const tab = await browser.tabs.create({
+        const win = await browser.windows.create({
           // WXT path types are regenerated on build; cast needed for unlisted pages
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           url: browser.runtime.getURL("/subtitleDisplay.html" as any),
+          type: "popup",
+          width: 800,
+          height: 200,
         });
-        if (tab.id !== undefined) {
-          await speechToTranslateTabIdStorage.setItem(tab.id);
+        if (win.id !== undefined) {
+          await speechToTranslateTabIdStorage.setItem(win.id);
         }
         await speechToTranslateStatusStorage.setItem(true);
         setIsSpeechToTranslateEnabled(true);
       } else {
-        const tabId = await speechToTranslateTabIdStorage.getItem();
-        if (tabId !== null) {
-          await browser.tabs.remove(tabId);
+        const windowId = await speechToTranslateTabIdStorage.getItem();
+        if (windowId !== null) {
+          await browser.windows.remove(windowId);
         }
         await speechToTranslateStatusStorage.setItem(false);
         await speechToTranslateTabIdStorage.setItem(null);
