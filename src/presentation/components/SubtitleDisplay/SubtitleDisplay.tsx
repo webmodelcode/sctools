@@ -31,7 +31,7 @@ export const SubtitleDisplay = () => {
   const fontColorStorage = useSubtitleFontColor();
 
   const [targetLanguage, setTargetLanguage] = useState("en");
-  const [fontSize, setFontSize] = useState(36);
+  const [fontSize, setFontSize] = useState(24);
   const [fontColor, setFontColor] = useState("#ffffff");
 
   // Load target language from storage and keep it in sync.
