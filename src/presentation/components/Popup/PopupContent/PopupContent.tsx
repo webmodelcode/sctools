@@ -21,7 +21,7 @@ import {
 import { ExtensionToggle } from "../ExtensionToggle/ExtensionToggle";
 
 export const PopupContent = () => {
-  const { translator, quickMessages, quickMenu } = useFeaturesStatus();
+  const { translator, quickMessages, quickMenu, speechToTranslate } = useFeaturesStatus();
 
   return (
     <CardContent className="px-4">
@@ -68,6 +68,13 @@ export const PopupContent = () => {
               orientation="horizontal"
               featureName="Menú de Acceso Rápido"
               tooltipText="Tendrás acceso a funciones especiales dentro de cada plataforma"
+            />
+            <ExtensionToggle
+              isEnabled={speechToTranslate.isEnabled}
+              onToggle={speechToTranslate.toggle}
+              orientation="horizontal"
+              featureName="Speech to Translate"
+              tooltipText="Traduce tu voz en tiempo real y muestra subtítulos para capturar en OBS"
             />
           </div>
         </TabsContent>
