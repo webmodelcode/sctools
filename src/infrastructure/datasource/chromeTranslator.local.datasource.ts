@@ -19,7 +19,7 @@ interface ILocalTranslator {
  */
 
 export const localTranslator = {
-  isAvailable: () => "Translator" in self,
+  isAvailable: () => "Translator" in globalThis,
   create: async ({
     sourceLanguage,
     targetLanguage,
