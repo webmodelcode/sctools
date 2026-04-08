@@ -14,7 +14,7 @@ interface IUseSubtitleFontSize {
 const subtitleFontSize = storage.defineItem<number>(
   `local:${GLOBAL_STRINGS.STORAGE_KEYS.SUBTITLE_FONT_SIZE}`,
   {
-    fallback: 36,
+    fallback: 24,
   },
 );
 
