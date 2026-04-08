@@ -22,6 +22,20 @@ export const GLOBAL_STRINGS = {
     TRANSLATOR_IS_ACTIVE: "translatorIsActive",
     /** Key for storing last shown timestamp of update notification in session storage */
     UPDATE_NOTIFICATION_LAST_SHOWN: "updateNotificationLastShown",
+    /** Key for storing speech-to-translate active state in local storage */
+    SPEECH_TO_TRANSLATE_IS_ACTIVE: "speechToTranslateIsActive",
+    /** Key for storing the tab ID of the subtitle display page in local storage */
+    SPEECH_TO_TRANSLATE_TAB_ID: "speechToTranslateTabId",
+    /** Key for storing the subtitle display font size in local storage */
+    SUBTITLE_FONT_SIZE: "subtitleFontSize",
+    /** Key for storing the subtitle display font color in local storage */
+    SUBTITLE_FONT_COLOR: "subtitleFontColor",
+    /** Key for storing the subtitle display background color in local storage */
+    SUBTITLE_BG_COLOR: "subtitleBgColor",
+  },
+  SPEECH_TO_TRANSLATE_CONFIG: {
+    /** Source language for speech recognition — always Spanish */
+    SOURCE_LANGUAGE: "es",
   },
   ERROR_MESSAGES: {
     /** Error message for when StripChat elements are not ready */

@@ -18,6 +18,16 @@ const mockQuickMenu = {
   setItem: vi.fn(),
   watchItem: vi.fn(),
 };
+const mockSpeechToTranslateStatus = {
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  watchItem: vi.fn(),
+};
+const mockSpeechToTranslateTabId = {
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  watchItem: vi.fn(),
+};
 
 vi.mock("../useTranslatorStatus/useTranslatorStatus", () => ({
   useTranslatorStatus: () => mockTranslator,
@@ -31,6 +41,14 @@ vi.mock("../useQuickMenuIsActive/useQuickMenuIsActive", () => ({
   useQuickMenuIsActive: () => mockQuickMenu,
 }));
 
+vi.mock("../useSpeechToTranslateStatus/useSpeechToTranslateStatus", () => ({
+  useSpeechToTranslateStatus: () => mockSpeechToTranslateStatus,
+}));
+
+vi.mock("../useSpeechToTranslateTabId/useSpeechToTranslateTabId", () => ({
+  useSpeechToTranslateTabId: () => mockSpeechToTranslateTabId,
+}));
+
 describe("useFeaturesStatus Hook", () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -39,6 +57,8 @@ describe("useFeaturesStatus Hook", () => {
     mockTranslator.getItem.mockResolvedValue(false);
     mockQuickMessages.getItem.mockResolvedValue(false);
     mockQuickMenu.getItem.mockResolvedValue(false);
+    mockSpeechToTranslateStatus.getItem.mockResolvedValue(false);
+    mockSpeechToTranslateTabId.getItem.mockResolvedValue(null);
   });
 
   it("should initialize with values from storage", async () => {

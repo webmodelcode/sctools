@@ -64,6 +64,7 @@ describe("InputLocalTranslator", () => {
       translator: { isEnabled: true, toggle: vi.fn() },
       quickMessages: { isEnabled: true, toggle: vi.fn() },
       quickMenu: { isEnabled: true, toggle: vi.fn() },
+      speechToTranslate: { isEnabled: false, toggle: vi.fn() },
       isInitialized: true,
     });
   });
@@ -74,6 +75,7 @@ describe("InputLocalTranslator", () => {
         translator: { isEnabled: false, toggle: vi.fn() },
         quickMessages: { isEnabled: true, toggle: vi.fn() },
         quickMenu: { isEnabled: true, toggle: vi.fn() },
+        speechToTranslate: { isEnabled: false, toggle: vi.fn() },
         isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
@@ -136,6 +138,7 @@ describe("InputLocalTranslator", () => {
         translator: { isEnabled: true, toggle: vi.fn() },
         quickMessages: { isEnabled: true, toggle: vi.fn() },
         quickMenu: { isEnabled: true, toggle: vi.fn() },
+        speechToTranslate: { isEnabled: false, toggle: vi.fn() },
         isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
@@ -186,6 +189,7 @@ describe("InputLocalTranslator", () => {
         translator: { isEnabled: true, toggle: vi.fn() },
         quickMessages: { isEnabled: true, toggle: vi.fn() },
         quickMenu: { isEnabled: true, toggle: vi.fn() },
+        speechToTranslate: { isEnabled: false, toggle: vi.fn() },
         isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
@@ -232,6 +236,7 @@ describe("InputLocalTranslator", () => {
         translator: { isEnabled: true, toggle: vi.fn() },
         quickMessages: { isEnabled: true, toggle: vi.fn() },
         quickMenu: { isEnabled: true, toggle: vi.fn() },
+        speechToTranslate: { isEnabled: false, toggle: vi.fn() },
         isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
@@ -254,6 +259,7 @@ describe("InputLocalTranslator", () => {
         translator: { isEnabled: true, toggle: vi.fn() },
         quickMessages: { isEnabled: true, toggle: vi.fn() },
         quickMenu: { isEnabled: true, toggle: vi.fn() },
+        speechToTranslate: { isEnabled: false, toggle: vi.fn() },
         isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
@@ -279,6 +285,7 @@ describe("InputLocalTranslator", () => {
         translator: { isEnabled: true, toggle: vi.fn() },
         quickMessages: { isEnabled: true, toggle: vi.fn() },
         quickMenu: { isEnabled: true, toggle: vi.fn() },
+        speechToTranslate: { isEnabled: false, toggle: vi.fn() },
         isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
@@ -308,6 +315,7 @@ describe("InputLocalTranslator", () => {
         translator: { isEnabled: true, toggle: vi.fn() },
         quickMessages: { isEnabled: true, toggle: vi.fn() },
         quickMenu: { isEnabled: true, toggle: vi.fn() },
+        speechToTranslate: { isEnabled: false, toggle: vi.fn() },
         isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
@@ -334,6 +342,7 @@ describe("InputLocalTranslator", () => {
         translator: { isEnabled: true, toggle: vi.fn() },
         quickMessages: { isEnabled: true, toggle: vi.fn() },
         quickMenu: { isEnabled: true, toggle: vi.fn() },
+        speechToTranslate: { isEnabled: false, toggle: vi.fn() },
         isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({
@@ -374,6 +383,7 @@ describe("InputLocalTranslator", () => {
         translator: { isEnabled: true, toggle: vi.fn() },
         quickMessages: { isEnabled: true, toggle: vi.fn() },
         quickMenu: { isEnabled: true, toggle: vi.fn() },
+        speechToTranslate: { isEnabled: false, toggle: vi.fn() },
         isInitialized: true,
       });
       mockUseFocusedElement.mockReturnValue({

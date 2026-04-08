@@ -19,6 +19,7 @@ vi.mock("~@/presentation/hooks/useFeaturesStatus/useFeaturesStatus", () => ({
     translator: { isEnabled: true, toggle: vi.fn() },
     quickMessages: { isEnabled: true, toggle: vi.fn() },
     quickMenu: { isEnabled: true, toggle: vi.fn() },
+    speechToTranslate: { isEnabled: false, toggle: vi.fn() },
     isInitialized: true,
   })),
 }));
@@ -108,6 +109,7 @@ describe("ChaturLocalTranslator", () => {
       translator: { isEnabled: true, toggle: vi.fn() },
       quickMessages: { isEnabled: true, toggle: vi.fn() },
       quickMenu: { isEnabled: true, toggle: vi.fn() },
+      speechToTranslate: { isEnabled: false, toggle: vi.fn() },
       isInitialized: true,
     });
   });
@@ -152,6 +154,7 @@ describe("ChaturLocalTranslator", () => {
         translator: { isEnabled: true, toggle: vi.fn() },
         quickMessages: { isEnabled: true, toggle: vi.fn() },
         quickMenu: { isEnabled: true, toggle: vi.fn() },
+        speechToTranslate: { isEnabled: false, toggle: vi.fn() },
         isInitialized: true,
       });
 
@@ -195,6 +198,7 @@ describe("ChaturLocalTranslator", () => {
         translator: { isEnabled: false, toggle: vi.fn() },
         quickMessages: { isEnabled: true, toggle: vi.fn() },
         quickMenu: { isEnabled: true, toggle: vi.fn() },
+        speechToTranslate: { isEnabled: false, toggle: vi.fn() },
         isInitialized: true,
       });
 
@@ -213,6 +217,7 @@ describe("ChaturLocalTranslator", () => {
         translator: { isEnabled: true, toggle: vi.fn() },
         quickMessages: { isEnabled: true, toggle: vi.fn() },
         quickMenu: { isEnabled: true, toggle: vi.fn() },
+        speechToTranslate: { isEnabled: false, toggle: vi.fn() },
         isInitialized: true,
       });
 
