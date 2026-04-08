@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocalTranslatorTargetLanguage } from "~@/presentation/hooks/useLocalTranslatorTargetLanguage/useLocalTranslatorTargetLanguage";
 import { useSpeechToTranslateStatus } from "~@/presentation/hooks/useSpeechToTranslateStatus/useSpeechToTranslateStatus";
 import { useSpeechToTranslateTabId } from "~@/presentation/hooks/useSpeechToTranslateTabId/useSpeechToTranslateTabId";
+import { useSubtitleBgColor } from "~@/presentation/hooks/useSubtitleBgColor/useSubtitleBgColor";
 import { useSubtitleFontColor } from "~@/presentation/hooks/useSubtitleFontColor/useSubtitleFontColor";
 import { useSubtitleFontSize } from "~@/presentation/hooks/useSubtitleFontSize/useSubtitleFontSize";
 import { SubtitleControls } from "./controls/SubtitleControls";
@@ -30,10 +31,12 @@ export const SubtitleDisplay = () => {
   const speechTabId = useSpeechToTranslateTabId();
   const fontSizeStorage = useSubtitleFontSize();
   const fontColorStorage = useSubtitleFontColor();
+  const bgColorStorage = useSubtitleBgColor();
 
   const [targetLanguage, setTargetLanguage] = useState("en");
   const [fontSize, setFontSize] = useState(24);
   const [fontColor, setFontColor] = useState("#ffffff");
+  const [bgColor, setBgColor] = useState("#000000");
 
   // Load target language from storage and keep it in sync.
   useEffect(() => {
@@ -51,6 +54,11 @@ export const SubtitleDisplay = () => {
     fontColorStorage.getItem().then(setFontColor);
     fontColorStorage.watchItem(setFontColor);
   }, [fontColorStorage]);
+
+  useEffect(() => {
+    bgColorStorage.getItem().then(setBgColor);
+    bgColorStorage.watchItem(setBgColor);
+  }, [bgColorStorage]);
 
   const { lines, isTranslating, error, translatorError, retry, stop, clearLines } =
     useSubtitleEngine(targetLanguage);
@@ -86,6 +94,11 @@ export const SubtitleDisplay = () => {
     fontColorStorage.setItem(color);
   };
 
+  const handleBgColorChange = (color: string) => {
+    setBgColor(color);
+    bgColorStorage.setItem(color);
+  };
+
   const displayLines = lines.slice(-MAX_DISPLAY_LINES);
 
   if (translatorError?.kind === "user-gesture-required") {
@@ -107,6 +120,8 @@ export const SubtitleDisplay = () => {
         onFontSizeChange={handleFontSizeChange}
         fontColor={fontColor}
         onFontColorChange={handleFontColorChange}
+        bgColor={bgColor}
+        onBgColorChange={handleBgColorChange}
         onClear={clearLines}
       />
       <div className="flex flex-col items-start justify-center gap-2 py-4">
@@ -119,6 +134,7 @@ export const SubtitleDisplay = () => {
               opacity={opacity}
               fontSize={fontSize}
               color={fontColor}
+              bgColor={bgColor}
             />
           );
         })}

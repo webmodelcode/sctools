@@ -30,6 +30,8 @@ export const GLOBAL_STRINGS = {
     SUBTITLE_FONT_SIZE: "subtitleFontSize",
     /** Key for storing the subtitle display font color in local storage */
     SUBTITLE_FONT_COLOR: "subtitleFontColor",
+    /** Key for storing the subtitle display background color in local storage */
+    SUBTITLE_BG_COLOR: "subtitleBgColor",
   },
   SPEECH_TO_TRANSLATE_CONFIG: {
     /** Source language for speech recognition — always Spanish */
