@@ -9,6 +9,7 @@ import { useSubtitleFontSize } from "~@/presentation/hooks/useSubtitleFontSize/u
 import { SubtitleControls } from "./controls/SubtitleControls";
 import { SubtitleLine } from "./SubtitleLine";
 import { SubtitleLoadingIndicator } from "./SubtitleLoadingIndicator";
+import { TranslatorDownloadPrompt } from "./TranslatorDownloadPrompt";
 import { useSubtitleEngine } from "./useSubtitleEngine";
 
 const MAX_DISPLAY_LINES = 8;
@@ -51,7 +52,7 @@ export const SubtitleDisplay = () => {
     fontColorStorage.watchItem(setFontColor);
   }, [fontColorStorage]);
 
-  const { lines, isTranslating, error, stop, clearLines } =
+  const { lines, isTranslating, error, translatorError, retry, stop, clearLines } =
     useSubtitleEngine(targetLanguage);
 
   // If the feature is toggled off from the popup, stop recognition and close the tab.
@@ -62,7 +63,7 @@ export const SubtitleDisplay = () => {
         window.close();
       }
     });
-  }, [speechStatus, stop]);
+  }, [speechStatus, stop, error]);
 
   // On tab close (manual or programmatic), clean up storage so the popup reflects
   // the correct state even if the tab was closed outside of the toggle flow.
@@ -86,6 +87,10 @@ export const SubtitleDisplay = () => {
   };
 
   const displayLines = lines.slice(-MAX_DISPLAY_LINES);
+
+  if (translatorError?.kind === "user-gesture-required") {
+    return <TranslatorDownloadPrompt onRetry={retry} />;
+  }
 
   if (error) {
     return (

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { GLOBAL_STRINGS } from "~@/config/utils/globalStrings";
-import { useTranslatorInstance } from "./hooks/useTranslatorInstance";
+import { useTranslatorInstance, type TranslatorError } from "./hooks/useTranslatorInstance";
 import { useTranslationStream } from "./hooks/useTranslationStream";
 import { useSegmentedRecognition } from "./hooks/useSegmentedRecognition";
 
@@ -12,8 +12,12 @@ export interface SubtitleEngineResult {
   lines: string[];
   /** True while a speech or translation stream is in progress */
   isTranslating: boolean;
-  /** Non-null when a recoverable error has occurred */
+  /** Non-null when a non-recoverable error has occurred (display string) */
   error: string | null;
+  /** Structured translator error — check kind for recoverable cases */
+  translatorError: TranslatorError | null;
+  /** Retry translator creation within a user gesture context */
+  retry: (onProgress?: (loaded: number) => void) => Promise<void>;
   /** Explicitly stop recognition (e.g. user toggled feature off) */
   stop: () => void;
   /** Clear all accumulated subtitle lines */
@@ -33,7 +37,7 @@ export interface SubtitleEngineResult {
 export const useSubtitleEngine = (
   targetLanguage: string,
 ): SubtitleEngineResult => {
-  const { translatorRef, error: translatorError } = useTranslatorInstance(
+  const { translatorRef, error: translatorError, retry } = useTranslatorInstance(
     SOURCE_LANGUAGE,
     targetLanguage,
   );
@@ -52,10 +56,18 @@ export const useSubtitleEngine = (
     onResult: handleTranscript,
   });
 
+  // "user-gesture-required" is handled by TranslatorDownloadPrompt — don't surface as a display error
+  const displayError =
+    translatorError?.kind === "user-gesture-required"
+      ? recognitionError
+      : (translatorError?.message ?? recognitionError);
+
   return {
     lines,
     isTranslating,
-    error: translatorError ?? recognitionError,
+    error: displayError,
+    translatorError,
+    retry,
     stop,
     clearLines,
   };
