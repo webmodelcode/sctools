@@ -5,6 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   manifest: {
     permissions: ["activeTab", "tabs", "storage", "scripting"],
+    host_permissions: ["https://www.estrellaswebcam.com/*"],
     name: "Redna Models",
     description:
       "Incorporamos herramientas para mejorar la experiencia de trabajo de los modelos de EW.",
