@@ -8,6 +8,8 @@ import { useSubtitleBgColor } from "~@/presentation/hooks/useSubtitleBgColor/use
 import { useSubtitleFontColor } from "~@/presentation/hooks/useSubtitleFontColor/useSubtitleFontColor";
 import { useSubtitleFontSize } from "~@/presentation/hooks/useSubtitleFontSize/useSubtitleFontSize";
 import { SubtitleControls } from "./controls/SubtitleControls";
+import { SUBTITLE_STRINGS } from "./constants";
+import { HelpLink } from "./HelpLink";
 import { SubtitleLine } from "./SubtitleLine";
 import { SubtitleLoadingIndicator } from "./SubtitleLoadingIndicator";
 import { TranslatorDownloadPrompt } from "./TranslatorDownloadPrompt";
@@ -123,6 +125,11 @@ export const SubtitleDisplay = () => {
         bgColor={bgColor}
         onBgColorChange={handleBgColorChange}
         onClear={clearLines}
+      />
+      <HelpLink
+        href={SUBTITLE_STRINGS.FREEZE_HELP_URL}
+        label={SUBTITLE_STRINGS.FREEZE_HELP_LABEL}
+        className="absolute top-1 left-1 z-50"
       />
       <div className="flex flex-col items-start justify-center gap-2 py-4">
         {displayLines.map((line, index) => {
