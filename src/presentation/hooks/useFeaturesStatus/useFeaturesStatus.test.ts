@@ -28,6 +28,11 @@ const mockSpeechToTranslateTabId = {
   setItem: vi.fn(),
   watchItem: vi.fn(),
 };
+const mockSelectionTranslator = {
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  watchItem: vi.fn(),
+};
 
 vi.mock("../useTranslatorStatus/useTranslatorStatus", () => ({
   useTranslatorStatus: () => mockTranslator,
@@ -49,6 +54,10 @@ vi.mock("../useSpeechToTranslateTabId/useSpeechToTranslateTabId", () => ({
   useSpeechToTranslateTabId: () => mockSpeechToTranslateTabId,
 }));
 
+vi.mock("../useSelectionTranslatorStatus/useSelectionTranslatorStatus", () => ({
+  useSelectionTranslatorStatus: () => mockSelectionTranslator,
+}));
+
 describe("useFeaturesStatus Hook", () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -59,6 +68,7 @@ describe("useFeaturesStatus Hook", () => {
     mockQuickMenu.getItem.mockResolvedValue(false);
     mockSpeechToTranslateStatus.getItem.mockResolvedValue(false);
     mockSpeechToTranslateTabId.getItem.mockResolvedValue(null);
+    mockSelectionTranslator.getItem.mockResolvedValue(false);
   });
 
   it("should initialize with values from storage", async () => {
@@ -110,6 +120,27 @@ describe("useFeaturesStatus Hook", () => {
 
     expect(mockQuickMenu.setItem).toHaveBeenCalledWith(true);
     expect(result.current.quickMenu.isEnabled).toBe(true);
+  });
+
+  it("should initialize selectionTranslator from storage", async () => {
+    mockSelectionTranslator.getItem.mockResolvedValue(true);
+    const { result } = renderHook(() => useFeaturesStatus());
+    await waitFor(() => {
+      expect(result.current.isInitialized).toBe(true);
+      expect(result.current.selectionTranslator.isEnabled).toBe(true);
+    });
+  });
+
+  it("should toggle selectionTranslator status", async () => {
+    const { result } = renderHook(() => useFeaturesStatus());
+    await waitFor(() => expect(result.current.isInitialized).toBe(true));
+
+    await act(async () => {
+      await result.current.selectionTranslator.toggle(true);
+    });
+
+    expect(mockSelectionTranslator.setItem).toHaveBeenCalledWith(true);
+    expect(result.current.selectionTranslator.isEnabled).toBe(true);
   });
 
   it("should update state when watched value changes", async () => {

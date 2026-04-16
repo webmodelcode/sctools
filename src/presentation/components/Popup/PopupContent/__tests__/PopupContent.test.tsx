@@ -10,6 +10,7 @@ vi.mock("~@/presentation/hooks/useFeaturesStatus/useFeaturesStatus", () => ({
     quickMessages: { isEnabled: true, toggle: vi.fn() },
     quickMenu: { isEnabled: true, toggle: vi.fn() },
     speechToTranslate: { isEnabled: false, toggle: vi.fn() },
+    selectionTranslator: { isEnabled: true, toggle: vi.fn() },
     isInitialized: true,
   }),
 }));
@@ -30,8 +31,8 @@ vi.mock("../../QuickMessageOperations/QuickMessageOperations", () => ({
 }));
 
 vi.mock("../../ExtensionToggle/ExtensionToggle", () => ({
-  ExtensionToggle: () => (
-    <div data-testid="extension-toggle">ExtensionToggle</div>
+  ExtensionToggle: ({ featureName }: { featureName: string }) => (
+    <div data-testid="extension-toggle">{featureName}</div>
   ),
 }));
 
@@ -67,6 +68,11 @@ describe("PopupContent Component", () => {
     // QuickMessages tab is default
     expect(screen.getByTestId("quick-message-operations")).toBeInTheDocument();
     expect(screen.getByTestId("quick-messages-list")).toBeInTheDocument();
+  });
+
+  it("should render Traductor de Selección toggle in features tab", () => {
+    render(<PopupContent />);
+    expect(screen.getByText("Traductor de Selección")).toBeInTheDocument();
   });
 
   it("should have correct layout structure for QuickMessages tab", () => {

@@ -231,8 +231,8 @@ CONFIG-001
 | UI-003    | Hook `useSelectionTranslation`                     | ✅ done | src/presentation/components/SelectionLocalTranslator/hooks/useSelectionTranslation.ts | —     |
 | UI-004    | Componente `SelectionBubble`                       | ✅ done | src/presentation/components/SelectionLocalTranslator/SelectionBubble/SelectionBubble.tsx | —     |
 | UI-005    | Componente `SelectionTooltip`                      | ✅ done | src/presentation/components/SelectionLocalTranslator/SelectionTooltip/SelectionTooltip.tsx | —     |
-| UI-006    | Componente `SelectionLocalTranslator` + entrypoint | ⬜ pendiente | —           | —     |
-| UI-007    | `selectionTranslator` en `useFeaturesStatus`       | ⬜ pendiente | —           | —     |
-| UI-008    | `ExtensionToggle` en `PopupContent`                | ⬜ pendiente | —           | —     |
+| UI-006    | Componente `SelectionLocalTranslator` + entrypoint | ✅ done | src/presentation/components/SelectionLocalTranslator/SelectionLocalTranslator.tsx | —     |
+| UI-007    | `selectionTranslator` en `useFeaturesStatus`       | ✅ done | src/presentation/hooks/useFeaturesStatus/useFeaturesStatus.ts | —     |
+| UI-008    | `ExtensionToggle` en `PopupContent`                | ✅ done | src/presentation/components/Popup/PopupContent/PopupContent.tsx | —     |
 
 **Leyenda:** ⬜ pendiente | 🔄 en progreso | ✅ done | 🚫 bloqueado | ⏭️ descartado
