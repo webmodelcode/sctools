@@ -87,6 +87,7 @@ describe("backgroundController", () => {
       expect(typeof backgroundController.handleChatMessage).toBe("function");
       expect(typeof backgroundController.handleInputMessage).toBe("function");
       expect(typeof backgroundController.handleCheckExtUpload).toBe("function");
+      expect(typeof backgroundController.handleSelectionMessage).toBe("function");
     });
 
     it("should be a valid controller object", () => {
@@ -204,6 +205,93 @@ describe("backgroundController", () => {
         sourceLanguage: "es",
         targetLanguage: "fr",
       });
+    });
+  });
+
+  describe("handleSelectionMessage", () => {
+    it("should return undefined when translator is not available", async () => {
+      vi.mocked(localTranslator.isAvailable).mockReturnValue(false);
+      vi.mocked(localLanguageDetector.isAvailable).mockReturnValue(true);
+
+      const result = await backgroundController.handleSelectionMessage(
+        "Hello world",
+        "es",
+      );
+
+      expect(result).toBeUndefined();
+    });
+
+    it("should return undefined when language detector is not available", async () => {
+      vi.mocked(localTranslator.isAvailable).mockReturnValue(true);
+      vi.mocked(localLanguageDetector.isAvailable).mockReturnValue(false);
+
+      const result = await backgroundController.handleSelectionMessage(
+        "Hello world",
+        "es",
+      );
+
+      expect(result).toBeUndefined();
+    });
+
+    it("should translate text and return translatedText with sourceLanguage", async () => {
+      vi.mocked(localTranslator.isAvailable).mockReturnValue(true);
+      vi.mocked(localLanguageDetector.isAvailable).mockReturnValue(true);
+      vi.mocked(localLanguageDetector.detectLanguage).mockResolvedValue("en");
+
+      const result = await backgroundController.handleSelectionMessage(
+        "Hello world",
+        "es",
+      );
+
+      expect(result).toEqual({
+        translatedText: "translated: Hello world",
+        sourceLanguage: "en",
+      });
+      expect(localTranslator.create).toHaveBeenCalledWith({
+        sourceLanguage: "en",
+        targetLanguage: "es",
+      });
+    });
+
+    it("should not block when source language equals target language (AC-05)", async () => {
+      vi.mocked(localTranslator.isAvailable).mockReturnValue(true);
+      vi.mocked(localLanguageDetector.isAvailable).mockReturnValue(true);
+      vi.mocked(localLanguageDetector.detectLanguage).mockResolvedValue("es");
+
+      const result = await backgroundController.handleSelectionMessage(
+        "Hola mundo",
+        "es",
+      );
+
+      expect(result).toEqual({
+        translatedText: "translated: Hola mundo",
+        sourceLanguage: "es",
+      });
+      expect(localTranslator.create).toHaveBeenCalledWith({
+        sourceLanguage: "es",
+        targetLanguage: "es",
+      });
+    });
+
+    it("should return undefined and log error on exception", async () => {
+      vi.mocked(localTranslator.isAvailable).mockReturnValue(true);
+      vi.mocked(localLanguageDetector.isAvailable).mockReturnValue(true);
+      vi.mocked(localLanguageDetector.detectLanguage).mockRejectedValue(
+        new Error("Detection failed"),
+      );
+
+      devConsole.error = vi.fn();
+
+      const result = await backgroundController.handleSelectionMessage(
+        "Hello world",
+        "es",
+      );
+
+      expect(result).toBeUndefined();
+      expect(devConsole.error).toHaveBeenCalledWith(
+        "Error translating selection:",
+        expect.any(Error),
+      );
     });
   });
 
