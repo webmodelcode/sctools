@@ -52,20 +52,14 @@ export const useTextSelection = (): UseTextSelectionReturn => {
       setSelection({ text, rect });
     };
 
-    const handleScroll = () => {
-      setSelection(null);
-    };
-
     document.addEventListener("mousedown", handleMouseDown);
     document.addEventListener("mouseup", handleMouseUp);
     document.addEventListener("selectionchange", handleSelectionChange);
-    document.addEventListener("scroll", handleScroll, true);
 
     return () => {
       document.removeEventListener("mousedown", handleMouseDown);
       document.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("selectionchange", handleSelectionChange);
-      document.removeEventListener("scroll", handleScroll, true);
     };
   }, []);
 

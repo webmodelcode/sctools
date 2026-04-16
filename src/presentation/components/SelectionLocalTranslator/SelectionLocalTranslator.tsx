@@ -63,9 +63,9 @@ export const SelectionLocalTranslator = () => {
       {isTooltipOpen && selection && (
         <div
           style={{
-            position: "fixed",
-            top: `${selection.rect.bottom + 8}px`,
-            left: `${selection.rect.left}px`,
+            position: "absolute",
+            top: `${selection.rect.bottom + window.scrollY + 8}px`,
+            left: `${selection.rect.left + window.scrollX}px`,
             zIndex: 1000000,
           }}
         >

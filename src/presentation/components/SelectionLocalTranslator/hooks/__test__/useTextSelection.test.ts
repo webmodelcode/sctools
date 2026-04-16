@@ -28,10 +28,6 @@ const triggerSelectionChange = () => {
   document.dispatchEvent(new Event("selectionchange"));
 };
 
-const triggerScroll = () => {
-  document.dispatchEvent(new Event("scroll", { bubbles: true }));
-};
-
 describe("useTextSelection", () => {
   beforeEach(() => {
     vi.spyOn(document, "getSelection").mockReturnValue(
@@ -100,7 +96,7 @@ describe("useTextSelection", () => {
     expect(result.current.selection).toBeNull();
   });
 
-  it("should clear selection on scroll", () => {
+  it("should NOT clear selection on scroll", () => {
     mockSelection.toString.mockReturnValue("hello world");
 
     const { result } = renderHook(() => useTextSelection());
@@ -112,10 +108,10 @@ describe("useTextSelection", () => {
     expect(result.current.selection).not.toBeNull();
 
     act(() => {
-      triggerScroll();
+      document.dispatchEvent(new Event("scroll", { bubbles: true }));
     });
 
-    expect(result.current.selection).toBeNull();
+    expect(result.current.selection).not.toBeNull();
   });
 
   it("clearSelection sets selection to null", () => {
@@ -172,9 +168,12 @@ describe("useTextSelection", () => {
       expect.any(Function),
     );
     expect(removeEventListenerSpy).toHaveBeenCalledWith(
-      "scroll",
+      "mousedown",
       expect.any(Function),
-      true,
+    );
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+      "mouseup",
+      expect.any(Function),
     );
   });
 });
