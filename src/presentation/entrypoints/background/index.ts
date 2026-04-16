@@ -28,6 +28,15 @@ export default defineBackground(() => {
           sendResponse(result);
         })();
         break;
+      case GLOBAL_STRINGS.BG_MESSAGE_TYPE.SELECTION_MESSAGE:
+        (async () => {
+          const result = await backgroundController.handleSelectionMessage(
+            message.data,
+            message.target,
+          );
+          sendResponse(result);
+        })();
+        break;
       default:
         break;
     }

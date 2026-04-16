@@ -7,7 +7,7 @@
       "name": "traductor-textos-seleccionados",
       "phase": "tasks",
       "phase_status": "approved",
-      "current_task": "APP-002",
+      "current_task": "UI-002",
       "files": {
         "spec": "docs/sdd/specs/SPEC-001-traductor-textos-seleccionados.md",
         "plan": "docs/sdd/plans/PLAN-SPEC-001.md",
