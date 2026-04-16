@@ -2,21 +2,6 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import { SelectionTooltip, SelectionTooltipProps } from "../SelectionTooltip";
 
-vi.mock(
-  "~@/presentation/components/LanguageSelector/LanguageSelectorControlled",
-  () => ({
-    LanguageSelectorControlled: ({ value, onChange }: { value: string; onChange: (l: string) => void }) => (
-      <button
-        data-testid="language-selector-controlled"
-        data-value={value}
-        onClick={() => onChange("fr")}
-      >
-        {value}
-      </button>
-    ),
-  }),
-);
-
 const defaultProps: SelectionTooltipProps = {
   status: "idle",
   translatedText: null,
@@ -121,17 +106,31 @@ describe("SelectionTooltip", () => {
     vi.useRealTimers();
   });
 
-  it("renders LanguageSelectorControlled with current targetLanguage", () => {
-    render(<SelectionTooltip {...defaultProps} targetLanguage="es" status="idle" />);
-    expect(screen.getByTestId("language-selector-controlled")).toHaveAttribute("data-value", "es");
+  it("renders language select with current targetLanguage", () => {
+    render(
+      <SelectionTooltip
+        {...defaultProps}
+        status="done"
+        translatedText="Hello"
+        sourceLanguage="es"
+        targetLanguage="es"
+      />,
+    );
+    expect(screen.getByRole("combobox")).toHaveValue("es");
   });
 
-  it("calls onLanguageChange when LanguageSelectorControlled fires onChange", () => {
+  it("calls onLanguageChange when select value changes", () => {
     const onLanguageChange = vi.fn();
     render(
-      <SelectionTooltip {...defaultProps} status="idle" onLanguageChange={onLanguageChange} />,
+      <SelectionTooltip
+        {...defaultProps}
+        status="done"
+        translatedText="Hello"
+        sourceLanguage="es"
+        onLanguageChange={onLanguageChange}
+      />,
     );
-    fireEvent.click(screen.getByTestId("language-selector-controlled"));
+    fireEvent.change(screen.getByRole("combobox"), { target: { value: "fr" } });
     expect(onLanguageChange).toHaveBeenCalledWith("fr");
   });
 

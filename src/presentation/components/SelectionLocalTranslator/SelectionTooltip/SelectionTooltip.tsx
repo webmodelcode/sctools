@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Copy, Check, RotateCcw, Loader2 } from "lucide-react";
 import { Button } from "~@/presentation/components/ui/button";
 import languagesSupported from "~@/presentation/components/LanguageSelector/languagesSupported";
-import { LanguageSelectorControlled } from "~@/presentation/components/LanguageSelector/LanguageSelectorControlled";
 import { TranslationStatus } from "../hooks/useSelectionTranslation";
+import { Label } from "../../ui/label";
 
 export interface SelectionTooltipProps {
   status: TranslationStatus;
@@ -34,49 +34,78 @@ export const SelectionTooltip = ({
   };
 
   const sourceLangLabel = sourceLanguage
-    ? (languagesSupported.find((l) => l.value === sourceLanguage)?.label ?? sourceLanguage)
+    ? (languagesSupported.find((l) => l.value === sourceLanguage)?.label ??
+      sourceLanguage)
     : null;
 
   return (
     <div
       data-testid="selection-tooltip"
-      className="flex min-w-48 max-w-xs flex-col gap-2 rounded-lg border border-ew-star-color bg-background p-3 shadow-lg"
+      className="flex max-w-xs min-w-48 flex-col gap-2 rounded-lg border border-ew-star-color bg-background p-3 shadow-lg"
     >
-      <LanguageSelectorControlled
-        value={targetLanguage}
-        onChange={onLanguageChange}
-        tooltipText="Selecciona el idioma al que deseas traducir la selección"
-      />
-
       {status === "translating" && (
-        <div className="flex items-center justify-center py-2" data-testid="spinner">
+        <div
+          className="flex items-center justify-center py-2"
+          data-testid="spinner"
+        >
           <Loader2 className="h-5 w-5 animate-spin" />
         </div>
       )}
 
       {status === "done" && (
         <div className="flex flex-col gap-1">
-          <p data-testid="translated-text" className="text-sm">
-            {translatedText}
-          </p>
           {sourceLangLabel && (
-            <span data-testid="source-language" className="text-xs text-muted-foreground">
+            <span
+              data-testid="source-language"
+              className="text-xs text-muted-foreground"
+            >
               Desde: {sourceLangLabel}
             </span>
           )}
-          <Button
-            data-testid="copy-button"
-            size="sm"
-            variant="outline"
-            className="mt-1 self-end"
-            onClick={handleCopy}
+
+          <p
+            data-testid="translated-text"
+            className="w-full rounded-md border bg-background p-2 text-sm"
           >
-            {copied ? (
-              <Check className="h-3 w-3" data-testid="check-icon" />
-            ) : (
-              <Copy className="h-3 w-3" data-testid="copy-icon" />
-            )}
-          </Button>
+            {translatedText}
+          </p>
+
+          <div className="flex items-center justify-between gap-2">
+            <div>
+              <Label
+                htmlFor="language"
+                className="text-xs text-muted-foreground"
+              >
+                Traducido a:{" "}
+              </Label>
+              <select
+                name="language"
+                className="rounded-md bg-primary py-1 text-primary-foreground"
+                value={targetLanguage}
+                onChange={(e) => onLanguageChange(e.target.value)}
+              >
+                {languagesSupported.map((lang) => (
+                  <option key={lang.value} value={lang.value}>
+                    {lang.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <Button
+              data-testid="copy-button"
+              size="sm"
+              variant="outline"
+              className="mt-1 self-end"
+              onClick={handleCopy}
+            >
+              {copied ? (
+                <Check className="h-3 w-3" data-testid="check-icon" />
+              ) : (
+                <Copy className="h-3 w-3" data-testid="copy-icon" />
+              )}
+            </Button>
+          </div>
         </div>
       )}
 
