@@ -50,6 +50,26 @@ export const backgroundController = {
       return msg;
     }
   },
+  handleSelectionMessage: async (text: string, targetLanguage: string) => {
+    try {
+      if (
+        !localTranslator.isAvailable() ||
+        !localLanguageDetector.isAvailable()
+      ) {
+        return undefined;
+      }
+      const sourceLanguage = await localLanguageDetector.detectLanguage(text);
+      const translator = await localTranslator.create({
+        sourceLanguage: sourceLanguage ?? "en",
+        targetLanguage,
+      });
+      const translatedText = await translator.translate(text);
+      return { translatedText, sourceLanguage: sourceLanguage ?? "en" };
+    } catch (error) {
+      devConsole.error("Error translating selection:", error);
+      return undefined;
+    }
+  },
   handleCheckExtUpload: async () => {
     const isProd = import.meta.env.PROD;
     const currentVersion = browser.runtime.getManifest().version;

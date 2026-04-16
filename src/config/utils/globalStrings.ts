@@ -32,6 +32,8 @@ export const GLOBAL_STRINGS = {
     SUBTITLE_FONT_COLOR: "subtitleFontColor",
     /** Key for storing the subtitle display background color in local storage */
     SUBTITLE_BG_COLOR: "subtitleBgColor",
+    /** Key for storing selection translator active state in local storage */
+    SELECTION_TRANSLATOR_IS_ACTIVE: "selectionTranslatorIsActive",
   },
   SPEECH_TO_TRANSLATE_CONFIG: {
     /** Source language for speech recognition — always Spanish */
@@ -47,6 +49,7 @@ export const GLOBAL_STRINGS = {
     CHAT_MESSAGE: "CHAT_MESSAGE",
     INPUT_MESSAGE: "INPUT_MESSAGE",
     CHECK_EXT_UPLOAD: "CHECK_EXT_UPLOAD",
+    SELECTION_MESSAGE: "SELECTION_MESSAGE",
   },
   APP_INFORMATION: {
     APP_NAME: "Redna Models",
