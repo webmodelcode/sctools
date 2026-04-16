@@ -227,7 +227,7 @@ CONFIG-001
 | APP-001   | `handleSelectionMessage` en backgroundController   | ✅ done | src/presentation/entrypoints/background/controller.ts | —     |
 | APP-002   | Case `SELECTION_MESSAGE` en background/index.ts    | ✅ done | src/presentation/entrypoints/background/index.ts | —     |
 | UI-001    | Hook `useSelectionTranslatorStatus`                | ✅ done | src/presentation/hooks/useSelectionTranslatorStatus/ | —     |
-| UI-002    | Hook `useTextSelection`                            | ⬜ pendiente | —           | —     |
+| UI-002    | Hook `useTextSelection`                            | ✅ done | src/presentation/components/SelectionLocalTranslator/hooks/useTextSelection.ts | —     |
 | UI-003    | Hook `useSelectionTranslation`                     | ⬜ pendiente | —           | —     |
 | UI-004    | Componente `SelectionBubble`                       | ⬜ pendiente | —           | —     |
 | UI-005    | Componente `SelectionTooltip`                      | ⬜ pendiente | —           | —     |
