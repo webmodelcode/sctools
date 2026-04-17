@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelectionTranslatorStatus } from "~@/presentation/hooks/useSelectionTranslatorStatus/useSelectionTranslatorStatus";
-import { useLocalTranslatorTargetLanguage } from "~@/presentation/hooks/useLocalTranslatorTargetLanguage/useLocalTranslatorTargetLanguage";
+import { useSelectionTranslatorTargetLanguage } from "~@/presentation/hooks/useSelectionTranslatorTargetLanguage/useSelectionTranslatorTargetLanguage";
 import { useTextSelection } from "./hooks/useTextSelection";
 import { useSelectionTranslation } from "./hooks/useSelectionTranslation";
 import { SelectionBubble } from "./SelectionBubble/SelectionBubble";
@@ -8,7 +8,7 @@ import { SelectionTooltip } from "./SelectionTooltip/SelectionTooltip";
 
 export const SelectionLocalTranslator = () => {
   const selectionTranslatorStatus = useSelectionTranslatorStatus();
-  const targetLanguageStorage = useLocalTranslatorTargetLanguage();
+  const targetLanguageStorage = useSelectionTranslatorTargetLanguage();
   const { selection } = useTextSelection();
   const { status, translatedText, sourceLanguage, errorMessage, translate, reset } =
     useSelectionTranslation();

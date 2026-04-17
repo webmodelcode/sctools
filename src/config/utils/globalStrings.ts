@@ -34,6 +34,8 @@ export const GLOBAL_STRINGS = {
     SUBTITLE_BG_COLOR: "subtitleBgColor",
     /** Key for storing selection translator active state in local storage */
     SELECTION_TRANSLATOR_IS_ACTIVE: "selectionTranslatorIsActive",
+    /** Key for storing selection translator target language in local storage */
+    SELECTION_TRANSLATOR_TARGET_LANGUAGE: "selectionTranslatorTargetLanguage",
   },
   SPEECH_TO_TRANSLATE_CONFIG: {
     /** Source language for speech recognition — always Spanish */
