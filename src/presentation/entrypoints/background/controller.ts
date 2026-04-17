@@ -59,6 +59,8 @@ export const backgroundController = {
         return undefined;
       }
       const sourceLanguage = await localLanguageDetector.detectLanguage(text);
+      if (sourceLanguage === targetLanguage)
+        return { translatedText: text, sourceLanguage };
       const translator = await localTranslator.create({
         sourceLanguage: sourceLanguage ?? "en",
         targetLanguage,
