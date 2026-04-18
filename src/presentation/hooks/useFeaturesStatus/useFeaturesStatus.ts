@@ -4,6 +4,7 @@ import { useQuickMenuIsActive } from "../useQuickMenuIsActive/useQuickMenuIsActi
 import { useTranslatorStatus } from "../useTranslatorStatus/useTranslatorStatus";
 import { useSpeechToTranslateStatus } from "../useSpeechToTranslateStatus/useSpeechToTranslateStatus";
 import { useSpeechToTranslateTabId } from "../useSpeechToTranslateTabId/useSpeechToTranslateTabId";
+import { useSelectionTranslatorStatus } from "../useSelectionTranslatorStatus/useSelectionTranslatorStatus";
 
 interface FeatureStatus {
   isEnabled: boolean;
@@ -15,6 +16,7 @@ interface UseFeaturesStatus {
   quickMessages: FeatureStatus;
   quickMenu: FeatureStatus;
   speechToTranslate: FeatureStatus;
+  selectionTranslator: FeatureStatus;
   isInitialized: boolean;
 }
 
@@ -29,29 +31,34 @@ export const useFeaturesStatus = (): UseFeaturesStatus => {
   const quickMenuIsActive = useQuickMenuIsActive();
   const speechToTranslateStatusStorage = useSpeechToTranslateStatus();
   const speechToTranslateTabIdStorage = useSpeechToTranslateTabId();
+  const selectionTranslatorStatusStorage = useSelectionTranslatorStatus();
 
   const [isTranslatorEnabled, setIsTranslatorEnabled] = useState(false);
   const [isQuickMessagesEnabled, setIsQuickMessagesEnabled] = useState(false);
   const [isQuickMenuEnabled, setIsQuickMenuEnabled] = useState(false);
   const [isSpeechToTranslateEnabled, setIsSpeechToTranslateEnabled] =
     useState(false);
+  const [isSelectionTranslatorEnabled, setIsSelectionTranslatorEnabled] =
+    useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
   const initFeaturesState = useCallback(async () => {
     if (isInitialized) return;
 
-    const [translator, quickMessages, quickMenu, speechToTranslate] =
+    const [translator, quickMessages, quickMenu, speechToTranslate, selectionTranslator] =
       await Promise.all([
         translatorStatus.getItem(),
         quickMessagesStatus.getItem(),
         quickMenuIsActive.getItem(),
         speechToTranslateStatusStorage.getItem(),
+        selectionTranslatorStatusStorage.getItem(),
       ]);
 
     setIsTranslatorEnabled(translator);
     setIsQuickMessagesEnabled(quickMessages);
     setIsQuickMenuEnabled(quickMenu);
     setIsSpeechToTranslateEnabled(speechToTranslate);
+    setIsSelectionTranslatorEnabled(selectionTranslator);
     setIsInitialized(true);
   }, [
     isInitialized,
@@ -59,6 +66,7 @@ export const useFeaturesStatus = (): UseFeaturesStatus => {
     quickMessagesStatus,
     quickMenuIsActive,
     speechToTranslateStatusStorage,
+    selectionTranslatorStatusStorage,
   ]);
 
   useEffect(() => {
@@ -70,12 +78,16 @@ export const useFeaturesStatus = (): UseFeaturesStatus => {
     speechToTranslateStatusStorage.watchItem((value) =>
       setIsSpeechToTranslateEnabled(value),
     );
+    selectionTranslatorStatusStorage.watchItem((value) =>
+      setIsSelectionTranslatorEnabled(value),
+    );
   }, [
     initFeaturesState,
     translatorStatus,
     quickMessagesStatus,
     quickMenuIsActive,
     speechToTranslateStatusStorage,
+    selectionTranslatorStatusStorage,
   ]);
 
   const toggleTranslator = useCallback(
@@ -100,6 +112,14 @@ export const useFeaturesStatus = (): UseFeaturesStatus => {
       setIsQuickMenuEnabled(checked);
     },
     [quickMenuIsActive],
+  );
+
+  const toggleSelectionTranslator = useCallback(
+    async (checked: boolean) => {
+      await selectionTranslatorStatusStorage.setItem(checked);
+      setIsSelectionTranslatorEnabled(checked);
+    },
+    [selectionTranslatorStatusStorage],
   );
 
   const toggleSpeechToTranslate = useCallback(
@@ -147,6 +167,10 @@ export const useFeaturesStatus = (): UseFeaturesStatus => {
     speechToTranslate: {
       isEnabled: isSpeechToTranslateEnabled,
       toggle: toggleSpeechToTranslate,
+    },
+    selectionTranslator: {
+      isEnabled: isSelectionTranslatorEnabled,
+      toggle: toggleSelectionTranslator,
     },
     isInitialized,
   };
